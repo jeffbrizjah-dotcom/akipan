@@ -1282,19 +1282,37 @@ footer{
 @media(max-width:768px){
   .nav-links,.nav-cta{display:none;}
   .nav-hamburger{display:flex;}
-  /* About — móvil grande */
-  .about-grid{gap:2.5rem;}
-  .about-img-stack{height:300px;max-width:100%;}
-  .about-img-main{width:72%;height:78%;}
-  .about-img-sec{width:52%;height:52%;}
-  .about-badge{bottom:9%;left:62%;padding:.8rem 1rem;}
-  .about-badge .num{font-size:1.8rem;}
+  /* About — móvil */
+  .about-grid{gap:2rem;}
+  /* Rediseño total del stack en móvil: solo imagen principal */
+  .about-img-stack{
+    height:260px;
+    max-width:100%;
+    border-radius:18px;
+    overflow:hidden;
+  }
+  .about-img-main{
+    position:relative;
+    width:100%;height:100%;
+    border-radius:18px;
+    top:auto;left:auto;
+    display:block;
+  }
+  .about-img-sec{display:none;}
+  .about-badge{
+    position:absolute;
+    bottom:1rem;right:1rem;left:auto;
+    padding:.7rem 1rem;
+    border-radius:12px;
+  }
+  .about-badge .num{font-size:1.7rem;}
+  .about-badge .lbl{font-size:.65rem;}
   .about-features{grid-template-columns:1fr 1fr;gap:.8rem;}
-  .about-corner{width:38px;height:38px;}
-  .about-corner-tl{top:1.2rem;left:1.2rem;}
-  .about-corner-tr{top:1.2rem;right:1.2rem;}
-  .about-corner-bl{bottom:1.2rem;left:1.2rem;}
-  .about-corner-br{bottom:1.2rem;right:1.2rem;}
+  .about-corner{width:36px;height:36px;}
+  .about-corner-tl{top:1rem;left:1rem;}
+  .about-corner-tr{top:1rem;right:1rem;}
+  .about-corner-bl{bottom:1rem;left:1rem;}
+  .about-corner-br{bottom:1rem;right:1rem;}
   .about-orb-3{display:none;}
   /* otros */
   .gallery-grid{columns:2;}
@@ -1315,18 +1333,17 @@ footer{
   .counters-grid{grid-template-columns:1fr 1fr;}
   .footer-bottom{flex-direction:column;text-align:center;}
   /* About — móvil pequeño */
-  .about-img-stack{height:240px;}
-  .about-img-main{width:70%;height:76%;border-radius:14px;}
-  .about-img-sec{width:50%;height:50%;border-radius:12px;}
-  .about-badge{bottom:6%;left:58%;padding:.65rem .85rem;}
-  .about-badge .num{font-size:1.5rem;}
-  .about-badge .lbl{font-size:.6rem;letter-spacing:1px;}
+  .about-img-stack{height:220px;border-radius:14px;}
+  .about-img-main{border-radius:14px;}
+  .about-badge{padding:.6rem .85rem;bottom:.8rem;right:.8rem;}
+  .about-badge .num{font-size:1.4rem;}
+  .about-badge .lbl{font-size:.58rem;letter-spacing:1px;}
   .about-features{grid-template-columns:1fr;}
   .about-corner-tr,.about-corner-bl{display:none;}
-  .about-corner-tl{width:28px;height:28px;top:1rem;left:1rem;}
-  .about-corner-br{width:28px;height:28px;bottom:1rem;right:1rem;}
-  .about-orb-1{width:350px;height:250px;}
-  .about-orb-2{width:280px;height:200px;}
+  .about-corner-tl{width:24px;height:24px;top:.8rem;left:.8rem;}
+  .about-corner-br{width:24px;height:24px;bottom:.8rem;right:.8rem;}
+  .about-orb-1{width:300px;height:220px;}
+  .about-orb-2{width:240px;height:180px;}
   #about .about-bg-text{font-size:28vw;}
 }
 
@@ -1646,7 +1663,7 @@ footer{
       <span class="hero-stat-label">Años de sabor</span>
     </div>
     <div class="hero-stat-card">
-      <span class="hero-stat-num">50+</span>
+      <span class="hero-stat-num">30+</span>
       <span class="hero-stat-label">Platos únicos</span>
     </div>
     <div class="hero-stat-card">
