@@ -1,0 +1,2503 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AKIPAN — Restaurante & Panadería</title>
+<meta name="description" content="AKIPAN Restaurante & Panadería — Sabores auténticos de la cocina ecuatoriana. Bienvenido a nuestra mesa.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display+SC:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Karla:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* =============================================
+   VARIABLES & RESET
+============================================= */
+:root {
+  --orange:      #FF6B00;
+  --orange-light:#FF8C00;
+  --orange-glow: #FF6B0044;
+  --orange-dim:  #cc5500;
+  --black:       #0A0A0A;
+  --black2:      #111111;
+  --black3:      #1A1A1A;
+  --white:       #FFFFFF;
+  --off-white:   #F8F4EF;
+  --glass-bg:    rgba(255,255,255,0.06);
+  --glass-border:rgba(255,140,0,0.18);
+  --glass-bg2:   rgba(255,107,0,0.08);
+  --text-muted:  #b0a090;
+  --radius:      16px;
+  --shadow-orange: 0 8px 40px rgba(255,107,0,0.3);
+  --font-display: 'Playfair Display SC', serif;
+  --font-serif:   'Playfair Display', serif;
+  --font-body:    'Karla', sans-serif;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{
+  background:#0A0A0A;
+  color:#e8ddd0;
+  font-family:var(--font-body);
+  line-height:1.7;
+  overflow-x:hidden;
+}
+img{max-width:100%;display:block;}
+a{text-decoration:none;color:inherit;}
+button{cursor:pointer;border:none;background:none;font-family:var(--font-body);}
+
+/* =============================================
+   PRELOADER
+============================================= */
+#preloader{
+  position:fixed;inset:0;
+  background:#0A0A0A;
+  z-index:9999;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  transition:opacity .6s ease, visibility .6s ease;
+}
+#preloader.hidden{opacity:0;visibility:hidden;}
+
+.pl-logo-wrap{
+  position:relative;
+  width:180px;height:180px;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:2rem;
+}
+.pl-ring{
+  position:absolute;
+  border-radius:50%;
+  border:2px solid transparent;
+  animation:ring-spin 2s linear infinite;
+}
+.pl-ring:nth-child(1){
+  width:160px;height:160px;
+  border-top-color:var(--orange);
+  border-right-color:var(--orange-light);
+  animation-duration:1.8s;
+}
+.pl-ring:nth-child(2){
+  width:130px;height:130px;
+  border-bottom-color:var(--orange-light);
+  border-left-color:var(--orange);
+  animation-duration:2.4s;
+  animation-direction:reverse;
+}
+.pl-ring:nth-child(3){
+  width:100px;height:100px;
+  border-top-color:rgba(255,140,0,0.4);
+  animation-duration:1.2s;
+}
+@keyframes ring-spin{to{transform:rotate(360deg);}}
+
+.pl-logo-img{
+  width:100px;height:100px;
+  object-fit:contain;
+  animation:pl-pulse 2s ease-in-out infinite;
+  filter:drop-shadow(0 0 20px var(--orange));
+}
+@keyframes pl-pulse{
+  0%,100%{transform:scale(1);filter:drop-shadow(0 0 12px var(--orange));}
+  50%{transform:scale(1.08);filter:drop-shadow(0 0 28px var(--orange-light));}
+}
+
+.pl-text{
+  font-family:var(--font-display);
+  font-size:2rem;
+  color:var(--orange);
+  letter-spacing:6px;
+  text-transform:uppercase;
+  animation:pl-fade 1.5s ease-in-out infinite alternate;
+}
+@keyframes pl-fade{from{opacity:.4;}to{opacity:1;}}
+
+.pl-sub{
+  font-family:var(--font-body);
+  font-size:.8rem;
+  letter-spacing:4px;
+  color:var(--text-muted);
+  margin-top:.4rem;
+  text-transform:uppercase;
+}
+.pl-bar-wrap{
+  margin-top:2.5rem;
+  width:200px;height:3px;
+  background:rgba(255,255,255,0.08);
+  border-radius:10px;
+  overflow:hidden;
+}
+.pl-bar{
+  height:100%;width:0%;
+  background:linear-gradient(90deg,var(--orange),var(--orange-light));
+  border-radius:10px;
+  animation:pl-load 2.5s ease forwards;
+}
+@keyframes pl-load{to{width:100%;}}
+
+/* =============================================
+   PARTICLES CANVAS
+============================================= */
+#particles-canvas{
+  position:absolute;inset:0;
+  pointer-events:none;z-index:1;
+}
+
+/* =============================================
+   NAVBAR
+============================================= */
+#navbar{
+  position:fixed;top:0;left:0;right:0;
+  z-index:1000;
+  padding:.8rem 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:all .4s ease;
+}
+#navbar.scrolled{
+  background:rgba(10,10,10,0.85);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--glass-border);
+  box-shadow:0 4px 30px rgba(255,107,0,0.1);
+}
+
+.nav-logo{
+  display:flex;align-items:center;gap:.7rem;
+}
+.nav-logo img{
+  height:72px;width:auto;
+  filter:drop-shadow(0 0 10px var(--orange-glow));
+  transition:transform .3s ease;
+}
+.nav-logo img:hover{transform:scale(1.05);}
+.nav-logo-text{
+  display:flex;flex-direction:column;line-height:1.1;
+}
+.nav-brand-name{
+  font-family:var(--font-display);
+  font-size:1.6rem;
+  letter-spacing:3px;
+  line-height:1.1;
+  display:block;
+}
+.nav-aki{color:#ffffff;}
+.nav-pan{color:var(--orange);}
+.nav-logo-text > span:last-child{
+  font-size:.65rem;
+  letter-spacing:3px;
+  color:var(--text-muted);
+  text-transform:uppercase;
+}
+
+.nav-logo{
+  display:flex;align-items:center;gap:.7rem;
+}
+
+.nav-links{
+  display:flex;align-items:center;gap:2rem;
+  list-style:none;
+  position:absolute;
+  left:50%;
+  transform:translateX(-46%);
+}
+.nav-links a{
+  font-size:.85rem;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:#ccc;
+  transition:color .3s ease;
+  position:relative;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-4px;left:0;right:0;
+  height:1px;background:var(--orange);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .3s ease;
+}
+.nav-links a:hover{color:var(--orange);}
+.nav-links a:hover::after{transform:scaleX(1);}
+
+.nav-cta{
+  background:linear-gradient(135deg,var(--orange),var(--orange-light));
+  color:#fff;
+  padding:.55rem 1.4rem;
+  border-radius:50px;
+  font-size:.8rem;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  font-weight:600;
+  transition:all .3s ease;
+  box-shadow:0 4px 20px rgba(255,107,0,0.35);
+}
+.nav-cta:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 28px rgba(255,107,0,0.5);
+}
+
+.nav-hamburger{
+  display:none;flex-direction:column;gap:5px;
+  cursor:pointer;padding:4px;
+}
+.nav-hamburger span{
+  display:block;width:24px;height:2px;
+  background:var(--orange);
+  border-radius:2px;
+  transition:all .3s ease;
+}
+
+.mobile-menu{
+  display:none;
+  position:fixed;top:0;right:-100%;
+  width:80%;max-width:320px;height:100vh;
+  background:rgba(10,10,10,0.97);
+  backdrop-filter:blur(20px);
+  z-index:1100;
+  flex-direction:column;
+  padding:5rem 2.5rem 2.5rem;
+  gap:2rem;
+  transition:right .4s cubic-bezier(0.4,0,0.2,1);
+  border-left:1px solid var(--glass-border);
+}
+.mobile-menu.open{right:0;}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{
+  font-family:var(--font-display);
+  font-size:1.4rem;
+  color:#ccc;
+  letter-spacing:3px;
+  border-bottom:1px solid rgba(255,107,0,0.1);
+  padding-bottom:.8rem;
+  transition:color .3s ease;
+}
+.mobile-menu a:hover{color:var(--orange);}
+.mobile-close{
+  position:absolute;top:1.5rem;right:1.5rem;
+  color:var(--orange);font-size:1.5rem;background:none;border:none;cursor:pointer;
+}
+.menu-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,0.5);z-index:1050;
+}
+.menu-overlay.open{display:block;}
+
+/* =============================================
+   HERO
+============================================= */
+#hero{
+  position:relative;
+  height:100vh;min-height:700px;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:-8%;z-index:0;
+  background:url('FOTO DE FACHADA INTERIOR DE AKIPAN.webp') center/cover no-repeat,
+             url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1800&q=80') center/cover no-repeat;
+  will-change:transform;
+  transform-origin:center center;
+}
+/* depth layers for mouse parallax */
+.hero-layer-mid{
+  position:absolute;inset:0;z-index:2;
+  pointer-events:none;
+  will-change:transform;
+}
+.hero-layer-fg{
+  position:absolute;inset:0;z-index:3;
+  display:flex;align-items:center;justify-content:center;
+  pointer-events:none;
+  will-change:transform;
+}
+.hero-overlay{
+  position:absolute;inset:0;z-index:1;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.50) 45%, rgba(0,0,0,0.82) 100%);
+}
+.hero-overlay2{
+  position:absolute;inset:0;z-index:2;
+  background:
+    radial-gradient(ellipse 80% 80% at 50% 50%, transparent 30%, rgba(0,0,0,0.55) 100%);
+}
+
+.hero-content{
+  position:relative;z-index:3;
+  text-align:center;
+  padding:0 2rem;
+  max-width:860px;
+  display:flex;flex-direction:column;align-items:center;gap:0;
+}
+
+/* ── Ornamento superior ── */
+.hero-ornament{
+  display:flex;align-items:center;gap:1rem;
+  width:100%;max-width:420px;
+  margin-bottom:1.6rem;
+  opacity:0;transform:scaleX(0);
+  animation:hero-orn .8s .1s cubic-bezier(0.4,0,0.2,1) forwards;
+}
+.hero-orn-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(255,140,0,0.6),transparent);}
+.hero-orn-diamond{
+  width:8px;height:8px;
+  background:var(--orange);
+  transform:rotate(45deg);
+  flex-shrink:0;
+  box-shadow:0 0 8px var(--orange);
+}
+@keyframes hero-orn{to{opacity:1;transform:scaleX(1);}}
+
+/* ── Eyebrow ── */
+.hero-eyebrow{
+  font-family:var(--font-body);
+  font-size:.68rem;letter-spacing:6px;text-transform:uppercase;
+  color:rgba(255,140,0,0.9);
+  margin-bottom:1.4rem;
+  opacity:0;
+  animation:hero-in .7s .3s ease forwards;
+}
+
+/* ── Título principal AKIPAN ── */
+.hero-main-title{
+  display:flex;align-items:center;justify-content:center;
+  gap:.02em;
+  margin-bottom:.6rem;
+  line-height:1;
+  width:100%;
+}
+.hero-letter{
+  font-family:var(--font-display);
+  font-size:clamp(4.5rem,13vw,10rem);
+  color:#fff;
+  display:inline-block;
+  letter-spacing:.06em;
+  opacity:0;transform:translateY(-40px) rotateX(90deg);
+  animation:letter-drop .6s ease forwards;
+  text-shadow:0 4px 30px rgba(0,0,0,0.5);
+}
+.hero-letter:nth-child(1){animation-delay:.35s;}
+.hero-letter:nth-child(2){animation-delay:.45s;}
+.hero-letter:nth-child(3){animation-delay:.55s;}
+.hero-letter:nth-child(4){animation-delay:.65s;}
+.hero-letter:nth-child(5){animation-delay:.75s;}
+.hero-letter:nth-child(6){animation-delay:.85s;}
+@keyframes letter-drop{
+  0%{opacity:0;transform:translateY(-50px) rotateX(90deg);}
+  60%{transform:translateY(6px) rotateX(-5deg);}
+  100%{opacity:1;transform:translateY(0) rotateX(0);}
+}
+
+/* ── Subtítulo Restaurante & Panadería ── */
+.hero-brand-row{
+  display:flex;align-items:center;gap:1.2rem;
+  margin-bottom:1.4rem;
+  opacity:0;transform:translateY(18px);
+  animation:hero-in .8s .95s ease forwards;
+}
+.hero-brand-dash{
+  width:36px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--orange));
+}
+.hero-brand-dash.right{background:linear-gradient(90deg,var(--orange),transparent);}
+.hero-brand-text{
+  font-family:var(--font-serif);
+  font-size:clamp(.9rem,2.2vw,1.45rem);
+  color:rgba(255,255,255,0.92);
+  letter-spacing:4px;
+  white-space:nowrap;
+}
+.hero-brand-dot{
+  color:var(--orange);
+  font-size:1.1em;margin:0 .3rem;
+}
+
+/* ── Divider ornamental ── */
+.hero-divider{
+  display:flex;align-items:center;gap:.8rem;
+  width:100%;max-width:320px;
+  margin-bottom:1.4rem;
+  opacity:0;
+  animation:hero-in .6s 1.05s ease forwards;
+}
+.hero-div-line{flex:1;height:1px;background:rgba(255,255,255,0.15);}
+.hero-div-icon{color:var(--orange);font-size:.7rem;letter-spacing:3px;white-space:nowrap;font-family:var(--font-body);}
+
+/* ── Tagline ── */
+.hero-tagline{
+  font-family:var(--font-serif);
+  font-style:italic;
+  font-size:clamp(1rem,2.2vw,1.4rem);
+  color:rgba(255,220,180,0.9);
+  margin-bottom:1.2rem;
+  letter-spacing:1px;
+  opacity:0;transform:translateY(14px);
+  animation:hero-in .8s 1.1s ease forwards;
+}
+
+/* ── Descripción ── */
+.hero-desc{
+  font-size:.95rem;
+  color:rgba(200,185,170,0.85);
+  max-width:480px;
+  line-height:1.85;
+  margin-bottom:2.2rem;
+  opacity:0;transform:translateY(14px);
+  animation:hero-in .8s 1.25s ease forwards;
+}
+
+/* ── Botones ── */
+.hero-btns{
+  display:flex;align-items:center;justify-content:center;
+  gap:1rem;flex-wrap:wrap;
+  opacity:0;transform:translateY(14px);
+  animation:hero-in .8s 1.4s ease forwards;
+}
+
+/* ── Ornamento inferior ── */
+.hero-ornament-bottom{
+  margin-top:2rem;
+  display:flex;align-items:center;gap:1rem;
+  width:100%;max-width:300px;
+  opacity:0;
+  animation:hero-in .6s 1.5s ease forwards;
+}
+.hero-orn-line-sm{flex:1;height:1px;background:rgba(255,140,0,0.2);}
+.hero-orn-dots{display:flex;gap:5px;}
+.hero-orn-dot{width:4px;height:4px;border-radius:50%;background:var(--orange);opacity:.5;}
+.hero-orn-dot:nth-child(2){opacity:.8;transform:scale(1.3);}
+
+@keyframes hero-in{to{opacity:1;transform:translateY(0);}}
+.btn-primary{
+  background:linear-gradient(135deg,var(--orange),var(--orange-light));
+  color:#fff;
+  padding:.85rem 2.2rem;
+  border-radius:50px;
+  font-size:.85rem;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  font-weight:700;
+  transition:all .3s ease;
+  box-shadow:0 6px 28px rgba(255,107,0,0.45);
+  display:inline-flex;align-items:center;gap:.6rem;
+}
+.btn-primary:hover{
+  transform:translateY(-3px);
+  box-shadow:0 10px 40px rgba(255,107,0,0.6);
+}
+.btn-outline{
+  border:1.5px solid rgba(255,255,255,0.3);
+  color:#fff;
+  padding:.85rem 2.2rem;
+  border-radius:50px;
+  font-size:.85rem;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  font-weight:600;
+  backdrop-filter:blur(8px);
+  background:rgba(255,255,255,0.04);
+  transition:all .3s ease;
+  display:inline-flex;align-items:center;gap:.6rem;
+}
+.btn-outline:hover{
+  border-color:var(--orange);
+  color:var(--orange);
+  transform:translateY(-3px);
+  background:rgba(255,107,0,0.07);
+}
+
+@keyframes hero-in{to{opacity:1;transform:translateY(0);}}
+
+.hero-scroll{
+  position:absolute;bottom:2.5rem;left:50%;
+  transform:translateX(-50%);
+  z-index:4;
+  display:flex;flex-direction:column;align-items:center;gap:.5rem;
+  color:var(--text-muted);font-size:.7rem;letter-spacing:3px;text-transform:uppercase;
+  animation:bounce 2s infinite;
+}
+.hero-scroll-line{
+  width:1px;height:50px;
+  background:linear-gradient(to bottom,transparent,var(--orange),transparent);
+  animation:scroll-line 1.5s ease-in-out infinite;
+}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(6px);}}
+@keyframes scroll-line{0%,100%{opacity:.3;}50%{opacity:1;}}
+
+.hero-stats{
+  position:absolute;bottom:8rem;right:3rem;
+  z-index:4;
+  display:flex;flex-direction:column;gap:1rem;
+}
+.hero-stat-card{
+  background:var(--glass-bg);
+  backdrop-filter:blur(12px);
+  border:1px solid var(--glass-border);
+  border-radius:12px;
+  padding:.8rem 1.2rem;
+  text-align:right;
+  transition:transform .3s ease;
+}
+.hero-stat-card:hover{transform:translateX(-4px);}
+.hero-stat-num{
+  font-family:var(--font-display);
+  font-size:1.6rem;color:var(--orange);
+  display:block;line-height:1;
+}
+.hero-stat-label{
+  font-size:.65rem;letter-spacing:2px;
+  color:var(--text-muted);text-transform:uppercase;
+}
+
+/* =============================================
+   SECTION BASE
+============================================= */
+section{padding:6rem 1.5rem;}
+.section-tag{
+  display:inline-block;
+  border:1px solid var(--orange);
+  color:var(--orange);
+  font-size:.65rem;letter-spacing:5px;
+  text-transform:uppercase;
+  padding:.35rem 1rem;
+  border-radius:50px;
+  margin-bottom:1rem;
+  background:rgba(255,107,0,0.05);
+}
+.section-title{
+  font-family:var(--font-display);
+  font-size:clamp(2rem,5vw,3.5rem);
+  color:var(--white);
+  line-height:1.1;
+  margin-bottom:1rem;
+  letter-spacing:2px;
+}
+.section-title span{color:var(--orange);}
+.section-line{
+  width:60px;height:3px;
+  background:linear-gradient(90deg,var(--orange),var(--orange-light));
+  border-radius:10px;
+  margin-bottom:1.5rem;
+}
+.section-line.center{margin:0 auto 1.5rem;}
+.section-desc{
+  color:var(--text-muted);
+  max-width:560px;
+  font-size:1rem;line-height:1.8;
+}
+.container{max-width:1200px;margin:0 auto;}
+.text-center{text-align:center;}
+.text-center .section-desc{margin:0 auto;}
+
+/* reveal animation */
+.reveal{
+  opacity:0;transform:translateY(40px);
+  transition:opacity .7s ease,transform .7s ease;
+}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-left{
+  opacity:0;transform:translateX(-50px);
+  transition:opacity .8s ease,transform .8s ease;
+}
+.reveal-left.visible{opacity:1;transform:translateX(0);}
+.reveal-right{
+  opacity:0;transform:translateX(50px);
+  transition:opacity .8s ease,transform .8s ease;
+}
+.reveal-right.visible{opacity:1;transform:translateX(0);}
+
+/* =============================================
+   ABOUT
+============================================= */
+#about{
+  position:relative;
+  background:var(--black2);
+  overflow:hidden;
+}
+#about .about-bg-text{
+  position:absolute;
+  font-family:var(--font-display);
+  font-size:20vw;color:rgba(255,107,0,0.03);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  white-space:nowrap;pointer-events:none;z-index:0;
+  letter-spacing:10px;
+}
+.about-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:4rem;align-items:center;
+  position:relative;z-index:1;
+}
+.about-img-stack{
+  position:relative;
+  height:500px;
+}
+.about-img-main{
+  position:absolute;
+  width:75%;height:80%;
+  object-fit:cover;
+  border-radius:20px;
+  top:0;left:0;
+  box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  transition:transform .4s ease;
+}
+.about-img-main:hover{transform:scale(1.02);}
+.about-img-sec{
+  position:absolute;
+  width:55%;height:55%;
+  object-fit:cover;
+  border-radius:16px;
+  bottom:0;right:0;
+  box-shadow:0 20px 60px rgba(0,0,0,0.4);
+  border:3px solid var(--black2);
+  transition:transform .4s ease;
+}
+.about-img-sec:hover{transform:scale(1.03);}
+.about-badge{
+  position:absolute;
+  bottom:12%;left:65%;
+  background:linear-gradient(135deg,var(--orange),var(--orange-light));
+  color:#fff;
+  border-radius:16px;
+  padding:1rem 1.2rem;
+  text-align:center;
+  box-shadow:var(--shadow-orange);
+  z-index:2;
+}
+.about-badge .num{
+  font-family:var(--font-display);
+  font-size:2.2rem;display:block;line-height:1;
+}
+.about-badge .lbl{font-size:.7rem;letter-spacing:2px;text-transform:uppercase;}
+
+.about-content{display:flex;flex-direction:column;gap:1.5rem;}
+.about-features{
+  display:grid;grid-template-columns:1fr 1fr;gap:1rem;
+  margin-top:.5rem;
+}
+.about-feature{
+  background:var(--glass-bg);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius);
+  padding:1.2rem;
+  backdrop-filter:blur(10px);
+  transition:all .3s ease;
+}
+.about-feature:hover{
+  border-color:var(--orange);
+  transform:translateY(-3px);
+  box-shadow:0 8px 30px rgba(255,107,0,0.15);
+}
+.about-feature svg{
+  color:var(--orange);margin-bottom:.6rem;
+}
+.about-feature h4{
+  font-family:var(--font-serif);
+  font-size:.9rem;color:var(--white);margin-bottom:.3rem;
+}
+.about-feature p{font-size:.8rem;color:var(--text-muted);line-height:1.5;}
+
+/* =============================================
+   PARALLAX DIVIDER
+============================================= */
+.parallax-divider{
+  position:relative;
+  height:400px;overflow:hidden;
+}
+.parallax-divider .par-bg{
+  position:absolute;inset:0;
+  background-size:cover;background-position:center;
+  background-attachment:fixed;
+  will-change:transform;
+}
+.parallax-divider .par-overlay{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+}
+.parallax-divider .par-text{
+  font-family:var(--font-display);
+  font-size:clamp(2rem,6vw,4.5rem);
+  color:#fff;text-align:center;
+  letter-spacing:6px;
+  text-shadow:0 4px 30px rgba(0,0,0,0.5);
+}
+.parallax-divider .par-text span{color:var(--orange);}
+
+/* =============================================
+   MENU
+============================================= */
+#menu{background:var(--black3);}
+.menu-cats{
+  display:flex;align-items:center;justify-content:center;
+  gap:.8rem;flex-wrap:wrap;
+  margin-bottom:3rem;
+}
+.menu-cat{
+  padding:.5rem 1.4rem;
+  border-radius:50px;
+  font-size:.8rem;letter-spacing:2px;text-transform:uppercase;
+  border:1px solid rgba(255,255,255,0.15);
+  color:#aaa;
+  cursor:pointer;
+  transition:all .3s ease;
+  background:transparent;
+}
+.menu-cat.active,
+.menu-cat:hover{
+  background:linear-gradient(135deg,var(--orange),var(--orange-light));
+  border-color:transparent;
+  color:#fff;
+  box-shadow:0 4px 20px rgba(255,107,0,0.35);
+}
+
+.menu-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:1.5rem;
+}
+.menu-card{
+  background:var(--glass-bg);
+  border:1px solid var(--glass-border);
+  border-radius:20px;
+  overflow:hidden;
+  backdrop-filter:blur(12px);
+  cursor:pointer;
+  transition:all .35s ease;
+  position:relative;
+}
+.menu-card:hover{
+  transform:translateY(-6px);
+  border-color:var(--orange);
+  box-shadow:0 16px 50px rgba(255,107,0,0.2);
+}
+.menu-card-img{
+  position:relative;height:200px;overflow:hidden;
+}
+.menu-card-img img{
+  width:100%;height:100%;
+  object-fit:cover;
+  transition:transform .5s ease;
+}
+.menu-card:hover .menu-card-img img{transform:scale(1.08);}
+.menu-card-badge{
+  position:absolute;top:.8rem;right:.8rem;
+  background:var(--orange);
+  color:#fff;font-size:.65rem;
+  padding:.3rem .7rem;border-radius:50px;
+  letter-spacing:1px;text-transform:uppercase;
+  font-weight:700;
+}
+.menu-card-body{padding:1.2rem;}
+.menu-card-body h3{
+  font-family:var(--font-serif);
+  font-size:1.1rem;color:var(--white);
+  margin-bottom:.4rem;
+}
+.menu-card-body p{
+  font-size:.82rem;color:var(--text-muted);
+  line-height:1.5;margin-bottom:.8rem;
+}
+.menu-card-footer{
+  display:flex;align-items:center;justify-content:space-between;
+}
+.menu-price{
+  font-family:var(--font-display);
+  font-size:1.2rem;color:var(--orange);
+}
+.menu-add{
+  width:34px;height:34px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--orange),var(--orange-light));
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:1.1rem;
+  cursor:pointer;
+  transition:transform .3s ease,box-shadow .3s ease;
+  border:none;
+}
+.menu-add:hover{
+  transform:scale(1.15);
+  box-shadow:0 4px 16px rgba(255,107,0,0.5);
+}
+
+/* =============================================
+   COUNTERS
+============================================= */
+#counters{
+  background:linear-gradient(135deg,var(--black) 0%,rgba(255,107,0,0.06) 50%,var(--black) 100%);
+  padding:5rem 1.5rem;
+}
+.counters-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:2rem;
+  max-width:900px;margin:0 auto;
+}
+.counter-card{
+  text-align:center;
+  background:var(--glass-bg);
+  border:1px solid var(--glass-border);
+  border-radius:20px;padding:2rem 1rem;
+  backdrop-filter:blur(10px);
+  transition:all .35s ease;
+}
+.counter-card:hover{
+  transform:translateY(-5px);
+  border-color:var(--orange);
+  box-shadow:var(--shadow-orange);
+}
+.counter-num{
+  font-family:var(--font-display);
+  font-size:3rem;color:var(--orange);
+  display:block;line-height:1;
+  margin-bottom:.5rem;
+}
+.counter-label{
+  font-size:.75rem;letter-spacing:3px;
+  text-transform:uppercase;
+  color:var(--text-muted);
+}
+
+/* =============================================
+   GALLERY
+============================================= */
+#gallery{background:var(--black2);}
+.gallery-grid{
+  columns:3;gap:1.2rem;
+  column-gap:1.2rem;
+}
+.gallery-item{
+  break-inside:avoid;
+  margin-bottom:1.2rem;
+  position:relative;
+  border-radius:16px;
+  overflow:hidden;
+  cursor:pointer;
+}
+.gallery-item img{
+  width:100%;display:block;
+  transition:transform .5s ease;
+}
+.gallery-item:hover img{transform:scale(1.05);}
+.gallery-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(10,10,10,.8) 0%,transparent 50%);
+  opacity:0;
+  transition:opacity .3s ease;
+  display:flex;align-items:flex-end;
+  padding:1.2rem;
+}
+.gallery-item:hover .gallery-overlay{opacity:1;}
+.gallery-overlay span{
+  font-family:var(--font-serif);
+  font-size:.9rem;color:#fff;
+  letter-spacing:1px;
+}
+.gallery-zoom{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%) scale(.6);
+  width:50px;height:50px;
+  background:rgba(255,107,0,0.9);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;
+  opacity:0;
+  transition:all .3s ease;
+}
+.gallery-item:hover .gallery-zoom{
+  opacity:1;transform:translate(-50%,-50%) scale(1);
+}
+
+/* Lightbox */
+#lightbox{
+  display:none;
+  position:fixed;inset:0;
+  background:rgba(0,0,0,0.95);
+  z-index:9000;
+  align-items:center;justify-content:center;
+  backdrop-filter:blur(10px);
+}
+#lightbox.open{display:flex;}
+#lightbox img{
+  max-width:90vw;max-height:85vh;
+  border-radius:12px;
+  box-shadow:0 20px 80px rgba(0,0,0,.8);
+  object-fit:contain;
+}
+.lb-close{
+  position:absolute;top:1.5rem;right:1.5rem;
+  width:44px;height:44px;background:rgba(255,107,0,.8);
+  border-radius:50%;color:#fff;font-size:1.4rem;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:all .3s ease;border:none;
+}
+.lb-close:hover{background:var(--orange);transform:scale(1.1);}
+
+/* =============================================
+   TESTIMONIALS
+============================================= */
+#testimonials{
+  background:var(--black3);
+  position:relative;overflow:hidden;
+}
+#testimonials::before{
+  content:'';position:absolute;
+  width:600px;height:600px;
+  background:radial-gradient(circle,rgba(255,107,0,0.05) 0%,transparent 70%);
+  top:-200px;right:-200px;pointer-events:none;
+}
+.testimonials-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1.5rem;
+  margin-top:3rem;
+}
+.testi-card{
+  background:var(--glass-bg);
+  border:1px solid var(--glass-border);
+  border-radius:20px;padding:2rem;
+  backdrop-filter:blur(12px);
+  position:relative;
+  transition:all .35s ease;
+}
+.testi-card:hover{
+  transform:translateY(-5px);
+  border-color:rgba(255,107,0,0.4);
+  box-shadow:0 16px 50px rgba(255,107,0,0.12);
+}
+.testi-card::before{
+  content:'\201C';
+  position:absolute;top:1rem;right:1.5rem;
+  font-family:var(--font-display);
+  font-size:5rem;color:var(--orange);
+  opacity:.15;line-height:1;
+}
+.testi-stars{
+  display:flex;gap:.2rem;margin-bottom:1rem;
+}
+.testi-stars svg{color:var(--orange);}
+.testi-text{
+  font-size:.92rem;color:#c8b8a8;
+  line-height:1.7;margin-bottom:1.5rem;
+  font-style:italic;
+}
+.testi-author{
+  display:flex;align-items:center;gap:.8rem;
+}
+.testi-avatar{
+  width:44px;height:44px;border-radius:50%;
+  object-fit:cover;
+  border:2px solid var(--orange);
+}
+.testi-name{font-weight:600;color:var(--white);font-size:.9rem;}
+.testi-loc{font-size:.75rem;color:var(--text-muted);}
+
+/* =============================================
+   CONTACT
+============================================= */
+#contact{
+  background:var(--black);
+  position:relative;overflow:hidden;
+}
+#contact::before{
+  content:'';position:absolute;inset:0;
+  background:url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600&q=80') center/cover;
+  opacity:.06;pointer-events:none;
+}
+.contact-grid{
+  display:grid;
+  grid-template-columns:1fr 1.2fr;
+  gap:4rem;align-items:start;
+  position:relative;z-index:1;
+}
+.contact-info{display:flex;flex-direction:column;gap:2rem;}
+.contact-item{
+  display:flex;align-items:flex-start;gap:1rem;
+}
+.contact-icon{
+  width:48px;height:48px;flex-shrink:0;
+  background:var(--glass-bg2);
+  border:1px solid var(--glass-border);
+  border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--orange);
+  backdrop-filter:blur(8px);
+}
+.contact-item h4{color:var(--white);font-size:.9rem;margin-bottom:.25rem;}
+.contact-item p{color:var(--text-muted);font-size:.85rem;line-height:1.5;}
+
+.contact-form{
+  background:var(--glass-bg);
+  border:1px solid var(--glass-border);
+  border-radius:24px;
+  padding:2.5rem;
+  backdrop-filter:blur(16px);
+}
+.form-group{margin-bottom:1.2rem;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;}
+.form-group label{
+  display:block;font-size:.75rem;
+  letter-spacing:2px;text-transform:uppercase;
+  color:var(--text-muted);margin-bottom:.5rem;
+}
+.form-group input,
+.form-group textarea,
+.form-group select{
+  width:100%;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:10px;
+  padding:.85rem 1rem;
+  color:#e8ddd0;
+  font-family:var(--font-body);
+  font-size:.9rem;
+  transition:border-color .3s ease,box-shadow .3s ease;
+  outline:none;
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{
+  border-color:var(--orange);
+  box-shadow:0 0 0 3px rgba(255,107,0,0.12);
+}
+.form-group textarea{resize:vertical;min-height:110px;}
+.form-group select option{background:var(--black3);}
+.form-submit{
+  width:100%;
+  background:linear-gradient(135deg,var(--orange),var(--orange-light));
+  color:#fff;padding:1rem;
+  border-radius:12px;
+  font-size:.9rem;letter-spacing:2px;text-transform:uppercase;
+  font-weight:700;border:none;cursor:pointer;
+  transition:all .3s ease;
+  box-shadow:0 6px 24px rgba(255,107,0,0.35);
+}
+.form-submit:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 36px rgba(255,107,0,0.5);
+}
+
+/* =============================================
+   FOOTER
+============================================= */
+footer{
+  background:#050505;
+  border-top:1px solid rgba(255,107,0,0.1);
+  padding:4rem 1.5rem 2rem;
+}
+.footer-grid{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:3rem;
+  max-width:1200px;margin:0 auto;
+  padding-bottom:3rem;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+}
+.footer-brand img{
+  height:60px;margin-bottom:1rem;
+  filter:drop-shadow(0 0 8px rgba(255,107,0,0.3));
+}
+.footer-brand p{
+  font-size:.85rem;color:var(--text-muted);
+  line-height:1.7;max-width:260px;
+}
+.footer-socials{
+  display:flex;gap:.7rem;margin-top:1.2rem;
+}
+.footer-social{
+  width:38px;height:38px;
+  border-radius:10px;
+  background:var(--glass-bg);
+  border:1px solid var(--glass-border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--text-muted);
+  transition:all .3s ease;
+  cursor:pointer;
+}
+.footer-social:hover{
+  background:var(--orange);
+  border-color:var(--orange);
+  color:#fff;
+  transform:translateY(-3px);
+}
+.footer-col h5{
+  font-family:var(--font-display);
+  font-size:.85rem;letter-spacing:3px;
+  color:var(--white);text-transform:uppercase;
+  margin-bottom:1.2rem;
+}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.6rem;}
+.footer-col ul li a{
+  font-size:.85rem;color:var(--text-muted);
+  transition:color .3s ease;
+  display:inline-flex;align-items:center;gap:.4rem;
+}
+.footer-col ul li a:hover{color:var(--orange);}
+.footer-col ul li a::before{
+  content:'';
+  width:6px;height:1px;
+  background:var(--orange);
+  transition:width .3s ease;
+}
+.footer-col ul li a:hover::before{width:12px;}
+
+.footer-bottom{
+  max-width:1200px;margin:2rem auto 0;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:1rem;
+}
+.footer-bottom p{font-size:.8rem;color:var(--text-muted);}
+.footer-bottom span{color:var(--orange);}
+
+/* =============================================
+   FLOATING BUTTONS
+============================================= */
+.float-btns{
+  position:fixed;bottom:2rem;right:2rem;
+  z-index:500;
+  display:flex;flex-direction:column;gap:.8rem;
+  align-items:flex-end;
+}
+.float-btn{
+  width:52px;height:52px;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 24px rgba(0,0,0,0.3);
+  cursor:pointer;
+  transition:all .3s ease;
+  border:none;
+}
+.float-btn:hover{transform:scale(1.1);box-shadow:0 6px 30px rgba(0,0,0,0.4);}
+.float-wa{background:#25D366;}
+.float-wa:hover{background:#1fb855;}
+.float-top{
+  background:linear-gradient(135deg,var(--orange),var(--orange-light));
+  opacity:0;pointer-events:none;
+  transition:all .3s ease;
+}
+.float-top.visible{opacity:1;pointer-events:auto;}
+
+/* =============================================
+   RESPONSIVE
+============================================= */
+@media(max-width:1024px){
+  .about-grid{grid-template-columns:1fr;}
+  .about-img-stack{height:360px;max-width:500px;margin:0 auto;}
+  .contact-grid{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:2rem;}
+  .counters-grid{grid-template-columns:repeat(2,1fr);}
+  .testimonials-grid{grid-template-columns:repeat(2,1fr);}
+  .hero-stats{display:none;}
+}
+@media(max-width:768px){
+  .nav-links,.nav-cta{display:none;}
+  .nav-hamburger{display:flex;}
+  .gallery-grid{columns:2;}
+  .testimonials-grid{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr;}
+  .footer-col:nth-child(n+3){display:none;}
+  .menu-grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr));}
+  .form-row{grid-template-columns:1fr;}
+  .hero-btns{flex-direction:column;align-items:center;}
+  .counters-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:480px){
+  .gallery-grid{columns:1;}
+  section{padding:4rem 1rem;}
+  .hero-letter{font-size:clamp(3rem,11vw,5.5rem);}
+  .hero-brand-text{font-size:.85rem;letter-spacing:2px;}
+  .hero-btns{flex-direction:column;align-items:center;}
+  .counters-grid{grid-template-columns:1fr 1fr;}
+  .footer-bottom{flex-direction:column;text-align:center;}
+}
+
+/* =============================================
+   REVIEWS CAROUSEL
+============================================= */
+.rc-section{
+  overflow:hidden;position:relative;
+  background:#060606;
+}
+/* dot-grid texture */
+.rc-dot-grid{
+  position:absolute;inset:0;
+  background-image:radial-gradient(circle at 1px 1px, rgba(255,107,0,0.07) 1px, transparent 0);
+  background-size:38px 38px;
+  pointer-events:none;z-index:0;
+}
+/* glowing orbs */
+.rc-orb{
+  position:absolute;border-radius:50%;
+  filter:blur(90px);pointer-events:none;z-index:0;
+}
+.rc-orb-1{
+  width:700px;height:500px;
+  background:rgba(255,107,0,0.08);
+  top:-120px;left:-180px;
+  animation:orb1 13s ease-in-out infinite;
+}
+.rc-orb-2{
+  width:500px;height:500px;
+  background:rgba(255,160,0,0.06);
+  bottom:-80px;right:-100px;
+  animation:orb2 16s ease-in-out infinite;
+}
+.rc-orb-3{
+  width:350px;height:500px;
+  background:rgba(200,55,0,0.05);
+  top:20%;right:25%;
+  animation:orb3 20s ease-in-out infinite;
+}
+@keyframes orb1{
+  0%,100%{transform:translate(0,0) scale(1);}
+  33%{transform:translate(70px,-50px) scale(1.12);}
+  66%{transform:translate(-40px,60px) scale(.92);}
+}
+@keyframes orb2{
+  0%,100%{transform:translate(0,0) scale(1);}
+  40%{transform:translate(-60px,40px) scale(1.1);}
+  70%{transform:translate(50px,-70px) scale(.9);}
+}
+@keyframes orb3{
+  0%,100%{transform:translate(0,0) scale(1);}
+  30%{transform:translate(40px,50px) scale(1.08);}
+  65%{transform:translate(-50px,-35px) scale(.95);}
+}
+/* gran marca de agua ★★★★★ */
+.rc-watermark{
+  position:absolute;
+  font-size:clamp(8rem,18vw,18rem);
+  color:rgba(255,107,0,0.025);
+  font-family:var(--font-display);
+  letter-spacing:.3em;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  white-space:nowrap;
+  pointer-events:none;z-index:0;
+  user-select:none;
+}
+/* líneas borde luminoso */
+.rc-edge{
+  position:absolute;left:0;right:0;height:1px;z-index:2;
+  background:linear-gradient(90deg,transparent 0%,rgba(255,107,0,.5) 30%,rgba(255,140,0,.7) 50%,rgba(255,107,0,.5) 70%,transparent 100%);
+}
+.rc-edge.top{top:0;}
+.rc-edge.bottom{bottom:0;}
+/* línea brillante lateral izquierda */
+.rc-edge-v{
+  position:absolute;top:0;bottom:0;width:1px;z-index:2;
+  background:linear-gradient(to bottom,transparent,rgba(255,107,0,.3) 30%,rgba(255,107,0,.3) 70%,transparent);
+}
+.rc-edge-v.left{left:0;}
+.rc-edge-v.right{right:0;}
+/* z-index para contenido sobre el fondo */
+.rc-header,.rc-inner{position:relative;z-index:1;}
+.rc-header{text-align:center;padding:5rem 1.5rem 3rem;max-width:1200px;margin:0 auto;}
+.rc-inner{
+  display:flex;align-items:center;gap:3rem;
+  max-width:1200px;margin:0 auto;
+  padding:0 1.5rem 5rem;
+}
+.rc-summary{
+  flex:0 0 230px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid var(--glass-border);
+  border-radius:20px;padding:2rem 1.5rem;
+  backdrop-filter:blur(12px);
+  display:flex;flex-direction:column;gap:1rem;
+  align-self:flex-start;
+}
+.rc-summary-title{
+  font-family:var(--font-display);
+  font-size:1.7rem;color:var(--white);line-height:1;
+}
+.rc-stars-main{color:var(--orange);font-size:1.1rem;letter-spacing:3px;}
+.rc-score{
+  font-family:var(--font-display);
+  font-size:3rem;color:var(--orange);line-height:1;
+}
+.rc-score-sub{font-size:.75rem;color:var(--text-muted);margin-top:.2rem;line-height:1.5;}
+.rc-platforms{display:flex;flex-direction:column;gap:.5rem;}
+.rc-badge{
+  display:flex;align-items:center;gap:.5rem;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:50px;padding:.4rem .9rem;
+  font-size:.7rem;color:#bbb;letter-spacing:1px;
+}
+.rc-badge img{width:16px;height:16px;border-radius:50%;}
+.rc-cta-btn{
+  display:flex;align-items:center;justify-content:center;gap:.5rem;
+  background:linear-gradient(135deg,var(--orange),var(--orange-light));
+  color:#fff;padding:.75rem 1.2rem;border-radius:50px;
+  font-size:.72rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;
+  text-decoration:none;transition:all .3s ease;
+  box-shadow:0 4px 20px rgba(255,107,0,.35);margin-top:.3rem;
+}
+.rc-cta-btn:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(255,107,0,.5);}
+.rc-carousel-outer{
+  flex:1;overflow:hidden;padding:1.2rem 0;
+  -webkit-mask-image:linear-gradient(to right,transparent 0%,black 8%,black 92%,transparent 100%);
+  mask-image:linear-gradient(to right,transparent 0%,black 8%,black 92%,transparent 100%);
+  contain:paint;
+}
+.rc-track{
+  display:flex;gap:1.1rem;width:max-content;
+  animation:rc-scroll 65s linear infinite;
+  will-change:transform;
+}
+.rc-track:hover{animation-play-state:paused;}
+@keyframes rc-scroll{
+  0%  {transform:translateX(0);}
+  100%{transform:translateX(-9060px);}
+}
+.rc-card{
+  width:285px;flex-shrink:0;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,140,0,0.12);
+  border-top:3px solid transparent;
+  border-radius:16px;padding:1.3rem;
+  display:flex;flex-direction:column;gap:.7rem;
+  transition:all .35s ease;cursor:default;
+}
+.rc-card:hover{
+  border-top-color:var(--orange);
+  transform:translateY(-5px);
+  box-shadow:0 14px 40px rgba(255,107,0,.18);
+  background:rgba(255,255,255,0.08);
+}
+.rc-card-head{display:flex;align-items:center;gap:.7rem;}
+.rc-glogo{width:18px;height:18px;flex-shrink:0;transition:transform .5s ease;}
+.rc-card:hover .rc-glogo{transform:rotate(360deg) scale(1.2);}
+.rc-aname{font-weight:700;font-size:.88rem;color:var(--white);}
+.rc-asrc{font-size:.68rem;color:var(--text-muted);}
+.rc-text{font-size:.8rem;color:rgba(200,185,165,.85);line-height:1.65;flex-grow:1;}
+.rc-foot{
+  display:flex;justify-content:space-between;align-items:center;
+  padding-top:.65rem;border-top:1px solid rgba(255,255,255,.06);
+}
+.rc-stars{color:var(--orange);font-size:.8rem;letter-spacing:2px;}
+.rc-dt{font-size:.68rem;color:var(--text-muted);}
+@media(max-width:900px){
+  .rc-inner{flex-direction:column;gap:2rem;padding:0 1rem 3rem;}
+  .rc-summary{flex:auto;width:100%;}
+}
+
+/* =============================================
+   SCROLLBAR
+============================================= */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--black);}
+::-webkit-scrollbar-thumb{background:var(--orange);border-radius:4px;}
+::-webkit-scrollbar-thumb:hover{background:var(--orange-light);}
+
+/* =============================================
+   SELECTION
+============================================= */
+::selection{background:rgba(255,107,0,0.35);color:#fff;}
+</style>
+</head>
+<body>
+
+<!-- PRELOADER -->
+<div id="preloader">
+  <div class="pl-logo-wrap">
+    <div class="pl-ring"></div>
+    <div class="pl-ring"></div>
+    <div class="pl-ring"></div>
+    <img src="LOGO AKIPAN.PNG" alt="AKIPAN" class="pl-logo-img" onerror="this.style.display='none'">
+  </div>
+  <div class="pl-text">AKIPAN</div>
+  <div class="pl-sub">Restaurante &amp; Panadería</div>
+  <div class="pl-bar-wrap"><div class="pl-bar"></div></div>
+</div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">
+    <img src="LOGO AKIPAN.PNG" alt="AKIPAN Logo" onerror="this.style.display='none'">
+    <div class="nav-logo-text">
+      <span class="nav-brand-name"><span class="nav-aki">AKI</span><span class="nav-pan">PAN</span></span>
+      <span>Restaurante &amp; Panadería</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">Nosotros</a></li>
+    <li><a href="#menu">Menú</a></li>
+    <li><a href="#gallery">Galería</a></li>
+    <li><a href="#testimonials">Opiniones</a></li>
+    <li><a href="#contact">Contacto</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Reservar</a>
+  <button class="nav-hamburger" id="hamburgerBtn" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU OVERLAY -->
+<div class="menu-overlay" id="menuOverlay"></div>
+<nav class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose" aria-label="Cerrar">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <a href="#about" class="mobile-link">Nosotros</a>
+  <a href="#menu" class="mobile-link">Menú</a>
+  <a href="#gallery" class="mobile-link">Galería</a>
+  <a href="#testimonials" class="mobile-link">Opiniones</a>
+  <a href="#contact" class="mobile-link">Contacto</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="particles-canvas"></canvas>
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay" id="heroOverlay"></div>
+  <div class="hero-overlay2" id="heroOverlay2"></div>
+  <div class="hero-content" id="heroContent">
+
+    <!-- Ornamento superior -->
+    <div class="hero-ornament">
+      <div class="hero-orn-line"></div>
+      <div class="hero-orn-diamond"></div>
+      <div class="hero-orn-line"></div>
+    </div>
+
+    <!-- Eyebrow -->
+    <p class="hero-eyebrow">Cocina Ecuatoriana Auténtica</p>
+
+    <!-- Título letra a letra -->
+    <h1 class="hero-main-title" aria-label="AKIPAN">
+      <span class="hero-letter">A</span>
+      <span class="hero-letter">K</span>
+      <span class="hero-letter">I</span>
+      <span class="hero-letter" style="color:var(--orange);text-shadow:0 0 30px rgba(255,107,0,0.5);">P</span>
+      <span class="hero-letter" style="color:var(--orange);text-shadow:0 0 30px rgba(255,107,0,0.5);">A</span>
+      <span class="hero-letter" style="color:var(--orange);text-shadow:0 0 30px rgba(255,107,0,0.5);">N</span>
+    </h1>
+
+    <!-- Restaurante & Panadería -->
+    <div class="hero-brand-row">
+      <div class="hero-brand-dash"></div>
+      <span class="hero-brand-text">
+        Restaurante <span class="hero-brand-dot">✦</span> Panadería
+      </span>
+      <div class="hero-brand-dash right"></div>
+    </div>
+
+    <!-- Divider ornamental -->
+    <div class="hero-divider">
+      <div class="hero-div-line"></div>
+      <span class="hero-div-icon">✦ &nbsp; ECUADOR &nbsp; ✦</span>
+      <div class="hero-div-line"></div>
+    </div>
+
+    <!-- Tagline -->
+    <p class="hero-tagline">"Donde el sabor es tradición"</p>
+
+    <!-- Descripción -->
+    <p class="hero-desc">Descubre los auténticos sabores de Ecuador. Cada plato cuenta una historia de tradición, amor y los mejores ingredientes frescos.</p>
+
+    <!-- CTAs -->
+    <div class="hero-btns">
+      <a href="#menu" class="btn-primary">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        Ver Menú
+      </a>
+      <a href="#contact" class="btn-outline">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        Reservar Mesa
+      </a>
+    </div>
+
+    <!-- Ornamento inferior -->
+    <div class="hero-ornament-bottom">
+      <div class="hero-orn-line-sm"></div>
+      <div class="hero-orn-dots">
+        <div class="hero-orn-dot"></div>
+        <div class="hero-orn-dot"></div>
+        <div class="hero-orn-dot"></div>
+      </div>
+      <div class="hero-orn-line-sm"></div>
+    </div>
+
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat-card">
+      <span class="hero-stat-num">15+</span>
+      <span class="hero-stat-label">Años de sabor</span>
+    </div>
+    <div class="hero-stat-card">
+      <span class="hero-stat-num">50+</span>
+      <span class="hero-stat-label">Platos únicos</span>
+    </div>
+    <div class="hero-stat-card">
+      <span class="hero-stat-num">5K+</span>
+      <span class="hero-stat-label">Clientes felices</span>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    <span>Explorar</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-bg-text">AKIPAN</div>
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-stack reveal-left">
+        <img class="about-img-main"
+          src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=700&q=80"
+          alt="Nuestra cocina" loading="lazy">
+        <img class="about-img-sec"
+          src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=500&q=80"
+          alt="Pan artesanal" loading="lazy">
+        <div class="about-badge">
+          <span class="num">15</span>
+          <span class="lbl">Años de<br>Tradición</span>
+        </div>
+      </div>
+      <div class="about-content reveal-right">
+        <div>
+          <div class="section-tag">Nuestra Historia</div>
+          <h2 class="section-title">Sabor que <span>une</span> familias</h2>
+          <div class="section-line"></div>
+          <p class="section-desc">En AKIPAN nacimos con la misión de llevar los auténticos sabores de la cocina ecuatoriana a cada mesa. Somos un restaurante familiar donde la tradición, el cariño y los ingredientes frescos son los protagonistas de cada plato.</p>
+        </div>
+        <p style="color:var(--text-muted);font-size:.92rem;line-height:1.8;">Desde nuestros hornados y secos de pollo hasta los panes artesanales recién salidos del horno — cada bocado es un viaje al corazón de Ecuador. Nuestro equipo de chefs apasionados trabaja cada día para superar tus expectativas.</p>
+        <div class="about-features">
+          <div class="about-feature">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.09 6.26L20 9l-4.55 3.7L17 19l-5-3.18L7 19l1.55-6.3L4 9l5.91-.74z"/></svg>
+            <h4>Ingredientes Frescos</h4>
+            <p>Seleccionados cada día del mercado local</p>
+          </div>
+          <div class="about-feature">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <h4>Ambiente Familiar</h4>
+            <p>Un espacio cálido para compartir momentos</p>
+          </div>
+          <div class="about-feature">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <h4>Siempre Frescos</h4>
+            <p>Panadería artesanal desde las 6am</p>
+          </div>
+          <div class="about-feature">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+            <h4>Hecho con Amor</h4>
+            <p>Recetas de familia transmitidas por generaciones</p>
+          </div>
+        </div>
+        <a href="#menu" class="btn-primary" style="align-self:flex-start;">
+          Explorar el Menú
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARALLAX DIVIDER 1 -->
+<div class="parallax-divider">
+  <div class="par-bg" style="background-image:url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1600&q=80');background-color:rgba(0,0,0,0.65);background-blend-mode:multiply;"></div>
+  <div class="par-overlay" style="background:rgba(0,0,0,0.55);">
+    <div class="par-text reveal">
+      "La mejor cocina <span>ecuatoriana</span><br>está aquí, en AKIPAN"
+    </div>
+  </div>
+</div>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="container">
+    <div class="text-center reveal" style="margin-bottom:1rem;">
+      <div class="section-tag">Nuestro Menú</div>
+      <h2 class="section-title">Platos que <span>enamoran</span></h2>
+      <div class="section-line center"></div>
+      <p class="section-desc">Una selección de los sabores más auténticos de la gastronomía ecuatoriana, preparados con ingredientes frescos y técnicas tradicionales.</p>
+    </div>
+    <div class="menu-cats reveal">
+      <button class="menu-cat active" onclick="filterMenu('all',this)">Todo</button>
+      <button class="menu-cat" onclick="filterMenu('platos',this)">Platos Principales</button>
+      <button class="menu-cat" onclick="filterMenu('sopas',this)">Sopas</button>
+      <button class="menu-cat" onclick="filterMenu('panaderia',this)">Panadería</button>
+      <button class="menu-cat" onclick="filterMenu('bebidas',this)">Bebidas</button>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-card reveal" data-cat="platos">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=500&q=80" alt="Seco de Pollo" loading="lazy">
+          <span class="menu-card-badge">Estrella</span>
+        </div>
+        <div class="menu-card-body">
+          <h3>Seco de Pollo</h3>
+          <p>Pollo guisado en salsa de chicha de jora con arroz, maduro y aguacate</p>
+          <div class="menu-card-footer">
+            <span class="menu-price">$8.50</span>
+            <button class="menu-add" aria-label="Agregar">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card reveal" data-cat="platos">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=500&q=80" alt="Hornado" loading="lazy">
+          <span class="menu-card-badge">Popular</span>
+        </div>
+        <div class="menu-card-body">
+          <h3>Hornado Serrano</h3>
+          <p>Cerdo horneado al estilo de la sierra ecuatoriana con mote y llapingachos</p>
+          <div class="menu-card-footer">
+            <span class="menu-price">$10.00</span>
+            <button class="menu-add" aria-label="Agregar">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card reveal" data-cat="platos">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=500&q=80" alt="Llapingachos" loading="lazy">
+        </div>
+        <div class="menu-card-body">
+          <h3>Llapingachos</h3>
+          <p>Tortillas de papa con queso, chorizo, aguacate y salsa de maní</p>
+          <div class="menu-card-footer">
+            <span class="menu-price">$7.50</span>
+            <button class="menu-add" aria-label="Agregar">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card reveal" data-cat="sopas">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=500&q=80" alt="Caldo de Gallina" loading="lazy">
+          <span class="menu-card-badge">Favorito</span>
+        </div>
+        <div class="menu-card-body">
+          <h3>Caldo de Gallina</h3>
+          <p>Caldo reconfortante de gallina criolla con fideos, papa y hierbas del campo</p>
+          <div class="menu-card-footer">
+            <span class="menu-price">$5.50</span>
+            <button class="menu-add" aria-label="Agregar">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card reveal" data-cat="sopas">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=500&q=80" alt="Locro de Papa" loading="lazy">
+        </div>
+        <div class="menu-card-body">
+          <h3>Locro de Papa</h3>
+          <p>Crema espesa de papa con queso fresco, aguacate y orégano</p>
+          <div class="menu-card-footer">
+            <span class="menu-price">$4.50</span>
+            <button class="menu-add" aria-label="Agregar">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card reveal" data-cat="panaderia">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&q=80" alt="Pan de Yuca" loading="lazy">
+          <span class="menu-card-badge">Artesanal</span>
+        </div>
+        <div class="menu-card-body">
+          <h3>Pan de Yuca</h3>
+          <p>Panes esponjosos de yuca y queso, recién horneados cada mañana</p>
+          <div class="menu-card-footer">
+            <span class="menu-price">$1.50 c/u</span>
+            <button class="menu-add" aria-label="Agregar">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card reveal" data-cat="panaderia">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?w=500&q=80" alt="Panadería Artesanal" loading="lazy">
+        </div>
+        <div class="menu-card-body">
+          <h3>Rosca de Maíz</h3>
+          <p>Tradicional rosca ecuatoriana de maíz morado con azúcar y canela</p>
+          <div class="menu-card-footer">
+            <span class="menu-price">$2.00</span>
+            <button class="menu-add" aria-label="Agregar">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card reveal" data-cat="bebidas">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=500&q=80" alt="Colada Morada" loading="lazy">
+          <span class="menu-card-badge">Especial</span>
+        </div>
+        <div class="menu-card-body">
+          <h3>Colada Morada</h3>
+          <p>Bebida tradicional de maíz morado con frutas y especias aromáticas</p>
+          <div class="menu-card-footer">
+            <span class="menu-price">$2.50</span>
+            <button class="menu-add" aria-label="Agregar">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COUNTERS -->
+<section id="counters">
+  <div class="container">
+    <div class="counters-grid">
+      <div class="counter-card reveal">
+        <span class="counter-num" data-target="15">0</span>
+        <span class="counter-label">Años de Experiencia</span>
+      </div>
+      <div class="counter-card reveal">
+        <span class="counter-num" data-target="50">0</span>
+        <span class="counter-label">Platos en el Menú</span>
+      </div>
+      <div class="counter-card reveal">
+        <span class="counter-num" data-target="5000">0</span>
+        <span class="counter-label">Clientes Satisfechos</span>
+      </div>
+      <div class="counter-card reveal">
+        <span class="counter-num" data-target="12">0</span>
+        <span class="counter-label">Variedades de Pan</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="container">
+    <div class="text-center reveal" style="margin-bottom:3rem;">
+      <div class="section-tag">Nuestra Galería</div>
+      <h2 class="section-title">Momentos que <span>saben</span> rico</h2>
+      <div class="section-line center"></div>
+      <p class="section-desc">Una mirada a nuestros platos, ambiente y los momentos especiales que vivimos juntos.</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item reveal" onclick="openLightbox('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1200&q=90')">
+        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80" alt="Restaurante AKIPAN" loading="lazy">
+        <div class="gallery-overlay"><span>Nuestro Restaurante</span></div>
+        <div class="gallery-zoom">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        </div>
+      </div>
+      <div class="gallery-item reveal" onclick="openLightbox('https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=1200&q=90')">
+        <img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=500&q=80" alt="Seco de Pollo" loading="lazy">
+        <div class="gallery-overlay"><span>Seco de Pollo</span></div>
+        <div class="gallery-zoom">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        </div>
+      </div>
+      <div class="gallery-item reveal" onclick="openLightbox('https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=1200&q=90')">
+        <img src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=500&q=80" alt="Pan Artesanal" loading="lazy">
+        <div class="gallery-overlay"><span>Panadería Artesanal</span></div>
+        <div class="gallery-zoom">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        </div>
+      </div>
+      <div class="gallery-item reveal" onclick="openLightbox('https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=1200&q=90')">
+        <img src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=500&q=80" alt="Plato Hornado" loading="lazy">
+        <div class="gallery-overlay"><span>Hornado Serrano</span></div>
+        <div class="gallery-zoom">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        </div>
+      </div>
+      <div class="gallery-item reveal" onclick="openLightbox('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&q=90')">
+        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=500&q=80" alt="Comida Ecuatoriana" loading="lazy">
+        <div class="gallery-overlay"><span>Cocina Ecuatoriana</span></div>
+        <div class="gallery-zoom">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        </div>
+      </div>
+      <div class="gallery-item reveal" onclick="openLightbox('https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=1200&q=90')">
+        <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=500&q=80" alt="Llapingachos" loading="lazy">
+        <div class="gallery-overlay"><span>Llapingachos</span></div>
+        <div class="gallery-zoom">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        </div>
+      </div>
+      <div class="gallery-item reveal" onclick="openLightbox('https://images.unsplash.com/photo-1517433670267-08bbd4be890f?w=1200&q=90')">
+        <img src="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?w=500&q=80" alt="Panadería" loading="lazy">
+        <div class="gallery-overlay"><span>Nuestra Panadería</span></div>
+        <div class="gallery-zoom">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        </div>
+      </div>
+      <div class="gallery-item reveal" onclick="openLightbox('https://images.unsplash.com/photo-1509440159596-0249088772ff?w=1200&q=90')">
+        <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&q=80" alt="Pan de Yuca" loading="lazy">
+        <div class="gallery-overlay"><span>Pan de Yuca</span></div>
+        <div class="gallery-zoom">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        </div>
+      </div>
+      <div class="gallery-item reveal" onclick="openLightbox('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&q=90')">
+        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=500&q=80" alt="Ambiente" loading="lazy">
+        <div class="gallery-overlay"><span>Ambiente Acogedor</span></div>
+        <div class="gallery-zoom">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" role="dialog" aria-label="Imagen ampliada">
+  <button class="lb-close" onclick="closeLightbox()" aria-label="Cerrar">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <img id="lightboxImg" src="" alt="Imagen galería">
+</div>
+
+<!-- PARALLAX DIVIDER 2 -->
+<div class="parallax-divider">
+  <div class="par-bg" style="background-image:url('https://images.unsplash.com/photo-1551218808-94e220e084d2?w=1600&q=80');background-color:rgba(0,0,0,0.7);background-blend-mode:multiply;"></div>
+  <div class="par-overlay" style="background:rgba(0,0,0,0.5);">
+    <div class="par-text reveal">
+      Abiertos todos los días<br><span>6:00 AM — 9:00 PM</span>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials" class="rc-section">
+  <!-- fondo decorativo -->
+  <div class="rc-dot-grid"></div>
+  <div class="rc-orb rc-orb-1"></div>
+  <div class="rc-orb rc-orb-2"></div>
+  <div class="rc-orb rc-orb-3"></div>
+  <div class="rc-watermark">★★★★★</div>
+  <div class="rc-edge top"></div>
+  <div class="rc-edge bottom"></div>
+  <div class="rc-edge-v left"></div>
+  <div class="rc-edge-v right"></div>
+
+  <div class="rc-header">
+    <div class="section-tag">Testimonios</div>
+    <h2 class="section-title">Lo que dicen nuestros <span>clientes</span></h2>
+    <div class="section-line center"></div>
+  </div>
+  <div class="rc-inner">
+
+    <!-- Panel resumen -->
+    <div class="rc-summary">
+      <div class="rc-summary-title">Excelente</div>
+      <div class="rc-stars-main">★★★★★</div>
+      <div>
+        <div class="rc-score">4.9</div>
+        <div class="rc-score-sub">Promedio basado en<br><strong style="color:#e8ddd0;">+500 reseñas</strong></div>
+      </div>
+      <a href="#contact" class="rc-cta-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2l2.09 6.26L20 9l-4.55 3.7L17 19l-5-3.18L7 19l1.55-6.3L4 9l5.91-.74z"/></svg>
+        Deja tu reseña
+      </a>
+    </div>
+
+    <!-- Carrusel infinito -->
+    <div class="rc-carousel-outer">
+      <div class="rc-track" id="rcTrack">
+
+        <!-- ══ 30 RESEÑAS ÚNICAS ══ -->
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">María González</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"El seco de pollo de AKIPAN me transporta directo al corazón de Ecuador. Cada bocado es como un abrazo de mi abuela. Sin duda el mejor restaurante ecuatoriano que he encontrado."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 2 días</span></div></div>
+
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Carlos Ramos</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"El pan de yuca recién salido del horno es pura magia. Lo acompaño cada mañana con un café y empiezo el día con una sonrisa. AKIPAN es mi lugar favorito sin dudarlo."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 1 semana</span></div></div>
+
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Ana Torres</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"El hornado serrano es extraordinario — crujiente por fuera, jugoso por dentro. La ración es generosa y el precio muy justo. Mi familia vuelve cada semana sin falta."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 3 días</span></div></div>
+
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Diego Herrera</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"Llevaba años sin probar unos llapingachos tan auténticos. La salsa de maní es cremosa y perfecta. Me vine a vivir lejos de Ecuador y AKIPAN me salva el alma."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 5 días</span></div></div>
+
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Sofía Morales</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"El ambiente es acogedor, limpio y con mucho sabor a Ecuador. El personal es amabilísimo y siempre sonríe. Es imposible no sentirse como en casa desde el primer momento."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 1 semana</span></div></div>
+
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Luis Castillo</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"El caldo de gallina criolla es el mejor remedio para cualquier día gris. Caliente, reconfortante y lleno de sabor auténtico. No hay nada igual en kilómetros a la redonda."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 4 días</span></div></div>
+
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Carmen Jiménez</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"La colada morada es espectacular — dulce, aromática y con la textura perfecta. No la había vuelto a probar desde que salí de Ecuador. ¡Gracias AKIPAN por traerme el sabor de casa!"</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 2 semanas</span></div></div>
+
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Roberto Vargas</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"Atención al cliente de primera clase. Nos explicaron cada plato con mucho cariño y paciencia. Se nota que aman lo que hacen. Volveremos muy pronto, eso es seguro."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 6 días</span></div></div>
+
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Isabella Mendoza</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"El locro de papa es simplemente perfecto. Cremoso, con ese sabor a hierbas y queso fresco que lo hace único. Un plato que me alegra el día desde el primer cucharazo."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 3 días</span></div></div>
+
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Andrés López</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"La panadería de AKIPAN es una auténtica joya. Cada pieza está hecha con amor y se nota en el sabor. Las roscas de maíz son adictivas — crujientes y con ese dulce perfecto."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 1 semana</span></div></div>
+
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Patricia Sánchez</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"Vine por recomendación y me conquistaron desde el primer seco de pollo. La chicha de jora en la salsa le da un sabor único que no he probado en ningún otro restaurante. ¡Increíble!"</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 5 días</span></div></div>
+
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Miguel Ángel Torres</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"El hornado de los sábados es un evento. La gente llega temprano porque se agota rápido. Con razón — es el más auténtico que he probado. Acompañado de mote es una experiencia completa."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 2 días</span></div></div>
+
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Valentina Cruz</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"Encontrar AKIPAN fue encontrar un pedazo de Ecuador. Cada plato tiene esa chispa de hogar que tanto echaba de menos. Los domingos en familia aquí son momentos que atesoro."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 1 semana</span></div></div>
+
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Fernando Reyes</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"Decoración bonita, música agradable y platos que enamoran. El seco de res es extraordinario y la porción enorme. Relación calidad-precio difícil de superar. ¡Mi nueva cantina favorita!"</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 4 días</span></div></div>
+
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Daniela Ruiz</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"Los llapingachos con chorizo y aguacate son una obra de arte culinaria. Bien condimentados, calientes y con presentación impecable. Vengo cada vez que puedo y nunca me decepciona."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 3 días</span></div></div>
+
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Santiago Vega</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"Traje a mis amigos y quedaron enamorados de la cocina ecuatoriana. El menú del día es variado y muy completo. AKIPAN es mi embajada gastronómica favorita — representando a Ecuador con orgullo."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 6 días</span></div></div>
+
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Gabriela Flores</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"El caldo de gallina criolla es reconfortante como ningún otro. Cuando no me encuentro bien lo primero que hago es venir aquí. Es como medicina para el alma, literalmente."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 2 semanas</span></div></div>
+
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Juan Pablo Moreno</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"La colada morada de temporada estaba deliciosa — especiada, espesa y auténtica. El tres leches que pedí de postre fue lo mejor del día. Precio muy asequible para tanta calidad."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 1 semana</span></div></div>
+
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Camila Guerrero</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"Todo en AKIPAN es excelente — la comida, el servicio, el precio y el ambiente. Es el tipo de restaurante que recomiendas a todos porque nunca decepciona. Un 10 sobre 10 siempre."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 3 días</span></div></div>
+
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Sebastián Paredes</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"El pan de yuca caliente con queso es adictivo. Me llevé una docena para casa y no duró ni un día. La panadería abre temprano y los panes del día siempre están recién hechos. ¡Impresionante!"</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 5 días</span></div></div>
+
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Natalia Suárez</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"El seco de res cocinado a fuego lento tiene una profundidad de sabor increíble. Con arroz amarillo y maduro frito es un plato completo y satisfactorio que deja a todos con buen humor."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 4 días</span></div></div>
+
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Emilio Contreras</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"El hornado del sábado se acaba rápido — llega temprano si quieres cogerlo. Con mote y llapingachos es una combinación imbatible. Felicidades al equipo por mantener tan alta la calidad."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 1 semana</span></div></div>
+
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Lucía Medina</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"El personal es muy amable y los tiempos de espera razonables. Siempre te reciben con una sonrisa y hacen que te sientas bienvenido. La calidad de la comida es completamente constante."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 2 días</span></div></div>
+
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Pablo Chávez</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"El locro de papa con aguacate y queso fresco es un manjar. Lo tomo como entrada y siempre me quedo con ganas de más. Un clásico ecuatoriano hecho con auténtica maestría culinaria."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 6 días</span></div></div>
+
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Andrea Romero</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"La rosca de maíz con canela es un desayuno perfecto — ligera, aromática y con ese sabor tradicional que me recuerda a los mercados de Otavalo. Un tesoro gastronómico que hay que probar."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 3 días</span></div></div>
+
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Marco Delgado</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"AKIPAN tiene ese ambiente familiar que hace que quieras quedarte horas. La decoración, la música y sobre todo la comida crean una experiencia única e irrepetible. ¡Mi restaurante ecuatoriano número 1!"</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 1 semana</span></div></div>
+
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Elena Prado</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"El seco de pollo con chicha de jora es el plato estrella. La salsa es increíblemente sabrosa y el pollo tiernísimo. Perfecto con el arroz amarillo y el plátano maduro frito. ¡Una delicia!"</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 4 días</span></div></div>
+
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Ricardo Salinas</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"El pan artesanal de AKIPAN es de otro nivel. Cada mañana paso a buscar pan fresco y nunca me ha decepcionado. El sabor casero se nota en cada mordisco — hecho con amor y dedicación."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 5 días</span></div></div>
+
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Valeria Espinosa</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"Llevé a toda mi familia y fue una experiencia mágica. Los niños se enamoraron del pan de yuca y los adultos del hornado. El lugar ideal para reuniones familiares que crean recuerdos."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 2 días</span></div></div>
+
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Javier Montoya</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"La gastronomía ecuatoriana merece más reconocimiento y AKIPAN lo está consiguiendo. Auténtico, honesto y con una propuesta que enamora desde el primer plato. Un orgullo para nuestra cultura."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 1 semana</span></div></div>
+
+        <!-- ══ DUPLICADO completo para bucle infinito ══ -->
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">María González</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"El seco de pollo de AKIPAN me transporta directo al corazón de Ecuador. Cada bocado es como un abrazo de mi abuela. Sin duda el mejor restaurante ecuatoriano que he encontrado."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 2 días</span></div></div>
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Carlos Ramos</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"El pan de yuca recién salido del horno es pura magia. Lo acompaño cada mañana con un café y empiezo el día con una sonrisa. AKIPAN es mi lugar favorito sin dudarlo."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 1 semana</span></div></div>
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Ana Torres</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"El hornado serrano es extraordinario — crujiente por fuera, jugoso por dentro. La ración es generosa y el precio muy justo. Mi familia vuelve cada semana sin falta."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 3 días</span></div></div>
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Diego Herrera</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"Llevaba años sin probar unos llapingachos tan auténticos. La salsa de maní es cremosa y perfecta. Me vine a vivir lejos de Ecuador y AKIPAN me salva el alma."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 5 días</span></div></div>
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Sofía Morales</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"El ambiente es acogedor, limpio y con mucho sabor a Ecuador. El personal es amabilísimo y siempre sonríe. Es imposible no sentirse como en casa desde el primer momento."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 1 semana</span></div></div>
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Luis Castillo</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"El caldo de gallina criolla es el mejor remedio para cualquier día gris. Caliente, reconfortante y lleno de sabor auténtico. No hay nada igual en kilómetros a la redonda."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 4 días</span></div></div>
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Carmen Jiménez</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"La colada morada es espectacular — dulce, aromática y con la textura perfecta. No la había vuelto a probar desde que salí de Ecuador. ¡Gracias AKIPAN por traerme el sabor de casa!"</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 2 semanas</span></div></div>
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Roberto Vargas</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"Atención al cliente de primera clase. Nos explicaron cada plato con mucho cariño y paciencia. Se nota que aman lo que hacen. Volveremos muy pronto, eso es seguro."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 6 días</span></div></div>
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Isabella Mendoza</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"El locro de papa es simplemente perfecto. Cremoso, con ese sabor a hierbas y queso fresco que lo hace único. Un plato que me alegra el día desde el primer cucharazo."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 3 días</span></div></div>
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Andrés López</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"La panadería de AKIPAN es una auténtica joya. Cada pieza está hecha con amor y se nota en el sabor. Las roscas de maíz son adictivas — crujientes y con ese dulce perfecto."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 1 semana</span></div></div>
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Patricia Sánchez</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"Vine por recomendación y me conquistaron desde el primer seco de pollo. La chicha de jora en la salsa le da un sabor único que no he probado en ningún otro restaurante. ¡Increíble!"</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 5 días</span></div></div>
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Miguel Ángel Torres</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"El hornado de los sábados es un evento. La gente llega temprano porque se agota rápido. Con razón — es el más auténtico que he probado. Acompañado de mote es una experiencia completa."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 2 días</span></div></div>
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Valentina Cruz</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"Encontrar AKIPAN fue encontrar un pedazo de Ecuador. Cada plato tiene esa chispa de hogar que tanto echaba de menos. Los domingos en familia aquí son momentos que atesoro."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 1 semana</span></div></div>
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Fernando Reyes</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"Decoración bonita, música agradable y platos que enamoran. El seco de res es extraordinario y la porción enorme. Relación calidad-precio difícil de superar. ¡Mi nueva cantina favorita!"</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 4 días</span></div></div>
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Daniela Ruiz</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"Los llapingachos con chorizo y aguacate son una obra de arte culinaria. Bien condimentados, calientes y con presentación impecable. Vengo cada vez que puedo y nunca me decepciona."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 3 días</span></div></div>
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Santiago Vega</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"Traje a mis amigos y quedaron enamorados de la cocina ecuatoriana. El menú del día es variado y muy completo. AKIPAN es mi embajada gastronómica favorita — representando a Ecuador con orgullo."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 6 días</span></div></div>
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Gabriela Flores</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"El caldo de gallina criolla es reconfortante como ningún otro. Cuando no me encuentro bien lo primero que hago es venir aquí. Es como medicina para el alma, literalmente."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 2 semanas</span></div></div>
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Juan Pablo Moreno</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"La colada morada de temporada estaba deliciosa — especiada, espesa y auténtica. El tres leches que pedí de postre fue lo mejor del día. Precio muy asequible para tanta calidad."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 1 semana</span></div></div>
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Camila Guerrero</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"Todo en AKIPAN es excelente — la comida, el servicio, el precio y el ambiente. Es el tipo de restaurante que recomiendas a todos porque nunca decepciona. Un 10 sobre 10 siempre."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 3 días</span></div></div>
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Sebastián Paredes</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"El pan de yuca caliente con queso es adictivo. Me llevé una docena para casa y no duró ni un día. La panadería abre temprano y los panes del día siempre están recién hechos. ¡Impresionante!"</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 5 días</span></div></div>
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Natalia Suárez</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"El seco de res cocinado a fuego lento tiene una profundidad de sabor increíble. Con arroz amarillo y maduro frito es un plato completo y satisfactorio que deja a todos con buen humor."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 4 días</span></div></div>
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Emilio Contreras</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"El hornado del sábado se acaba rápido — llega temprano si quieres cogerlo. Con mote y llapingachos es una combinación imbatible. Felicidades al equipo por mantener tan alta la calidad."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 1 semana</span></div></div>
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Lucía Medina</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"El personal es muy amable y los tiempos de espera razonables. Siempre te reciben con una sonrisa y hacen que te sientas bienvenido. La calidad de la comida es completamente constante."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 2 días</span></div></div>
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Pablo Chávez</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"El locro de papa con aguacate y queso fresco es un manjar. Lo tomo como entrada y siempre me quedo con ganas de más. Un clásico ecuatoriano hecho con auténtica maestría culinaria."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 6 días</span></div></div>
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Andrea Romero</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"La rosca de maíz con canela es un desayuno perfecto — ligera, aromática y con ese sabor tradicional que me recuerda a los mercados de Otavalo. Un tesoro gastronómico que hay que probar."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 3 días</span></div></div>
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Marco Delgado</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"AKIPAN tiene ese ambiente familiar que hace que quieras quedarte horas. La decoración, la música y sobre todo la comida crean una experiencia única e irrepetible. ¡Mi restaurante ecuatoriano número 1!"</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 1 semana</span></div></div>
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Elena Prado</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"El seco de pollo con chicha de jora es el plato estrella. La salsa es increíblemente sabrosa y el pollo tiernísimo. Perfecto con el arroz amarillo y el plátano maduro frito. ¡Una delicia!"</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 4 días</span></div></div>
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Ricardo Salinas</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"El pan artesanal de AKIPAN es de otro nivel. Cada mañana paso a buscar pan fresco y nunca me ha decepcionado. El sabor casero se nota en cada mordisco — hecho con amor y dedicación."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 5 días</span></div></div>
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Valeria Espinosa</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"Llevé a toda mi familia y fue una experiencia mágica. Los niños se enamoraron del pan de yuca y los adultos del hornado. El lugar ideal para reuniones familiares que crean recuerdos."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 2 días</span></div></div>
+        <div class="rc-card"><div class="rc-card-head"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="rc-glogo" alt="Google"><div><div class="rc-aname">Javier Montoya</div><div class="rc-asrc">En Google</div></div></div><p class="rc-text">"La gastronomía ecuatoriana merece más reconocimiento y AKIPAN lo está consiguiendo. Auténtico, honesto y con una propuesta que enamora desde el primer plato. Un orgullo para nuestra cultura."</p><div class="rc-foot"><div class="rc-stars">★★★★★</div><span class="rc-dt">Hace 1 semana</span></div></div>
+
+      </div><!-- end rc-track -->
+    </div><!-- end rc-carousel-outer -->
+
+  </div><!-- end rc-inner -->
+
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info reveal-left">
+        <div>
+          <div class="section-tag">Contáctanos</div>
+          <h2 class="section-title">Visítanos o <span>resérvanos</span></h2>
+          <div class="section-line"></div>
+          <p class="section-desc">Estamos listos para recibirte. Haz tu reservación o simplemente ven a disfrutar.</p>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <h4>Ubicación</h4>
+            <p>Av. Principal s/n, Ecuador<br>Cerca del Parque Central</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.71 19.79 19.79 0 013 1.11 2 2 0 015 .93h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L9.91 8.17a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+          </div>
+          <div>
+            <h4>Teléfono / WhatsApp</h4>
+            <p>+593 99 999 9999</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <div>
+            <h4>Horarios</h4>
+            <p>Lunes — Domingo<br>6:00 AM — 9:00 PM</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <h4>Correo</h4>
+            <p>info@akipan.com.ec</p>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form reveal-right">
+        <h3 style="font-family:var(--font-serif);font-size:1.4rem;color:var(--white);margin-bottom:1.8rem;">Hacer una Reservación</h3>
+        <form onsubmit="submitForm(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fname">Nombre</label>
+              <input type="text" id="fname" placeholder="Tu nombre" required>
+            </div>
+            <div class="form-group">
+              <label for="fphone">Teléfono</label>
+              <input type="tel" id="fphone" placeholder="+593...">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="femail">Correo Electrónico</label>
+            <input type="email" id="femail" placeholder="tu@correo.com">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fdate">Fecha</label>
+              <input type="date" id="fdate">
+            </div>
+            <div class="form-group">
+              <label for="fpeople">Personas</label>
+              <select id="fpeople">
+                <option value="">Seleccionar</option>
+                <option>1 - 2 personas</option>
+                <option>3 - 4 personas</option>
+                <option>5 - 6 personas</option>
+                <option>7+ personas</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="fmsg">Mensaje o solicitud especial</label>
+            <textarea id="fmsg" placeholder="Cuéntanos algo especial..."></textarea>
+          </div>
+          <button type="submit" class="form-submit">Enviar Reservación</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="LOGO AKIPAN.PNG" alt="AKIPAN" onerror="this.style.display='none'">
+      <p>Sabores auténticos de la cocina ecuatoriana que unen a las familias desde hace más de 15 años. Bienvenido a nuestra mesa.</p>
+      <div class="footer-socials">
+        <button class="footer-social" aria-label="Facebook">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+        </button>
+        <button class="footer-social" aria-label="Instagram">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        </button>
+        <button class="footer-social" aria-label="TikTok">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.27 8.27 0 004.84 1.55V6.79a4.85 4.85 0 01-1.07-.1z"/></svg>
+        </button>
+        <button class="footer-social" aria-label="WhatsApp">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Menú</h5>
+      <ul>
+        <li><a href="#menu">Platos Principales</a></li>
+        <li><a href="#menu">Sopas y Caldos</a></li>
+        <li><a href="#menu">Panadería</a></li>
+        <li><a href="#menu">Bebidas</a></li>
+        <li><a href="#menu">Postres</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Nosotros</h5>
+      <ul>
+        <li><a href="#about">Historia</a></li>
+        <li><a href="#gallery">Galería</a></li>
+        <li><a href="#testimonials">Opiniones</a></li>
+        <li><a href="#contact">Contacto</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Horarios</h5>
+      <ul>
+        <li><a href="#">Lun — Vie: 6am – 9pm</a></li>
+        <li><a href="#">Sáb — Dom: 7am – 9pm</a></li>
+        <li><a href="#contact">Reservas disponibles</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2024 <span>AKIPAN</span> Restaurante &amp; Panadería. Todos los derechos reservados.</p>
+    <p>Hecho con <span>♥</span> en Ecuador</p>
+  </div>
+</footer>
+
+<!-- FLOATING BUTTONS -->
+<div class="float-btns">
+  <button class="float-btn float-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Volver arriba">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+  <a href="https://wa.me/593999999999?text=Hola%20AKIPAN%2C%20quisiera%20hacer%20una%20reservaci%C3%B3n" target="_blank" rel="noopener">
+    <button class="float-btn float-wa" aria-label="WhatsApp">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </button>
+  </a>
+</div>
+
+<script>
+// =============================================
+// PRELOADER
+// =============================================
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('preloader').classList.add('hidden');
+  }, 2800);
+});
+
+// =============================================
+// PARTICLES
+// =============================================
+(function(){
+  const canvas = document.getElementById('particles-canvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  let W, H;
+
+  function resize(){
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  class Particle {
+    constructor(){
+      this.reset();
+    }
+    reset(){
+      this.x = Math.random() * W;
+      this.y = Math.random() * H;
+      this.size = Math.random() * 2.5 + .5;
+      this.speedX = (Math.random() - .5) * .5;
+      this.speedY = (Math.random() - .5) * .5;
+      this.opacity = Math.random() * .5 + .1;
+      this.color = Math.random() > .5 ? 'rgba(255,107,0,' : 'rgba(255,140,0,';
+    }
+    update(){
+      this.x += this.speedX;
+      this.y += this.speedY;
+      if(this.x < 0 || this.x > W || this.y < 0 || this.y > H) this.reset();
+    }
+    draw(){
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = this.color + this.opacity + ')';
+      ctx.fill();
+    }
+  }
+
+  for(let i = 0; i < 80; i++) particles.push(new Particle());
+
+  function animate(){
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(p => { p.update(); p.draw(); });
+
+    // draw connections
+    for(let i = 0; i < particles.length; i++){
+      for(let j = i + 1; j < particles.length; j++){
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if(dist < 120){
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(255,107,0,${.06 * (1 - dist/120)})`;
+          ctx.lineWidth = .5;
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+// =============================================
+// NAVBAR SCROLL
+// =============================================
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  if(window.scrollY > 60){
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+  // scroll top button
+  const btn = document.getElementById('scrollTopBtn');
+  if(window.scrollY > 400) btn.classList.add('visible');
+  else btn.classList.remove('visible');
+});
+
+// =============================================
+// HERO PARALLAX — MOUSE + SCROLL INTERACTIVO
+// =============================================
+(function(){
+  const bg       = document.getElementById('heroBg');
+  const content  = document.getElementById('heroContent');
+  const overlay  = document.getElementById('heroOverlay');
+  const overlay2 = document.getElementById('heroOverlay2');
+  const hero     = document.getElementById('hero');
+
+  // current lerped values
+  let mx = 0, my = 0;       // normalized -1..1 mouse target
+  let cx = 0, cy = 0;       // current lerped mouse
+  let scrollY = 0;
+
+  const LERP = 0.055;        // smoothing factor (lower = smoother/lazier)
+  const BG_RANGE   = 28;    // px max movement for background
+  const CNT_RANGE  = 10;    // px max movement for content (opposite dir)
+  const OVL_RANGE  = 14;    // px for overlay drift
+  const TILT_DEG   = 4;     // max perspective tilt in degrees
+
+  function lerp(a, b, t){ return a + (b - a) * t; }
+
+  // Track mouse over the hero section
+  hero.addEventListener('mousemove', (e) => {
+    const rect = hero.getBoundingClientRect();
+    mx = ((e.clientX - rect.left) / rect.width  - 0.5) * 2;
+    my = ((e.clientY - rect.top)  / rect.height - 0.5) * 2;
+  });
+
+  // On mouse leave, smoothly return to center
+  hero.addEventListener('mouseleave', () => {
+    mx = 0; my = 0;
+  });
+
+  window.addEventListener('scroll', () => {
+    scrollY = window.scrollY;
+  }, { passive: true });
+
+  function tick(){
+    cx = lerp(cx, mx, LERP);
+    cy = lerp(cy, my, LERP);
+
+    const heroVisible = scrollY < window.innerHeight;
+
+    if(bg && heroVisible){
+      // Background moves opposite to mouse → depth illusion
+      const bx = -cx * BG_RANGE;
+      const by = -cy * BG_RANGE + scrollY * 0.25;
+      bg.style.transform = `translate(${bx}px, ${by}px)`;
+    }
+
+    if(overlay && heroVisible){
+      // Overlay drifts slightly with mouse for extra depth layer
+      const ox = cx * OVL_RANGE * 0.5;
+      const oy = cy * OVL_RANGE * 0.5;
+      overlay.style.transform = `translate(${ox}px, ${oy}px)`;
+    }
+
+    if(content && heroVisible){
+      // Content floats gently in mouse direction + perspective tilt
+      const tx = cx * CNT_RANGE;
+      const ty = cy * CNT_RANGE;
+      const rx = -cy * TILT_DEG;   // tilt X axis (up/down mouse)
+      const ry =  cx * TILT_DEG;   // tilt Y axis (left/right mouse)
+      content.style.transform =
+        `translate(${tx}px, ${ty}px) perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  tick();
+
+  // Cursor spotlight glow that follows mouse on hero
+  const spotlight = document.createElement('div');
+  spotlight.id = 'hero-spotlight';
+  spotlight.style.cssText = `
+    position:absolute;inset:0;z-index:2;pointer-events:none;
+    background:radial-gradient(circle 320px at 50% 50%, rgba(255,107,0,0.10) 0%, transparent 70%);
+    transition:background 0.05s;will-change:background;
+  `;
+  hero.appendChild(spotlight);
+
+  hero.addEventListener('mousemove', (e) => {
+    const rect = hero.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width  * 100).toFixed(1);
+    const y = ((e.clientY - rect.top)  / rect.height * 100).toFixed(1);
+    spotlight.style.background =
+      `radial-gradient(circle 380px at ${x}% ${y}%, rgba(255,107,0,0.13) 0%, transparent 65%)`;
+  });
+
+  hero.addEventListener('mouseleave', () => {
+    spotlight.style.background =
+      `radial-gradient(circle 320px at 50% 50%, rgba(255,107,0,0.06) 0%, transparent 70%)`;
+  });
+})();
+
+// =============================================
+// MOBILE MENU
+// =============================================
+const hamburger = document.getElementById('hamburgerBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+const menuOverlay = document.getElementById('menuOverlay');
+const mobileClose = document.getElementById('mobileClose');
+
+function openMenu(){
+  mobileMenu.classList.add('open');
+  menuOverlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeMenu(){
+  mobileMenu.classList.remove('open');
+  menuOverlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+hamburger.addEventListener('click', openMenu);
+mobileClose.addEventListener('click', closeMenu);
+menuOverlay.addEventListener('click', closeMenu);
+document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', closeMenu));
+
+// =============================================
+// SCROLL REVEAL
+// =============================================
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
+  observer.observe(el);
+});
+
+// Stagger children
+document.querySelectorAll('.menu-grid, .testimonials-grid, .counters-grid, .about-features, .gallery-grid').forEach(grid => {
+  const children = grid.querySelectorAll('.reveal, .menu-card, .testi-card, .counter-card, .about-feature, .gallery-item');
+  children.forEach((child, i) => {
+    child.style.transitionDelay = `${i * 0.08}s`;
+  });
+});
+
+// =============================================
+// COUNTER ANIMATION
+// =============================================
+function animateCounter(el, target, suffix){
+  let current = 0;
+  const duration = 2000;
+  const step = target / (duration / 16);
+  const timer = setInterval(() => {
+    current += step;
+    if(current >= target){
+      current = target;
+      clearInterval(timer);
+    }
+    el.textContent = Math.floor(current).toLocaleString() + (suffix || '');
+  }, 16);
+}
+
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      const el = entry.target;
+      const target = parseInt(el.dataset.target);
+      const suffix = target >= 1000 ? '+' : '+';
+      animateCounter(el, target, suffix);
+      counterObserver.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.counter-num').forEach(el => counterObserver.observe(el));
+
+// =============================================
+// MENU FILTER
+// =============================================
+function filterMenu(cat, btn){
+  document.querySelectorAll('.menu-cat').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.menu-card').forEach(card => {
+    if(cat === 'all' || card.dataset.cat === cat){
+      card.style.display = '';
+      setTimeout(() => { card.style.opacity = '1'; card.style.transform = ''; }, 10);
+    } else {
+      card.style.opacity = '0';
+      card.style.transform = 'scale(.95)';
+      setTimeout(() => { card.style.display = 'none'; }, 300);
+    }
+  });
+}
+
+// =============================================
+// LIGHTBOX
+// =============================================
+function openLightbox(src){
+  const lb = document.getElementById('lightbox');
+  const img = document.getElementById('lightboxImg');
+  img.src = src;
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('lightbox').addEventListener('click', function(e){
+  if(e.target === this) closeLightbox();
+});
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape') closeLightbox();
+});
+
+// =============================================
+// FORM SUBMIT
+// =============================================
+function submitForm(e){
+  e.preventDefault();
+  const btn = e.target.querySelector('.form-submit');
+  btn.textContent = '¡Reservación Enviada!';
+  btn.style.background = 'linear-gradient(135deg,#22c55e,#16a34a)';
+  setTimeout(() => {
+    btn.textContent = 'Enviar Reservación';
+    btn.style.background = '';
+    e.target.reset();
+  }, 3000);
+}
+
+// =============================================
+// REDUCED MOTION
+// =============================================
+if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  document.querySelectorAll('[style*="animation"], [style*="transition"]').forEach(el => {
+    el.style.animation = 'none';
+    el.style.transition = 'none';
+  });
+}
+</script>
+</body>
+</html>
