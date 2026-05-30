@@ -607,17 +607,96 @@ section{padding:6rem 1.5rem;}
 ============================================= */
 #about{
   position:relative;
-  background:var(--black2);
+  background:linear-gradient(145deg,#090909 0%,#111111 38%,#100905 68%,#0d0d0d 100%);
   overflow:hidden;
 }
 #about .about-bg-text{
   position:absolute;
   font-family:var(--font-display);
-  font-size:20vw;color:rgba(255,107,0,0.03);
-  top:50%;left:50%;transform:translate(-50%,-50%);
+  font-size:20vw;color:rgba(255,107,0,0.022);
+  top:50%;left:50%;
   white-space:nowrap;pointer-events:none;z-index:0;
   letter-spacing:10px;
+  animation:about-drift 22s ease-in-out infinite;
+  transform:translate(-50%,-50%);
 }
+@keyframes about-drift{
+  0%,100%{transform:translate(-50%,-50%) scale(1);}
+  50%{transform:translate(-50%,-53%) scale(1.04);}
+}
+/* Orbs */
+.about-orb{
+  position:absolute;border-radius:50%;
+  filter:blur(100px);pointer-events:none;z-index:0;
+}
+.about-orb-1{
+  width:680px;height:480px;
+  background:rgba(255,107,0,0.09);
+  top:-160px;right:-130px;
+  animation:aorb1 18s ease-in-out infinite;
+}
+.about-orb-2{
+  width:500px;height:370px;
+  background:rgba(255,140,0,0.055);
+  bottom:-100px;left:-130px;
+  animation:aorb2 24s ease-in-out infinite;
+}
+.about-orb-3{
+  width:340px;height:340px;
+  background:rgba(180,55,0,0.045);
+  top:28%;left:38%;
+  animation:aorb3 30s ease-in-out infinite;
+}
+@keyframes aorb1{
+  0%,100%{transform:translate(0,0) scale(1);}
+  33%{transform:translate(-85px,65px) scale(1.12);}
+  66%{transform:translate(50px,-40px) scale(.92);}
+}
+@keyframes aorb2{
+  0%,100%{transform:translate(0,0) scale(1);}
+  40%{transform:translate(80px,-55px) scale(1.13);}
+  70%{transform:translate(-45px,80px) scale(.9);}
+}
+@keyframes aorb3{
+  0%,100%{transform:translate(0,0) scale(1);}
+  30%{transform:translate(-60px,50px) scale(1.08);}
+  65%{transform:translate(55px,-60px) scale(.94);}
+}
+/* Dot grid */
+.about-dot-grid{
+  position:absolute;inset:0;
+  background-image:radial-gradient(circle at 1px 1px,rgba(255,107,0,0.052) 1px,transparent 0);
+  background-size:44px 44px;
+  pointer-events:none;z-index:0;
+}
+/* Corner brackets */
+.about-corner{
+  position:absolute;width:58px;height:58px;
+  pointer-events:none;z-index:1;
+}
+.about-corner-tl{top:2rem;left:2rem;
+  border-top:1.5px solid rgba(255,107,0,0.3);
+  border-left:1.5px solid rgba(255,107,0,0.3);
+  border-radius:5px 0 0 0;}
+.about-corner-tr{top:2rem;right:2rem;
+  border-top:1.5px solid rgba(255,107,0,0.3);
+  border-right:1.5px solid rgba(255,107,0,0.3);
+  border-radius:0 5px 0 0;}
+.about-corner-bl{bottom:2rem;left:2rem;
+  border-bottom:1.5px solid rgba(255,107,0,0.3);
+  border-left:1.5px solid rgba(255,107,0,0.3);
+  border-radius:0 0 0 5px;}
+.about-corner-br{bottom:2rem;right:2rem;
+  border-bottom:1.5px solid rgba(255,107,0,0.3);
+  border-right:1.5px solid rgba(255,107,0,0.3);
+  border-radius:0 0 5px 0;}
+/* SVG deco lines layer */
+.about-deco-svg{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  pointer-events:none;z-index:0;overflow:hidden;
+}
+/* Grid */
 .about-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -634,21 +713,27 @@ section{padding:6rem 1.5rem;}
   object-fit:cover;
   border-radius:20px;
   top:0;left:0;
-  box-shadow:0 20px 60px rgba(0,0,0,0.5);
-  transition:transform .4s ease;
+  box-shadow:0 20px 60px rgba(0,0,0,0.6),0 0 0 1px rgba(255,107,0,0.1);
+  transition:transform .4s ease,box-shadow .4s ease;
 }
-.about-img-main:hover{transform:scale(1.02);}
+.about-img-main:hover{
+  transform:scale(1.02);
+  box-shadow:0 28px 75px rgba(0,0,0,0.7),0 0 40px rgba(255,107,0,0.13);
+}
 .about-img-sec{
   position:absolute;
   width:55%;height:55%;
   object-fit:cover;
   border-radius:16px;
   bottom:0;right:0;
-  box-shadow:0 20px 60px rgba(0,0,0,0.4);
-  border:3px solid var(--black2);
-  transition:transform .4s ease;
+  box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  border:3px solid rgba(255,107,0,0.2);
+  transition:transform .4s ease,box-shadow .4s ease;
 }
-.about-img-sec:hover{transform:scale(1.03);}
+.about-img-sec:hover{
+  transform:scale(1.03);
+  box-shadow:0 26px 65px rgba(0,0,0,0.6),0 0 28px rgba(255,107,0,0.1);
+}
 .about-badge{
   position:absolute;
   bottom:12%;left:65%;
@@ -665,24 +750,31 @@ section{padding:6rem 1.5rem;}
   font-size:2.2rem;display:block;line-height:1;
 }
 .about-badge .lbl{font-size:.7rem;letter-spacing:2px;text-transform:uppercase;}
-
 .about-content{display:flex;flex-direction:column;gap:1.5rem;}
 .about-features{
   display:grid;grid-template-columns:1fr 1fr;gap:1rem;
   margin-top:.5rem;
 }
 .about-feature{
-  background:var(--glass-bg);
-  border:1px solid var(--glass-border);
+  background:rgba(255,255,255,0.035);
+  border:1px solid rgba(255,140,0,0.13);
   border-radius:var(--radius);
   padding:1.2rem;
-  backdrop-filter:blur(10px);
-  transition:all .3s ease;
+  backdrop-filter:blur(12px);
+  transition:all .35s ease;
+  position:relative;overflow:hidden;
 }
+.about-feature::before{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,107,0,0.07) 0%,transparent 60%);
+  opacity:0;transition:opacity .35s ease;
+}
+.about-feature:hover::before{opacity:1;}
 .about-feature:hover{
-  border-color:var(--orange);
-  transform:translateY(-3px);
-  box-shadow:0 8px 30px rgba(255,107,0,0.15);
+  border-color:rgba(255,107,0,0.48);
+  transform:translateY(-4px);
+  box-shadow:0 12px 38px rgba(255,107,0,0.18);
 }
 .about-feature svg{
   color:var(--orange);margin-bottom:.6rem;
@@ -1176,8 +1268,11 @@ footer{
    RESPONSIVE
 ============================================= */
 @media(max-width:1024px){
-  .about-grid{grid-template-columns:1fr;}
-  .about-img-stack{height:360px;max-width:500px;margin:0 auto;}
+  /* About — tablet */
+  .about-grid{grid-template-columns:1fr;gap:3rem;}
+  .about-img-stack{height:380px;max-width:540px;margin:0 auto;}
+  .about-corner-tr,.about-corner-bl{width:42px;height:42px;}
+  /* otros */
   .contact-grid{grid-template-columns:1fr;}
   .footer-grid{grid-template-columns:1fr 1fr;gap:2rem;}
   .counters-grid{grid-template-columns:repeat(2,1fr);}
@@ -1187,6 +1282,21 @@ footer{
 @media(max-width:768px){
   .nav-links,.nav-cta{display:none;}
   .nav-hamburger{display:flex;}
+  /* About — móvil grande */
+  .about-grid{gap:2.5rem;}
+  .about-img-stack{height:300px;max-width:100%;}
+  .about-img-main{width:72%;height:78%;}
+  .about-img-sec{width:52%;height:52%;}
+  .about-badge{bottom:9%;left:62%;padding:.8rem 1rem;}
+  .about-badge .num{font-size:1.8rem;}
+  .about-features{grid-template-columns:1fr 1fr;gap:.8rem;}
+  .about-corner{width:38px;height:38px;}
+  .about-corner-tl{top:1.2rem;left:1.2rem;}
+  .about-corner-tr{top:1.2rem;right:1.2rem;}
+  .about-corner-bl{bottom:1.2rem;left:1.2rem;}
+  .about-corner-br{bottom:1.2rem;right:1.2rem;}
+  .about-orb-3{display:none;}
+  /* otros */
   .gallery-grid{columns:2;}
   .testimonials-grid{grid-template-columns:1fr;}
   .footer-grid{grid-template-columns:1fr;}
@@ -1204,6 +1314,20 @@ footer{
   .hero-btns{flex-direction:column;align-items:center;}
   .counters-grid{grid-template-columns:1fr 1fr;}
   .footer-bottom{flex-direction:column;text-align:center;}
+  /* About — móvil pequeño */
+  .about-img-stack{height:240px;}
+  .about-img-main{width:70%;height:76%;border-radius:14px;}
+  .about-img-sec{width:50%;height:50%;border-radius:12px;}
+  .about-badge{bottom:6%;left:58%;padding:.65rem .85rem;}
+  .about-badge .num{font-size:1.5rem;}
+  .about-badge .lbl{font-size:.6rem;letter-spacing:1px;}
+  .about-features{grid-template-columns:1fr;}
+  .about-corner-tr,.about-corner-bl{display:none;}
+  .about-corner-tl{width:28px;height:28px;top:1rem;left:1rem;}
+  .about-corner-br{width:28px;height:28px;bottom:1rem;right:1rem;}
+  .about-orb-1{width:350px;height:250px;}
+  .about-orb-2{width:280px;height:200px;}
+  #about .about-bg-text{font-size:28vw;}
 }
 
 /* =============================================
@@ -1400,9 +1524,9 @@ footer{
     <div class="pl-ring"></div>
     <div class="pl-ring"></div>
     <div class="pl-ring"></div>
-    <img src="LOGO AKIPAN.PNG" alt="AKIPAN" class="pl-logo-img" onerror="this.style.display='none'">
+    <img src="LOGO AKIPAN ACTUAL.PNG" alt="AKIPAN" class="pl-logo-img" onerror="this.style.display='none'">
   </div>
-  <div class="pl-text">AKIPAN</div>
+  <div class="pl-text"><span style="color:#ffffff">AKI</span>PAN</div>
   <div class="pl-sub">Restaurante &amp; Panadería</div>
   <div class="pl-bar-wrap"><div class="pl-bar"></div></div>
 </div>
@@ -1410,7 +1534,7 @@ footer{
 <!-- NAVBAR -->
 <nav id="navbar">
   <a href="#hero" class="nav-logo">
-    <img src="LOGO AKIPAN.PNG" alt="AKIPAN Logo" onerror="this.style.display='none'">
+    <img src="LOGO AKIPAN ACTUAL.PNG" alt="AKIPAN Logo" onerror="this.style.display='none'">
     <div class="nav-logo-text">
       <span class="nav-brand-name"><span class="nav-aki">AKI</span><span class="nav-pan">PAN</span></span>
       <span>Restaurante &amp; Panadería</span>
@@ -1538,6 +1662,33 @@ footer{
 
 <!-- ABOUT -->
 <section id="about">
+
+  <!-- Fondo decorativo -->
+  <div class="about-dot-grid"></div>
+  <div class="about-orb about-orb-1"></div>
+  <div class="about-orb about-orb-2"></div>
+  <div class="about-orb about-orb-3"></div>
+
+  <!-- Esquinas decorativas -->
+  <div class="about-corner about-corner-tl"></div>
+  <div class="about-corner about-corner-tr"></div>
+  <div class="about-corner about-corner-bl"></div>
+  <div class="about-corner about-corner-br"></div>
+
+  <!-- Líneas diagonales SVG -->
+  <svg class="about-deco-svg" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <line x1="0" y1="190" x2="460" y2="-25"   stroke="rgba(255,107,0,0.065)" stroke-width="1"/>
+    <line x1="0" y1="360" x2="380" y2="110"   stroke="rgba(255,107,0,0.04)"  stroke-width="1"/>
+    <line x1="740" y1="750" x2="1260" y2="440" stroke="rgba(255,107,0,0.065)" stroke-width="1"/>
+    <line x1="860" y1="720" x2="1310" y2="510" stroke="rgba(255,107,0,0.04)"  stroke-width="1"/>
+    <circle cx="1110" cy="85"  r="130" fill="none" stroke="rgba(255,107,0,0.045)" stroke-width="1"/>
+    <circle cx="1110" cy="85"  r="85"  fill="none" stroke="rgba(255,107,0,0.03)"  stroke-width="1"/>
+    <circle cx="1110" cy="85"  r="40"  fill="none" stroke="rgba(255,107,0,0.025)" stroke-width="1"/>
+    <circle cx="90"   cy="620" r="100" fill="none" stroke="rgba(255,107,0,0.04)"  stroke-width="1"/>
+    <circle cx="90"   cy="620" r="60"  fill="none" stroke="rgba(255,107,0,0.025)" stroke-width="1"/>
+    <line x1="550" y1="0" x2="600" y2="700"    stroke="rgba(255,107,0,0.025)" stroke-width="1" stroke-dasharray="6 18"/>
+  </svg>
+
   <div class="about-bg-text">AKIPAN</div>
   <div class="container">
     <div class="about-grid">
@@ -2101,7 +2252,7 @@ footer{
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
-      <img src="LOGO AKIPAN.PNG" alt="AKIPAN" onerror="this.style.display='none'">
+      <img src="LOGO AKIPAN ACTUAL.PNG" alt="AKIPAN" onerror="this.style.display='none'">
       <p>Sabores auténticos de la cocina ecuatoriana que unen a las familias desde hace más de 15 años. Bienvenido a nuestra mesa.</p>
       <div class="footer-socials">
         <button class="footer-social" aria-label="Facebook">
