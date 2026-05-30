@@ -960,7 +960,8 @@ section{padding:6rem 1.5rem;}
   position:relative;
   background:linear-gradient(155deg,#0e0e0e 0%,#1a1a1a 42%,#120a02 72%,#111111 100%);
   overflow:hidden;
-  contain:layout style;
+  /* paint aísla completamente los repaints del menú del resto de la página */
+  contain:layout style paint;
 }
 #menu .container{position:relative;z-index:1;}
 /* Orbs */
@@ -1047,15 +1048,20 @@ section{padding:6rem 1.5rem;}
   border-top:2px solid rgba(255,107,0,0.32);
   border-radius:20px;
   overflow:hidden;
-  backdrop-filter:blur(22px);
-  -webkit-backdrop-filter:blur(22px);
+  /* blur desactivado por defecto → JS lo activa solo en tarjetas visibles */
+  backdrop-filter:none;
+  -webkit-backdrop-filter:none;
   cursor:pointer;
-  transition:all .38s ease;
+  transition:transform .38s ease, border-color .38s ease, box-shadow .38s ease, opacity .38s ease;
   position:relative;
   display:flex;flex-direction:column;
-  /* perf: no se pinta el blur de tarjetas fuera de pantalla */
   content-visibility:auto;
   contain-intrinsic-size:300px 390px;
+}
+/* blur solo cuando la tarjeta está cerca del viewport */
+.menu-card.bf{
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
 }
 .menu-card::before{
   content:'';
@@ -4051,19 +4057,47 @@ document.querySelectorAll('.counter-num').forEach(el => counterObserver.observe(
 // =============================================
 // MENU FILTER
 // =============================================
+// ---- Blur lazy: activa backdrop-filter SOLO en tarjetas visibles/cercanas ----
+(function(){
+  const blurObs = new IntersectionObserver(entries => {
+    entries.forEach(e => e.target.classList.toggle('bf', e.isIntersecting));
+  }, { rootMargin: '200px 0px 200px 0px', threshold: 0 });
+  document.querySelectorAll('.menu-card').forEach(c => blurObs.observe(c));
+
+  // ---- Pausa las orbs animadas cuando el menú sale completamente de pantalla ----
+  const menuEl  = document.getElementById('menu');
+  const menuOrbs = menuEl.querySelectorAll('.menu-orb');
+  new IntersectionObserver(entries => {
+    const play = entries[0].isIntersecting ? 'running' : 'paused';
+    menuOrbs.forEach(o => o.style.animationPlayState = play);
+  }, { threshold: 0 }).observe(menuEl);
+})();
+
+// ---- filterMenu: un solo timeout por lote en vez de N×2 ----
 function filterMenu(cat, btn){
   document.querySelectorAll('.menu-cat').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  document.querySelectorAll('.menu-card').forEach(card => {
-    if(cat === 'all' || card.dataset.cat === cat){
-      card.style.display = '';
-      setTimeout(() => { card.style.opacity = '1'; card.style.transform = ''; }, 10);
-    } else {
-      card.style.opacity = '0';
-      card.style.transform = 'scale(.95)';
-      setTimeout(() => { card.style.display = 'none'; }, 300);
-    }
+
+  const cards   = document.querySelectorAll('.menu-card');
+  const toHide  = [];
+  const toShow  = [];
+
+  cards.forEach(card => {
+    if(cat === 'all' || card.dataset.cat === cat) toShow.push(card);
+    else toHide.push(card);
   });
+
+  // 1. Oculta con fade
+  toHide.forEach(c => { c.style.opacity='0'; c.style.transform='scale(.95)'; });
+
+  // 2. Un único timeout que aplica display:none + muestra el resto
+  setTimeout(() => {
+    toHide.forEach(c => { c.style.display='none'; });
+    toShow.forEach(c => {
+      c.style.display = '';
+      requestAnimationFrame(() => { c.style.opacity='1'; c.style.transform=''; });
+    });
+  }, 280);
 }
 
 // =============================================
