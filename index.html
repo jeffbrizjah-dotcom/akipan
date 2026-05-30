@@ -1120,19 +1120,8 @@ section{padding:6rem 1.5rem;}
   font-family:var(--font-display);
   font-size:1.25rem;color:var(--orange);
 }
-.menu-add{
-  width:36px;height:36px;border-radius:50%;
-  background:linear-gradient(135deg,var(--orange),var(--orange-light));
-  display:flex;align-items:center;justify-content:center;
-  color:#fff;font-size:1.1rem;cursor:pointer;
-  transition:transform .3s ease,box-shadow .3s ease;
-  border:none;
-  box-shadow:0 3px 14px rgba(255,107,0,0.38);
-}
-.menu-add:hover{
-  transform:scale(1.2);
-  box-shadow:0 6px 22px rgba(255,107,0,0.58);
-}
+.menu-add{ display:none; }
+.menu-card-footer{ justify-content:flex-start; }
 /* Responsive menu */
 @media(max-width:1024px){
   .menu-grid{grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.3rem;}
@@ -2555,89 +2544,190 @@ footer{
     <div class="menu-cats reveal">
       <button class="menu-cat active" onclick="filterMenu('all',this)">Todo</button>
       <button class="menu-cat" onclick="filterMenu('platos',this)">Platos Principales</button>
-      <button class="menu-cat" onclick="filterMenu('sopas',this)">Sopas</button>
+      <button class="menu-cat" onclick="filterMenu('sopas',this)">Sopas & Caldos</button>
       <button class="menu-cat" onclick="filterMenu('panaderia',this)">Panadería</button>
       <button class="menu-cat" onclick="filterMenu('bebidas',this)">Bebidas</button>
+      <button class="menu-cat" onclick="filterMenu('postres',this)">Postres</button>
     </div>
     <div class="menu-grid">
-      <div class="menu-card reveal" data-cat="platos">
-        <div class="menu-card-img">
-          <img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=500&q=80" alt="Seco de Pollo" loading="lazy" decoding="async">
-          <span class="menu-card-badge">Estrella</span>
-        </div>
-        <div class="menu-card-body">
-          <h3>Seco de Pollo</h3>
-          <p>Pollo guisado en salsa de chicha de jora con arroz, maduro y aguacate</p>
-          <div class="menu-card-footer">
-            <span class="menu-price">$8.50</span>
-            <button class="menu-add" aria-label="Agregar">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            </button>
-          </div>
-        </div>
-      </div>
+
+      <!-- PLATOS PRINCIPALES -->
       <div class="menu-card reveal" data-cat="platos">
         <div class="menu-card-img">
           <img src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=500&q=80" alt="Hornado" loading="lazy" decoding="async">
+          <span class="menu-card-badge">Estrella</span>
+        </div>
+        <div class="menu-card-body">
+          <h3>Hornado</h3>
+          <p>Cerdo adobado con especias de nuestra tierra, horneado por horas. Servido con tortillas de patatas, plátano maduro, aguacate, ensalada y salsa de maní.</p>
+          <div class="menu-card-footer">
+            <span class="menu-price">Ver carta</span>
+            <button class="menu-add" aria-label="Agregar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-card reveal" data-cat="platos">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=500&q=80" alt="Fritada" loading="lazy" decoding="async">
           <span class="menu-card-badge">Popular</span>
         </div>
         <div class="menu-card-body">
-          <h3>Hornado Serrano</h3>
-          <p>Cerdo horneado al estilo de la sierra ecuatoriana con mote y llapingachos</p>
+          <h3>Fritada</h3>
+          <p>Costillas y carne de cerdo frito condimentado con nuestras especias. Servido con mote cocido, tortillas de patatas, aguacate, ensalada y salsa de maní.</p>
           <div class="menu-card-footer">
-            <span class="menu-price">$10.00</span>
-            <button class="menu-add" aria-label="Agregar">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            </button>
+            <span class="menu-price">Ver carta</span>
+            <button class="menu-add" aria-label="Agregar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
           </div>
         </div>
       </div>
+
       <div class="menu-card reveal" data-cat="platos">
         <div class="menu-card-img">
-          <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=500&q=80" alt="Llapingachos" loading="lazy" decoding="async">
+          <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=500&q=80" alt="Churrasco" loading="lazy" decoding="async">
         </div>
         <div class="menu-card-body">
-          <h3>Llapingachos</h3>
-          <p>Tortillas de papa con queso, chorizo, aguacate y salsa de maní</p>
+          <h3>Churrasco</h3>
+          <p>Carne de ternera fina con nuestro aliño especial. Servido con arroz, patatas fritas, dos huevos fritos, plátano maduro, aguacate y ensalada.</p>
           <div class="menu-card-footer">
-            <span class="menu-price">$7.50</span>
-            <button class="menu-add" aria-label="Agregar">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            </button>
+            <span class="menu-price">Ver carta</span>
+            <button class="menu-add" aria-label="Agregar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
           </div>
         </div>
       </div>
+
+      <div class="menu-card reveal" data-cat="platos">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=500&q=80" alt="Llapingacho" loading="lazy" decoding="async">
+        </div>
+        <div class="menu-card-body">
+          <h3>Llapingacho</h3>
+          <p>Plato de la sierra con salsa de maní, tortillas de patatas, chorizo especial, huevo frito, ensalada y aguacate.</p>
+          <div class="menu-card-footer">
+            <span class="menu-price">Ver carta</span>
+            <button class="menu-add" aria-label="Agregar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-card reveal" data-cat="platos">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=500&q=80" alt="Seco de Carne" loading="lazy" decoding="async">
+        </div>
+        <div class="menu-card-body">
+          <h3>Seco de Carne</h3>
+          <p>Carne de ternera guisada y condimentada al gusto. Servida con arroz blanco y huevo frito.</p>
+          <div class="menu-card-footer">
+            <span class="menu-price">Ver carta</span>
+            <button class="menu-add" aria-label="Agregar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-card reveal" data-cat="platos">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=500&q=80" alt="Ceviche de Camarón" loading="lazy" decoding="async">
+          <span class="menu-card-badge">Costa</span>
+        </div>
+        <div class="menu-card-body">
+          <h3>Ceviche de Camarón</h3>
+          <p>Ceviche tradicional de la costa ecuatoriana en caldo de camarones con cebolla colorada, pimientos, cilantro y limón.</p>
+          <div class="menu-card-footer">
+            <span class="menu-price">Ver carta</span>
+            <button class="menu-add" aria-label="Agregar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-card reveal" data-cat="platos">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1512058564366-18510be2db19?w=500&q=80" alt="Chaulafán" loading="lazy" decoding="async">
+        </div>
+        <div class="menu-card-body">
+          <h3>Chaulafán</h3>
+          <p>Arroz con cerdo, ternera, pollo, camarón, jamón york y verduras. Servido con tortilla de huevo y plátano maduro frito.</p>
+          <div class="menu-card-footer">
+            <span class="menu-price">Ver carta</span>
+            <button class="menu-add" aria-label="Agregar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-card reveal" data-cat="platos">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=500&q=80" alt="Bandera" loading="lazy" decoding="async">
+          <span class="menu-card-badge">Especial</span>
+        </div>
+        <div class="menu-card-body">
+          <h3>Bandera</h3>
+          <p>Cuatro sabores de la costa en un solo plato: guatita, seco de carne, ceviche de camarón y arroz. Con aguacate y ensalada.</p>
+          <div class="menu-card-footer">
+            <span class="menu-price">Ver carta</span>
+            <button class="menu-add" aria-label="Agregar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SOPAS & CALDOS -->
       <div class="menu-card reveal" data-cat="sopas">
         <div class="menu-card-img">
-          <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=500&q=80" alt="Caldo de Gallina" loading="lazy" decoding="async">
+          <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=500&q=80" alt="Encebollado" loading="lazy" decoding="async">
           <span class="menu-card-badge">Favorito</span>
         </div>
         <div class="menu-card-body">
-          <h3>Caldo de Gallina</h3>
-          <p>Caldo reconfortante de gallina criolla con fideos, papa y hierbas del campo</p>
+          <h3>Encebollado</h3>
+          <p>Sopa típica de la costa en caldo de pescado con yuca. Servida con pescado bonito en trozos, cebolla colorada, cilantro y limón al gusto.</p>
           <div class="menu-card-footer">
-            <span class="menu-price">$5.50</span>
-            <button class="menu-add" aria-label="Agregar">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            </button>
+            <span class="menu-price">Ver carta</span>
+            <button class="menu-add" aria-label="Agregar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
           </div>
         </div>
       </div>
+
       <div class="menu-card reveal" data-cat="sopas">
         <div class="menu-card-img">
-          <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=500&q=80" alt="Locro de Papa" loading="lazy" decoding="async">
+          <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=500&q=80" alt="Caldo de Gallina" loading="lazy" decoding="async">
         </div>
         <div class="menu-card-body">
-          <h3>Locro de Papa</h3>
-          <p>Crema espesa de papa con queso fresco, aguacate y orégano</p>
+          <h3>Caldo de Gallina</h3>
+          <p>Gallina criolla cocida en caldo con yuca, zanahorias y apio, condimentada al gusto. Servida con cilantro picado.</p>
           <div class="menu-card-footer">
-            <span class="menu-price">$4.50</span>
-            <button class="menu-add" aria-label="Agregar">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            </button>
+            <span class="menu-price">Ver carta</span>
+            <button class="menu-add" aria-label="Agregar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
           </div>
         </div>
       </div>
+
+      <div class="menu-card reveal" data-cat="sopas">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1584949091598-c31daaaa4aa9?w=500&q=80" alt="Caldo de Bola" loading="lazy" decoding="async">
+        </div>
+        <div class="menu-card-body">
+          <h3>Caldo de Bola</h3>
+          <p>Bola de plátano verde rellena de ternera con verduras y salsa de maní, cocida en caldo de carne con choclo, col y yuca.</p>
+          <div class="menu-card-footer">
+            <span class="menu-price">Ver carta</span>
+            <button class="menu-add" aria-label="Agregar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-card reveal" data-cat="sopas">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1559847844-5315695dadae?w=500&q=80" alt="Sopa Marinera" loading="lazy" decoding="async">
+          <span class="menu-card-badge">Costa</span>
+        </div>
+        <div class="menu-card-body">
+          <h3>Sopa Marinera</h3>
+          <p>Plato de la costa elaborado con mariscos: camarón, concha y pescado. Con maní para un sabor delicioso e inconfundible.</p>
+          <div class="menu-card-footer">
+            <span class="menu-price">Ver carta</span>
+            <button class="menu-add" aria-label="Agregar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANADERÍA -->
       <div class="menu-card reveal" data-cat="panaderia">
         <div class="menu-card-img">
           <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&q=80" alt="Pan de Yuca" loading="lazy" decoding="async">
@@ -2645,46 +2735,159 @@ footer{
         </div>
         <div class="menu-card-body">
           <h3>Pan de Yuca</h3>
-          <p>Panes esponjosos de yuca y queso, recién horneados cada mañana</p>
+          <p>Elaborado con yuca y queso, recién horneado. Incluye 3 unidades.</p>
           <div class="menu-card-footer">
-            <span class="menu-price">$1.50 c/u</span>
-            <button class="menu-add" aria-label="Agregar">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            </button>
+            <span class="menu-price">1,00 €</span>
+            <button class="menu-add" aria-label="Agregar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
           </div>
         </div>
       </div>
+
       <div class="menu-card reveal" data-cat="panaderia">
         <div class="menu-card-img">
-          <img src="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?w=500&q=80" alt="Panadería Artesanal" loading="lazy" decoding="async">
+          <img src="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?w=500&q=80" alt="Bollería Ecuatoriana" loading="lazy" decoding="async">
+          <span class="menu-card-badge">Desayuno</span>
         </div>
         <div class="menu-card-body">
-          <h3>Rosca de Maíz</h3>
-          <p>Tradicional rosca ecuatoriana de maíz morado con azúcar y canela</p>
+          <h3>Bollería Ecuatoriana</h3>
+          <p>Nuestra selección de bollería artesanal ecuatoriana, perfecta para el desayuno o la merienda.</p>
           <div class="menu-card-footer">
-            <span class="menu-price">$2.00</span>
-            <button class="menu-add" aria-label="Agregar">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            </button>
+            <span class="menu-price">1,90 €</span>
+            <button class="menu-add" aria-label="Agregar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
           </div>
         </div>
       </div>
+
+      <div class="menu-card reveal" data-cat="panaderia">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=500&q=80" alt="Bolón de Verde" loading="lazy" decoding="async">
+        </div>
+        <div class="menu-card-body">
+          <h3>Bolón de Verde</h3>
+          <p>Hecho con plátano verde, chicharrón de cerdo y queso. Servido con seco de carne, huevo frito y ensalada de cebolla. Plato de la región costa.</p>
+          <div class="menu-card-footer">
+            <span class="menu-price">Ver carta</span>
+            <button class="menu-add" aria-label="Agregar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-card reveal" data-cat="panaderia">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=500&q=80" alt="Tamal" loading="lazy" decoding="async">
+        </div>
+        <div class="menu-card-body">
+          <h3>Tamal</h3>
+          <p>Masa de harina de mote rellena de pollo, ternera, pimientos y huevo duro. Envuelto en hoja de plátano y cocinado a baño María.</p>
+          <div class="menu-card-footer">
+            <span class="menu-price">Ver carta</span>
+            <button class="menu-add" aria-label="Agregar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- BEBIDAS -->
       <div class="menu-card reveal" data-cat="bebidas">
         <div class="menu-card-img">
-          <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=500&q=80" alt="Colada Morada" loading="lazy" decoding="async">
-          <span class="menu-card-badge">Especial</span>
+          <img src="https://images.unsplash.com/photo-1546171753-97d7676e4602?w=500&q=80" alt="Batido de Frutas" loading="lazy" decoding="async">
+          <span class="menu-card-badge">Natural</span>
         </div>
         <div class="menu-card-body">
-          <h3>Colada Morada</h3>
-          <p>Bebida tradicional de maíz morado con frutas y especias aromáticas</p>
+          <h3>Batido Mixto de Frutas</h3>
+          <p>Batido de dos frutas tropicales a elegir: mango, fresa, mora, guanábana, guayaba, lulo, maracuyá, tomate de árbol y más.</p>
           <div class="menu-card-footer">
-            <span class="menu-price">$2.50</span>
-            <button class="menu-add" aria-label="Agregar">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            </button>
+            <span class="menu-price">4,50 €</span>
+            <button class="menu-add" aria-label="Agregar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
           </div>
         </div>
       </div>
+
+      <div class="menu-card reveal" data-cat="bebidas">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=500&q=80" alt="Batido con Zumo Natural" loading="lazy" decoding="async">
+        </div>
+        <div class="menu-card-body">
+          <h3>Batido con Zumo Natural</h3>
+          <p>Batido de frutas tropicales con zumo de naranja natural exprimido al momento.</p>
+          <div class="menu-card-footer">
+            <span class="menu-price">5,00 €</span>
+            <button class="menu-add" aria-label="Agregar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-card reveal" data-cat="bebidas">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=500&q=80" alt="Café" loading="lazy" decoding="async">
+        </div>
+        <div class="menu-card-body">
+          <h3>Café</h3>
+          <p>Americano, solo, con leche, cortado, con hielo o capuchino. También infusiones. Café bombón desde 1,50 €.</p>
+          <div class="menu-card-footer">
+            <span class="menu-price">Desde 1,30 €</span>
+            <button class="menu-add" aria-label="Agregar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- POSTRES -->
+      <div class="menu-card reveal" data-cat="postres">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=500&q=80" alt="Tarta de Tres Leches" loading="lazy" decoding="async">
+          <span class="menu-card-badge">Favorito</span>
+        </div>
+        <div class="menu-card-body">
+          <h3>Tarta de Tres Leches</h3>
+          <p>El postre más querido de la gastronomía ecuatoriana. Esponjoso bizcocho empapado en tres tipos de leche.</p>
+          <div class="menu-card-footer">
+            <span class="menu-price">4,00 €</span>
+            <button class="menu-add" aria-label="Agregar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-card reveal" data-cat="postres">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=500&q=80" alt="Arroz con Leche" loading="lazy" decoding="async">
+        </div>
+        <div class="menu-card-body">
+          <h3>Arroz con Leche</h3>
+          <p>Postre tradicional cremoso de arroz con leche, canela y azúcar. Elaborado con la receta de siempre.</p>
+          <div class="menu-card-footer">
+            <span class="menu-price">4,00 €</span>
+            <button class="menu-add" aria-label="Agregar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-card reveal" data-cat="postres">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=500&q=80" alt="Flan" loading="lazy" decoding="async">
+        </div>
+        <div class="menu-card-body">
+          <h3>Flan</h3>
+          <p>Flan casero de huevo con caramelo, suave y cremoso. Un clásico que nunca falla.</p>
+          <div class="menu-card-footer">
+            <span class="menu-price">4,00 €</span>
+            <button class="menu-add" aria-label="Agregar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-card reveal" data-cat="postres">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=500&q=80" alt="Frutas de Temporada" loading="lazy" decoding="async">
+        </div>
+        <div class="menu-card-body">
+          <h3>Frutas de Temporada</h3>
+          <p>Selección fresca de frutas tropicales de temporada. Ligero y natural para finalizar con buen sabor.</p>
+          <div class="menu-card-footer">
+            <span class="menu-price">3,00 €</span>
+            <button class="menu-add" aria-label="Agregar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
