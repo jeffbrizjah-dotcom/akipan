@@ -599,6 +599,149 @@ section{padding:6rem 1.5rem;}
 
 
 /* =============================================
+   SECTION SEPARATOR
+============================================= */
+.ssep{
+  position:relative;
+  z-index:5;
+  background:linear-gradient(to bottom,#0A0A0A 0%,#0c0c0c 100%);
+  padding:2.8rem 2rem;
+  overflow:hidden;
+}
+.ssep::before{
+  content:'';
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 55% 120% at 50% 50%,rgba(255,107,0,0.05) 0%,transparent 70%);
+  pointer-events:none;
+}
+.ssep-inner{
+  display:flex;align-items:center;
+  max-width:860px;margin:0 auto;
+  gap:0;
+}
+.ssep-line{
+  flex:1;height:1px;
+  background:linear-gradient(90deg,transparent 0%,rgba(255,107,0,0.55) 60%,rgba(255,140,0,0.75) 100%);
+}
+.ssep-line.r{
+  background:linear-gradient(90deg,rgba(255,140,0,0.75) 0%,rgba(255,107,0,0.55) 40%,transparent 100%);
+}
+.ssep-ornament{
+  display:flex;align-items:center;gap:0;
+  padding:0 1.2rem;flex-shrink:0;
+}
+.ssep-dot{
+  width:5px;height:5px;border-radius:50%;
+  background:rgba(255,107,0,0.55);
+  display:block;flex-shrink:0;
+}
+.ssep-micro{
+  width:18px;height:1px;
+  background:rgba(255,107,0,0.4);
+  display:block;flex-shrink:0;
+}
+.ssep-dia{
+  width:7px;height:7px;
+  background:rgba(255,120,0,0.7);
+  transform:rotate(45deg);
+  display:block;flex-shrink:0;
+  margin:0 6px;
+  box-shadow:0 0 8px rgba(255,107,0,0.45);
+  animation:ssep-dia-pulse 3s ease-in-out infinite;
+}
+@keyframes ssep-dia-pulse{
+  0%,100%{opacity:.7;box-shadow:0 0 6px rgba(255,107,0,0.4);}
+  50%{opacity:1;box-shadow:0 0 16px rgba(255,107,0,0.85),0 0 28px rgba(255,107,0,0.3);}
+}
+.ssep-gem{
+  position:relative;width:48px;height:48px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;margin:0 14px;
+}
+.ssep-gem-ring{
+  position:absolute;inset:0;
+  border:1px solid rgba(255,107,0,0.3);
+  transform:rotate(45deg);border-radius:5px;
+  animation:ssep-ring 4s ease-in-out infinite;
+}
+.ssep-gem-ring2{
+  position:absolute;inset:8px;
+  border:1px solid rgba(255,140,0,0.2);
+  transform:rotate(45deg);border-radius:3px;
+  animation:ssep-ring 4s ease-in-out infinite reverse;
+}
+@keyframes ssep-ring{
+  0%,100%{border-color:rgba(255,107,0,0.25);box-shadow:none;}
+  50%{border-color:rgba(255,140,0,0.65);box-shadow:0 0 14px rgba(255,107,0,0.2);}
+}
+.ssep-gem-core{
+  width:14px;height:14px;
+  background:linear-gradient(135deg,var(--orange),var(--orange-light));
+  transform:rotate(45deg);
+  border-radius:2px;
+  box-shadow:0 0 18px rgba(255,107,0,0.9),0 0 36px rgba(255,107,0,0.35);
+  animation:ssep-core 3s ease-in-out infinite;
+  position:relative;z-index:1;
+}
+@keyframes ssep-core{
+  0%,100%{box-shadow:0 0 12px rgba(255,107,0,0.7),0 0 24px rgba(255,107,0,0.25);}
+  50%{box-shadow:0 0 28px rgba(255,160,0,1),0 0 52px rgba(255,107,0,0.45);}
+}
+/* second decorative row below */
+.ssep-sub{
+  display:flex;align-items:center;justify-content:center;
+  gap:.7rem;margin-top:1.1rem;
+}
+.ssep-sub-line{
+  width:55px;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,107,0,0.28));
+}
+.ssep-sub-line.r{transform:scaleX(-1);}
+.ssep-sub-text{
+  font-family:var(--font-body);
+  font-size:.6rem;letter-spacing:5px;
+  color:rgba(255,140,0,0.45);
+  text-transform:uppercase;
+}
+
+/* --- Responsive separator --- */
+@media(max-width:1024px){
+  .ssep{padding:2.4rem 2rem;}
+  .ssep-inner{max-width:680px;}
+}
+@media(max-width:768px){
+  .ssep{padding:2.2rem 1.5rem;}
+  .ssep-inner{max-width:100%;}
+  .ssep-gem{width:42px;height:42px;margin:0 10px;}
+  .ssep-gem-ring2{inset:6px;}
+  .ssep-gem-core{width:12px;height:12px;}
+  .ssep-micro{width:12px;}
+  .ssep-dia{width:6px;height:6px;margin:0 5px;}
+  .ssep-ornament{padding:0 .8rem;}
+  .ssep-sub-text{letter-spacing:3px;font-size:.58rem;}
+  .ssep-sub-line{width:36px;}
+  .ssep-sub{gap:.5rem;margin-top:.9rem;}
+}
+@media(max-width:480px){
+  .ssep{padding:1.8rem 1rem;}
+  .ssep-gem{width:36px;height:36px;margin:0 8px;}
+  .ssep-gem-ring2{inset:5px;}
+  .ssep-gem-core{width:10px;height:10px;}
+  .ssep-micro{width:7px;}
+  .ssep-dia{width:5px;height:5px;margin:0 4px;}
+  .ssep-dot{display:none;}
+  .ssep-ornament{padding:0 .5rem;}
+  .ssep-sub-text{letter-spacing:1.5px;font-size:.55rem;}
+  .ssep-sub-line{width:22px;}
+  .ssep-sub{gap:.4rem;margin-top:.7rem;}
+}
+@media(max-width:360px){
+  .ssep-micro{display:none;}
+  .ssep-sub-text{letter-spacing:1px;}
+  .ssep-sub-line{width:14px;}
+}
+
+/* =============================================
    ABOUT
 ============================================= */
 #about{
@@ -1383,6 +1526,28 @@ section{padding:6rem 1.5rem;}
 }
 .form-group textarea{resize:vertical;min-height:110px;}
 .form-group select option{background:var(--black3);}
+/* Date input — tema oscuro en todos los navegadores */
+.form-group input[type="date"]{
+  color-scheme:dark;
+  -webkit-appearance:none;
+  appearance:none;
+}
+.form-group input[type="date"]::-webkit-calendar-picker-indicator{
+  filter:invert(.75) sepia(1) saturate(4) hue-rotate(3deg);
+  opacity:.7;cursor:pointer;
+}
+.form-group input[type="date"]:not([value]),.form-group input[type="date"][value=""]{
+  color:rgba(176,160,144,0.55);
+}
+/* Select — quitar flecha nativa en iOS y reemplazar por una consistente */
+.form-group select{
+  -webkit-appearance:none;
+  appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23FF6B00' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 1rem center;
+  padding-right:2.5rem;
+}
 .form-submit{
   width:100%;
   background:linear-gradient(135deg,var(--orange),var(--orange-light));
@@ -1396,6 +1561,30 @@ section{padding:6rem 1.5rem;}
 .form-submit:hover{
   transform:translateY(-2px);
   box-shadow:0 10px 36px rgba(255,107,0,0.5);
+}
+/* ---- Contact responsive ---- */
+@media(max-width:1024px){
+  .contact-form{padding:2.2rem 2rem;border-radius:20px;}
+}
+@media(max-width:768px){
+  .contact-form{padding:2rem 1.5rem;border-radius:16px;}
+  /* font-size 1rem (16px) = evita zoom automático de iOS al enfocar inputs */
+  .form-group input,
+  .form-group textarea,
+  .form-group select{font-size:1rem;padding:.8rem .9rem;border-radius:10px;}
+  .form-group label{font-size:.68rem;letter-spacing:1.5px;}
+  .form-group{margin-bottom:1rem;}
+  .form-submit{font-size:.85rem;padding:1rem;letter-spacing:2px;}
+}
+@media(max-width:480px){
+  .contact-form{padding:1.6rem 1.1rem;border-radius:14px;}
+  .form-group input,
+  .form-group textarea,
+  .form-group select{font-size:1rem;padding:.75rem .85rem;}
+  .form-group label{letter-spacing:1px;}
+  .form-group{margin-bottom:.85rem;}
+  .form-group textarea{min-height:90px;}
+  .form-submit{border-radius:10px;}
 }
 
 /* =============================================
@@ -1968,16 +2157,86 @@ footer{
 /* =============================================
    PARALLAX DIVIDER 2 — reutiliza pd1-section
 ============================================= */
+/* Eyebrow "Horario de Atención" */
+.pd1-eyebrow{
+  display:flex;align-items:center;gap:.9rem;
+  font-family:var(--font-body);
+  font-size:.68rem;letter-spacing:4px;text-transform:uppercase;
+  color:rgba(255,255,255,0.62);
+  margin-bottom:.3rem;
+}
+.pd1-eline{
+  flex:0 0 55px;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,107,0,0.5));
+}
+.pd1-eline.r{
+  background:linear-gradient(90deg,rgba(255,107,0,0.5),transparent);
+}
+
+/* pd2 background */
 #pd2Section .pd1-bg{
   background-image:url('https://images.unsplash.com/photo-1551218808-94e220e084d2?w=1600&q=80');
 }
+
+/* pd2 hours display */
 #pd2Section .pd1-line2{
+  display:flex;align-items:center;justify-content:center;
+  gap:.6em;
   font-size:clamp(2.4rem,6.5vw,5rem);
   letter-spacing:3px;
+  white-space:nowrap;
 }
 #pd2Section .pd1-line2 .pd2-dash{
-  color:rgba(255,255,255,0.45);
-  margin:0 .3em;
+  color:rgba(255,255,255,0.4);
+  font-size:.55em;
+  letter-spacing:0;
+  flex-shrink:0;
+}
+.pd2-time{ display:inline-block; }
+
+/* ---- Tablet (≤1024px) ---- */
+@media(max-width:1024px){
+  #pd2Section .pd1-line2{
+    font-size:clamp(2.2rem,5.5vw,4rem);
+    gap:.5em;
+  }
+  .pd1-eline{flex:0 0 40px;}
+}
+/* ---- Tablet chico (≤768px) ---- */
+@media(max-width:768px){
+  #pd2Section .pd1-line2{
+    font-size:clamp(2rem,7.5vw,3.2rem);
+    gap:.4em;
+    letter-spacing:2px;
+  }
+  .pd1-eyebrow{font-size:.62rem;letter-spacing:3px;gap:.6rem;}
+  .pd1-eline{flex:0 0 30px;}
+}
+/* ---- Móvil (≤480px): apila los horarios verticalmente ---- */
+@media(max-width:480px){
+  #pd2Section .pd1-line2{
+    flex-direction:column;
+    gap:.15em;
+    font-size:clamp(2.4rem,11vw,3.2rem);
+    letter-spacing:2px;
+    white-space:normal;
+  }
+  #pd2Section .pd1-line2 .pd2-dash{
+    font-size:.45em;
+    opacity:.55;
+    letter-spacing:6px;
+    margin:.05em 0;
+  }
+  .pd1-eyebrow{font-size:.58rem;letter-spacing:2px;gap:.5rem;}
+  .pd1-eline{flex:0 0 22px;}
+}
+/* ---- Móvil pequeño (≤360px) ---- */
+@media(max-width:360px){
+  #pd2Section .pd1-line2{
+    font-size:clamp(2rem,10vw,2.6rem);
+  }
+  .pd1-eline{display:none;}
+  .pd1-eyebrow{justify-content:center;}
 }
 
 /* =============================================
@@ -2131,6 +2390,34 @@ footer{
     </div>
   </div>
 </section>
+
+<!-- SECTION SEPARATOR -->
+<div class="ssep" aria-hidden="true">
+  <div class="ssep-inner">
+    <div class="ssep-line"></div>
+    <div class="ssep-ornament">
+      <span class="ssep-dot"></span>
+      <span class="ssep-micro"></span>
+      <span class="ssep-dia"></span>
+      <span class="ssep-micro"></span>
+      <div class="ssep-gem">
+        <span class="ssep-gem-ring"></span>
+        <span class="ssep-gem-ring2"></span>
+        <span class="ssep-gem-core"></span>
+      </div>
+      <span class="ssep-micro"></span>
+      <span class="ssep-dia"></span>
+      <span class="ssep-micro"></span>
+      <span class="ssep-dot"></span>
+    </div>
+    <div class="ssep-line r"></div>
+  </div>
+  <div class="ssep-sub">
+    <span class="ssep-sub-line"></span>
+    <span class="ssep-sub-text">Restaurante &amp; Panadería</span>
+    <span class="ssep-sub-line r"></span>
+  </div>
+</div>
 
 <!-- ABOUT -->
 <section id="about">
@@ -2581,7 +2868,11 @@ footer{
       <span class="pd1-orn-diamond"></span>
       <span class="pd1-orn-line r"></span>
     </div>
-    <div class="pd1-line2">6:00 AM <span class="pd2-dash">—</span> 9:00 PM</div>
+    <div class="pd1-line2">
+      <span class="pd2-time">6:00 AM</span>
+      <span class="pd2-dash">—</span>
+      <span class="pd2-time">9:00 PM</span>
+    </div>
   </div>
 </div>
 
