@@ -509,6 +509,17 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font-body);}
   margin-bottom:1.4rem;
   opacity:0;
   animation:hero-in .7s .3s ease forwards;
+  display:flex;align-items:center;gap:.9rem;
+}
+.hero-eyebrow::before,
+.hero-eyebrow::after{
+  content:'';
+  width:5px;height:5px;
+  background:var(--orange);
+  transform:rotate(45deg);
+  flex-shrink:0;
+  box-shadow:0 0 8px rgba(255,107,0,0.7);
+  opacity:.9;
 }
 
 /* ── Título principal AKIPAN ── */
