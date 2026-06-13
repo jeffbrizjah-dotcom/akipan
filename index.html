@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -1018,51 +1018,98 @@ section{padding:6rem 1.5rem;}
 }
 .about-img-stack{
   position:relative;
-  height:500px;
+  height:520px;
+}
+/* Marco decorativo naranja — aparece detrás offset bottom-right */
+.about-img-stack::before{
+  content:'';
+  position:absolute;
+  top:20px;left:20px;
+  right:0;bottom:0;
+  border:1.5px solid rgba(255,107,0,0.28);
+  border-radius:26px;
+  z-index:0;
+  pointer-events:none;
+  transition:border-color .4s ease;
+}
+.about-img-stack:hover::before{
+  border-color:rgba(255,140,0,0.45);
+}
+/* Orb de brillo sutil */
+.about-img-stack::after{
+  content:'';
+  position:absolute;
+  width:280px;height:280px;
+  background:radial-gradient(circle,rgba(255,107,0,0.1) 0%,transparent 65%);
+  bottom:0;right:0;
+  z-index:0;
+  border-radius:50%;
+  filter:blur(40px);
+  pointer-events:none;
 }
 .about-img-main{
   position:absolute;
-  width:75%;height:80%;
-  object-fit:cover;
-  border-radius:20px;
   top:0;left:0;
-  box-shadow:0 20px 60px rgba(0,0,0,0.6),0 0 0 1px rgba(255,107,0,0.1);
-  transition:transform .4s ease,box-shadow .4s ease;
+  width:calc(100% - 20px);
+  height:calc(100% - 20px);
+  object-fit:cover;
+  border-radius:22px;
+  box-shadow:0 28px 80px rgba(0,0,0,0.65),0 0 0 1px rgba(255,107,0,0.1);
+  transition:transform .5s ease,box-shadow .5s ease;
+  z-index:1;
 }
 .about-img-main:hover{
   transform:scale(1.02);
-  box-shadow:0 28px 75px rgba(0,0,0,0.7),0 0 40px rgba(255,107,0,0.13);
+  box-shadow:0 36px 90px rgba(0,0,0,0.72),0 0 48px rgba(255,107,0,0.13);
 }
-.about-img-sec{
-  position:absolute;
-  width:55%;height:55%;
-  object-fit:cover;
-  border-radius:16px;
-  bottom:0;right:0;
-  box-shadow:0 20px 60px rgba(0,0,0,0.5);
-  border:3px solid rgba(255,107,0,0.2);
-  transition:transform .4s ease,box-shadow .4s ease;
-}
-.about-img-sec:hover{
-  transform:scale(1.03);
-  box-shadow:0 26px 65px rgba(0,0,0,0.6),0 0 28px rgba(255,107,0,0.1);
-}
+.about-img-sec{ display:none !important; }
 .about-badge{
   position:absolute;
-  bottom:12%;left:65%;
+  bottom:1.5rem;right:1.5rem;
   background:linear-gradient(135deg,var(--orange),var(--orange-light));
   color:#fff;
-  border-radius:16px;
-  padding:1rem 1.2rem;
+  border-radius:18px;
+  padding:1.2rem 1.5rem;
   text-align:center;
-  box-shadow:var(--shadow-orange);
+  box-shadow:0 14px 44px rgba(255,107,0,0.5),0 0 0 4px rgba(10,10,10,0.88);
   z-index:2;
+  min-width:110px;
 }
 .about-badge .num{
   font-family:var(--font-display);
-  font-size:2.2rem;display:block;line-height:1;
+  font-size:2.6rem;display:block;line-height:1;
+  margin-bottom:.2rem;
 }
-.about-badge .lbl{font-size:.7rem;letter-spacing:2px;text-transform:uppercase;}
+.about-badge .lbl{font-size:.68rem;letter-spacing:2px;text-transform:uppercase;line-height:1.6;}
+/* Pill de rating Google */
+.about-rating-pill{
+  position:absolute;
+  top:1.4rem;left:1.4rem;
+  z-index:2;
+  display:flex;align-items:center;gap:.45rem;
+  background:rgba(10,10,10,0.78);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(255,107,0,0.2);
+  border-radius:50px;
+  padding:.55rem 1rem .55rem .7rem;
+  box-shadow:0 8px 28px rgba(0,0,0,0.4);
+  white-space:nowrap;
+  transition:border-color .3s ease;
+}
+.about-rating-pill:hover{ border-color:rgba(255,107,0,0.38); }
+.about-rating-pill svg{ flex-shrink:0; }
+.about-rating-pill .rp-score{
+  font-family:var(--font-serif);
+  font-size:.92rem;font-weight:700;
+  color:var(--white);
+}
+.about-rating-pill .rp-sep{
+  color:rgba(255,255,255,0.22);font-size:.8rem;
+}
+.about-rating-pill .rp-label{
+  font-size:.72rem;color:var(--text-muted);letter-spacing:.4px;
+}
 .about-content{display:flex;flex-direction:column;gap:1.5rem;}
 .about-features{
   display:grid;grid-template-columns:1fr 1fr;gap:1rem;
@@ -1918,13 +1965,39 @@ footer{
   flex-shrink:0;
   box-shadow:0 2px 8px rgba(218,12,24,0.4);
 }
+.footer-legal{
+  max-width:1200px;margin:0 auto;
+  padding:1.2rem 0;
+  border-top:1px solid rgba(255,255,255,0.04);
+  display:flex;align-items:center;justify-content:center;
+  flex-wrap:wrap;gap:.5rem 1.6rem;
+}
+.footer-legal a{
+  font-size:.76rem;color:rgba(255,255,255,0.35);
+  letter-spacing:.8px;text-transform:uppercase;
+  transition:color .3s ease;
+  white-space:nowrap;
+}
+.footer-legal a:hover{color:var(--orange);}
+.footer-legal-sep{
+  width:1px;height:12px;
+  background:rgba(255,255,255,0.12);
+  flex-shrink:0;
+}
 .footer-bottom{
-  max-width:1200px;margin:1.5rem auto 0;
+  max-width:1200px;margin:0 auto;
+  padding-top:1.2rem;
+  border-top:1px solid rgba(255,255,255,0.04);
   display:flex;align-items:center;justify-content:space-between;
   flex-wrap:wrap;gap:1rem;
 }
 .footer-bottom p{font-size:.8rem;color:var(--text-muted);}
 .footer-bottom span{color:var(--orange);}
+@media(max-width:600px){
+  .footer-legal-sep{display:none;}
+  .footer-legal{gap:.5rem 1.2rem;}
+  .footer-legal a{font-size:.7rem;}
+}
 
 /* =============================================
    FLOATING BUTTONS
@@ -1958,7 +2031,14 @@ footer{
 @media(max-width:1024px){
   /* About — tablet */
   .about-grid{grid-template-columns:1fr;gap:3rem;}
-  .about-img-stack{height:380px;max-width:540px;margin:0 auto;}
+  .about-img-stack{height:420px;max-width:560px;margin:0 auto;}
+  .about-img-stack::before{top:16px;left:16px;}
+  .about-img-main{
+    width:calc(100% - 16px);
+    height:calc(100% - 16px);
+    position:absolute;
+    top:0;left:0;
+  }
   .about-corner-tr,.about-corner-bl{width:42px;height:42px;}
   /* otros */
   .contact-grid{grid-template-columns:1fr;}
@@ -1972,29 +2052,42 @@ footer{
   .nav-hamburger{display:flex;}
   /* About — móvil */
   .about-grid{gap:2rem;}
-  /* Rediseño total del stack en móvil: solo imagen principal */
   .about-img-stack{
-    height:260px;
+    height:300px;
     max-width:100%;
     border-radius:18px;
     overflow:hidden;
   }
+  /* Sin marco decorativo ni orb en móvil — más limpio */
+  .about-img-stack::before{display:none;}
+  .about-img-stack::after{display:none;}
   .about-img-main{
-    position:relative;
-    width:100%;height:100%;
-    border-radius:18px;
-    top:auto;left:auto;
+    position:relative !important;
+    width:100% !important;height:100% !important;
+    top:auto !important;left:auto !important;
+    right:auto !important;bottom:auto !important;
     display:block;
+    border-radius:0;
+    box-shadow:none;
   }
-  .about-img-sec{display:none;}
+  .about-img-sec{display:none !important;}
   .about-badge{
     position:absolute;
     bottom:1rem;right:1rem;left:auto;
-    padding:.7rem 1rem;
-    border-radius:12px;
+    padding:.8rem 1.1rem;
+    border-radius:14px;
+    min-width:88px;
   }
-  .about-badge .num{font-size:1.7rem;}
-  .about-badge .lbl{font-size:.65rem;}
+  .about-badge .num{font-size:1.9rem;}
+  .about-badge .lbl{font-size:.63rem;}
+  .about-rating-pill{
+    position:absolute;
+    top:.9rem;left:.9rem;
+    padding:.45rem .9rem .45rem .65rem;
+    max-width:calc(100% - 1.8rem);
+  }
+  .about-rating-pill .rp-score{font-size:.82rem;}
+  .about-rating-pill .rp-label{font-size:.65rem;}
   .about-features{grid-template-columns:1fr 1fr;gap:.8rem;}
   .about-corner{width:36px;height:36px;}
   .about-corner-tl{top:1rem;left:1rem;}
@@ -2021,11 +2114,15 @@ footer{
   .counters-grid{grid-template-columns:1fr 1fr;}
   .footer-bottom{flex-direction:column;text-align:center;}
   /* About — móvil pequeño */
-  .about-img-stack{height:220px;border-radius:14px;}
-  .about-img-main{border-radius:14px;}
-  .about-badge{padding:.6rem .85rem;bottom:.8rem;right:.8rem;}
-  .about-badge .num{font-size:1.4rem;}
-  .about-badge .lbl{font-size:.58rem;letter-spacing:1px;}
+  .about-img-stack{height:240px;border-radius:14px;}
+  .about-img-stack::before{display:none;}
+  .about-img-stack::after{display:none;}
+  .about-img-main{border-radius:0;}
+  .about-badge{padding:.6rem .85rem;bottom:.75rem;right:.75rem;border-radius:12px;min-width:auto;}
+  .about-badge .num{font-size:1.5rem;}
+  .about-badge .lbl{font-size:.55rem;letter-spacing:1px;}
+  .about-rating-pill{top:.7rem;left:.7rem;padding:.38rem .7rem .38rem .5rem;}
+  .about-rating-pill .rp-label{display:none;}
   .about-features{grid-template-columns:1fr;}
   .about-corner-tr,.about-corner-bl{display:none;}
   .about-corner-tl{width:24px;height:24px;top:.8rem;left:.8rem;}
@@ -2420,6 +2517,207 @@ footer{
 }
 
 /* =============================================
+   MENÚ DEL DÍA
+============================================= */
+#menu-dia{
+  position:relative;
+  padding:100px 24px;
+  background:linear-gradient(155deg,#090909 0%,#0d0700 55%,#111111 100%);
+  overflow:hidden;
+}
+/* líneas decorativas top/bottom */
+#menu-dia::before,#menu-dia::after{
+  content:'';position:absolute;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,107,0,0.35),transparent);
+  pointer-events:none;
+}
+#menu-dia::before{top:0;}
+#menu-dia::after{bottom:0;}
+/* orb de fondo */
+.md-bg-orb{
+  position:absolute;pointer-events:none;border-radius:50%;filter:blur(80px);
+}
+.md-bg-orb-1{
+  width:500px;height:500px;
+  background:radial-gradient(circle,rgba(255,107,0,0.07) 0%,transparent 70%);
+  right:-100px;top:50%;transform:translateY(-50%);
+}
+.md-bg-orb-2{
+  width:300px;height:300px;
+  background:radial-gradient(circle,rgba(255,140,0,0.04) 0%,transparent 70%);
+  left:-60px;bottom:-60px;
+}
+/* grid decorativo */
+.md-grid-deco{
+  position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(circle at 1px 1px,rgba(255,107,0,0.03) 1px,transparent 0);
+  background-size:44px 44px;
+}
+/* wrapper principal */
+.md-wrapper{
+  max-width:1100px;margin:0 auto;
+  display:flex;align-items:center;gap:4rem;
+  position:relative;z-index:1;
+}
+/* columna izquierda */
+.md-info{flex:1;min-width:0;}
+.md-eyebrow{
+  display:inline-flex;align-items:center;gap:.7rem;
+  font-family:var(--font-display);
+  font-size:.68rem;letter-spacing:4px;text-transform:uppercase;
+  color:var(--orange);margin-bottom:1.3rem;
+}
+.md-eyebrow-line{
+  width:32px;height:1px;
+  background:linear-gradient(90deg,var(--orange),transparent);
+}
+.md-title{
+  font-family:var(--font-display);
+  font-size:clamp(2.8rem,5.5vw,5rem);
+  line-height:.95;text-transform:uppercase;
+  color:var(--white);margin-bottom:1.4rem;letter-spacing:-1px;
+}
+.md-title span{
+  display:block;color:var(--orange);
+  text-shadow:0 0 40px rgba(255,107,0,0.35);
+}
+.md-desc{
+  font-size:.95rem;color:var(--text-muted);
+  line-height:1.75;max-width:430px;margin-bottom:2rem;
+}
+.md-includes{
+  list-style:none;padding:0;margin:0;
+  display:flex;flex-direction:column;gap:.6rem;
+}
+.md-includes li{
+  display:flex;align-items:center;gap:.65rem;
+  font-family:var(--font-display);
+  font-size:.75rem;letter-spacing:2px;
+  color:rgba(255,255,255,0.65);text-transform:uppercase;
+}
+.md-includes li::before{
+  content:'';width:6px;height:6px;border-radius:50%;
+  background:var(--orange);flex-shrink:0;
+  box-shadow:0 0 8px rgba(255,107,0,0.5);
+}
+/* columna derecha */
+.md-cta{
+  flex-shrink:0;width:320px;
+  display:flex;flex-direction:column;align-items:center;gap:1.3rem;
+}
+/* tarjeta de precio */
+.md-price-card{
+  width:100%;
+  background:linear-gradient(145deg,#191919 0%,#131313 60%,#0e0700 100%);
+  border:1px solid rgba(255,107,0,0.2);
+  border-top:2px solid var(--orange);
+  border-radius:22px;
+  padding:2.2rem 2rem 1.8rem;
+  text-align:center;
+  box-shadow:0 24px 60px rgba(0,0,0,0.55),0 0 40px rgba(255,107,0,0.06);
+  position:relative;overflow:hidden;
+}
+.md-price-card::before{
+  content:'';position:absolute;
+  top:-80px;left:50%;transform:translateX(-50%);
+  width:240px;height:240px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,107,0,0.07) 0%,transparent 65%);
+  pointer-events:none;
+}
+.md-price-label{
+  display:block;
+  font-family:var(--font-display);
+  font-size:.68rem;letter-spacing:3.5px;text-transform:uppercase;
+  color:var(--text-muted);margin-bottom:.6rem;
+}
+.md-price{
+  display:block;
+  font-family:var(--font-display);
+  font-size:clamp(4.5rem,10vw,7rem);
+  line-height:1;letter-spacing:-3px;font-weight:900;
+  color:var(--white);
+  text-shadow:0 0 30px rgba(255,107,0,0.2);
+}
+.md-price-sub{
+  display:block;
+  font-family:var(--font-display);
+  font-size:.68rem;letter-spacing:3px;text-transform:uppercase;
+  color:var(--orange);margin-top:.5rem;
+}
+/* texto previo al botón */
+.md-wa-pre{
+  font-size:.85rem;color:var(--text-muted);
+  line-height:1.55;text-align:center;margin:0;
+}
+/* botón WhatsApp */
+.md-wa-btn{
+  display:flex;align-items:center;justify-content:center;gap:.65rem;
+  width:100%;
+  background:#25D366;color:#fff;
+  border:none;border-radius:50px;
+  padding:.9rem 1.5rem;
+  font-family:var(--font-body);
+  font-size:.82rem;letter-spacing:.8px;font-weight:700;
+  text-decoration:none;
+  box-shadow:0 8px 28px rgba(37,211,102,0.32);
+  transition:transform .3s ease,box-shadow .3s ease;
+}
+.md-wa-btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 14px 40px rgba(37,211,102,0.48);
+}
+.md-wa-btn svg{flex-shrink:0;}
+/* reply time */
+.md-reply{
+  font-size:.77rem;color:var(--text-muted);
+  text-align:center;margin:0;
+  display:flex;align-items:center;gap:.45rem;
+  justify-content:center;
+}
+.md-reply-dot{
+  display:inline-block;width:7px;height:7px;border-radius:50%;
+  background:#25D366;
+  box-shadow:0 0 8px rgba(37,211,102,0.6);
+  animation:md-pulse-dot 1.8s ease-in-out infinite;
+  flex-shrink:0;
+}
+@keyframes md-pulse-dot{
+  0%,100%{opacity:1;transform:scale(1);}
+  50%{opacity:.5;transform:scale(.7);}
+}
+/* reveal on scroll */
+.md-info,.md-cta{
+  opacity:0;transform:translateY(30px);
+  transition:opacity .8s ease,transform .8s ease;
+}
+.md-info{transition-delay:.1s;}
+.md-cta{transition-delay:.28s;}
+#menu-dia.md-on .md-info,
+#menu-dia.md-on .md-cta{opacity:1;transform:translateY(0);}
+
+/* ── Tablet ── */
+@media(max-width:960px){
+  .md-wrapper{flex-direction:column;gap:2.8rem;text-align:center;}
+  .md-desc{max-width:100%;}
+  .md-includes{align-items:center;}
+  .md-cta{width:100%;max-width:420px;}
+  .md-eyebrow{justify-content:center;}
+}
+/* ── Móvil ── */
+@media(max-width:600px){
+  #menu-dia{padding:72px 16px;}
+  .md-title{font-size:clamp(2.4rem,11vw,3.2rem);letter-spacing:-1px;}
+  .md-desc{font-size:.88rem;}
+  .md-price-card{padding:1.7rem 1.4rem 1.5rem;}
+  .md-price{font-size:5.5rem;letter-spacing:-3px;}
+  .md-wa-btn{font-size:.79rem;padding:.85rem 1.2rem;}
+}
+@media(max-width:380px){
+  .md-price{font-size:4.5rem;}
+  .md-title{font-size:2.4rem;}
+}
+
+/* =============================================
    PARALLAX DIVIDER 2 — reutiliza pd1-section
 ============================================= */
 /* Eyebrow "Horario de Atención" */
@@ -2572,6 +2870,160 @@ footer{
 }
 
 /* =============================================
+   COOKIE CONSENT BANNER
+============================================= */
+#cookie-overlay{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,0.6);
+  backdrop-filter:blur(5px);
+  -webkit-backdrop-filter:blur(5px);
+  z-index:9990;
+  display:flex;align-items:flex-end;justify-content:center;
+  padding:1rem;
+  opacity:0;pointer-events:none;
+  transition:opacity .45s ease;
+}
+#cookie-overlay.show{
+  opacity:1;pointer-events:auto;
+}
+#cookie-banner{
+  background:linear-gradient(145deg,#111111 0%,#1c1c1c 60%,#0f0800 100%);
+  border:1px solid rgba(255,107,0,0.22);
+  border-top:2px solid var(--orange);
+  border-radius:18px;
+  padding:1.2rem 1.5rem;
+  max-width:820px;width:100%;
+  box-shadow:0 -4px 50px rgba(0,0,0,0.55),0 0 30px rgba(255,107,0,0.07);
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  gap:1.2rem;
+  position:relative;
+  transform:translateY(30px);
+  transition:transform .5s cubic-bezier(0.34,1.46,0.64,1);
+  overflow:hidden;
+}
+#cookie-overlay.show #cookie-banner{
+  transform:translateY(0);
+}
+/* glow borde izquierdo */
+#cookie-banner::before{
+  content:'';position:absolute;
+  left:0;top:0;bottom:0;width:2px;
+  background:linear-gradient(to bottom,transparent,var(--orange),rgba(255,140,0,.4),transparent);
+  pointer-events:none;
+}
+/* orb decorativo */
+#cookie-banner::after{
+  content:'';position:absolute;
+  width:220px;height:220px;border-radius:50%;
+  background:rgba(255,107,0,0.045);
+  filter:blur(55px);
+  top:-70px;right:-50px;
+  pointer-events:none;
+}
+/* Contenedor izquierdo: icono + texto */
+.cookie-left{
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  gap:1rem;
+  flex:1;
+  min-width:0;
+  position:relative;z-index:1;
+}
+.cookie-icon{
+  width:40px;height:40px;flex-shrink:0;
+  background:rgba(255,107,0,0.1);
+  border:1px solid rgba(255,107,0,0.22);
+  border-radius:11px;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--orange);
+}
+.cookie-body{
+  min-width:0;
+}
+.cookie-title{
+  font-family:var(--font-display);
+  font-size:.8rem;letter-spacing:2.5px;
+  color:var(--white);text-transform:uppercase;
+  margin-bottom:.25rem;line-height:1.2;
+}
+.cookie-title span{color:var(--orange);}
+.cookie-text{
+  font-size:.77rem;color:var(--text-muted);
+  line-height:1.55;margin:0;
+}
+.cookie-text a{
+  color:var(--orange);text-decoration:underline;
+  text-underline-offset:3px;
+}
+/* Contenedor derecho: botones */
+.cookie-btns{
+  display:flex;flex-direction:column;
+  align-items:stretch;gap:.45rem;
+  flex-shrink:0;
+  position:relative;z-index:1;
+}
+.cookie-accept{
+  background:linear-gradient(135deg,var(--orange),var(--orange-light));
+  color:#fff;border:none;
+  padding:.58rem 1.25rem;border-radius:50px;
+  font-family:var(--font-body);
+  font-size:.72rem;letter-spacing:1.8px;text-transform:uppercase;font-weight:700;
+  cursor:pointer;white-space:nowrap;
+  box-shadow:0 4px 18px rgba(255,107,0,0.38);
+  transition:all .3s ease;
+}
+.cookie-accept:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 24px rgba(255,107,0,0.55);
+}
+.cookie-decline{
+  background:transparent;
+  border:1px solid rgba(255,255,255,0.1);
+  color:var(--text-muted);
+  padding:.5rem 1rem;border-radius:50px;
+  font-family:var(--font-body);
+  font-size:.68rem;letter-spacing:1.2px;text-transform:uppercase;font-weight:500;
+  cursor:pointer;white-space:nowrap;text-align:center;
+  transition:all .3s ease;
+}
+.cookie-decline:hover{
+  border-color:rgba(255,255,255,0.25);color:#bbb;
+}
+
+/* ── Móvil ── */
+@media(max-width:640px){
+  #cookie-overlay{padding:.7rem;}
+  #cookie-banner{
+    flex-direction:column;
+    align-items:stretch;
+    gap:.9rem;
+    padding:1.1rem 1.1rem;
+    border-radius:16px;
+  }
+  .cookie-left{gap:.75rem;}
+  .cookie-icon{width:36px;height:36px;border-radius:9px;}
+  .cookie-title{font-size:.76rem;letter-spacing:2px;margin-bottom:.2rem;}
+  .cookie-text{font-size:.75rem;}
+  .cookie-btns{
+    flex-direction:row;gap:.6rem;
+  }
+  .cookie-accept,.cookie-decline{flex:1;text-align:center;padding:.62rem .5rem;}
+}
+
+/* ── Móvil pequeño ── */
+@media(max-width:380px){
+  #cookie-banner{padding:.95rem .9rem;gap:.8rem;}
+  .cookie-icon{display:none;}
+  .cookie-title{font-size:.72rem;letter-spacing:1.5px;}
+  .cookie-text{font-size:.72rem;line-height:1.5;}
+  .cookie-accept{font-size:.68rem;letter-spacing:1.4px;}
+  .cookie-decline{font-size:.65rem;}
+}
+
+/* =============================================
    SCROLLBAR
 ============================================= */
 ::-webkit-scrollbar{width:4px;}
@@ -2663,6 +3115,36 @@ footer{
   <div class="pl-text"><span style="color:#ffffff">AKI</span>PAN</div>
   <div class="pl-sub">Restaurante &amp; Panadería</div>
   <div class="pl-bar-wrap"><div class="pl-bar"></div></div>
+</div>
+
+<!-- COOKIE CONSENT BANNER -->
+<div id="cookie-overlay" role="dialog" aria-modal="true" aria-label="Aviso de cookies">
+  <div id="cookie-banner">
+
+    <!-- Izquierda: icono + texto -->
+    <div class="cookie-left">
+      <div class="cookie-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/>
+          <path d="M8.5 8.5v.01"/><path d="M16 15.5v.01"/><path d="M12 12v.01"/>
+        </svg>
+      </div>
+      <div class="cookie-body">
+        <p class="cookie-title"><span>AKI</span>PAN — Política de Cookies</p>
+        <p class="cookie-text">
+          Usamos cookies para mejorar tu experiencia, analizar el tráfico y personalizar el contenido.
+          Al aceptar, consientes su uso. Más info en nuestra <a href="#" onclick="return false;">política de privacidad</a>.
+        </p>
+      </div>
+    </div>
+
+    <!-- Derecha: botones -->
+    <div class="cookie-btns">
+      <button class="cookie-accept" id="cookieAccept">✓ &nbsp;Aceptar todo</button>
+      <button class="cookie-decline" id="cookieDecline">Solo esenciales</button>
+    </div>
+
+  </div>
 </div>
 
 <!-- NAVBAR -->
@@ -2767,7 +3249,7 @@ footer{
     </div>
     <div class="mm-footer-item">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-      Lun — Vie · 8:30 AM – 11:00 PM
+      Lun — Dom · 8:30 AM – 11:00 PM
     </div>
     <div class="mm-social">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
@@ -2929,9 +3411,16 @@ footer{
         <img class="about-img-main"
           src="AKIPAN IMAGE 1.jpeg"
           alt="Restaurante AKIPAN lleno de clientes" loading="lazy" decoding="async">
-        <img class="about-img-sec"
-          src="AKIPAN IMAGE 3.jpeg"
-          alt="Interior restaurante AKIPAN" loading="lazy" decoding="async">
+
+        <!-- Rating pill — esquina superior izquierda -->
+        <div class="about-rating-pill">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--orange)"><path d="M12 2l2.09 6.26L20 9l-4.55 3.7L17 19l-5-3.18L7 19l1.55-6.3L4 9l5.91-.74z"/></svg>
+          <span class="rp-score">4.9</span>
+          <span class="rp-sep">|</span>
+          <span class="rp-label">+500 reseñas Google</span>
+        </div>
+
+        <!-- Badge años — esquina inferior derecha -->
         <div class="about-badge">
           <span class="num">15</span>
           <span class="lbl">Años de<br>Tradición</span>
@@ -3012,6 +3501,64 @@ footer{
   </div>
 </div>
 
+<!-- MENÚ DEL DÍA -->
+<section id="menu-dia">
+  <!-- Fondos decorativos -->
+  <div class="md-bg-orb md-bg-orb-1"></div>
+  <div class="md-bg-orb md-bg-orb-2"></div>
+  <div class="md-grid-deco"></div>
+
+  <div class="md-wrapper">
+
+    <!-- Columna izquierda: texto -->
+    <div class="md-info">
+      <div class="md-eyebrow">
+        <span class="md-eyebrow-line"></span>
+        Todos los días
+        <span class="md-eyebrow-line" style="transform:scaleX(-1);"></span>
+      </div>
+      <h2 class="md-title">
+        Menú
+        <span>del Día</span>
+      </h2>
+      <p class="md-desc">
+        Cada día preparamos una propuesta diferente con los sabores más auténticos de la cocina ecuatoriana. Disfruta de una experiencia completa a un precio inmejorable.
+      </p>
+    </div>
+
+    <!-- Columna derecha: precio + WhatsApp -->
+    <div class="md-cta">
+
+      <!-- Tarjeta de precio -->
+      <div class="md-price-card">
+        <span class="md-price-label">Por solo</span>
+        <span class="md-price">14€</span>
+        <span class="md-price-sub">por persona</span>
+      </div>
+
+      <!-- Texto WhatsApp -->
+      <p class="md-wa-pre">¿Qué hay hoy en el menú?<br>Pregúntanos y te respondemos al momento.</p>
+
+      <!-- Botón WhatsApp -->
+      <a href="https://wa.me/34675079041?text=Hola!%20%C2%BFCu%C3%A1l%20es%20el%20men%C3%BA%20del%20d%C3%ADa%20de%20hoy%3F%20%F0%9F%8D%BD%EF%B8%8F"
+         target="_blank" rel="noopener noreferrer"
+         class="md-wa-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Preguntar el menú de hoy
+      </a>
+
+      <!-- Tiempo de respuesta -->
+      <p class="md-reply">
+        <span class="md-reply-dot"></span>
+        Te respondemos en menos de 5 minutos
+      </p>
+
+    </div>
+  </div>
+</section>
+
 <!-- MENU -->
 <section id="menu">
   <!-- Fondo decorativo -->
@@ -3049,90 +3596,90 @@ footer{
       <!-- DESAYUNOS (Lunes a Domingo · 9:00 – 12:30) -->
       <div class="menu-card reveal" data-cat="desayunos">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/ENCEBOLLADO.jpeg" alt="Encebollado" loading="lazy" decoding="async">
+          <img src="ENCEBOLLADO.jpeg" alt="Encebollado" loading="lazy" decoding="async">
           <span class="menu-card-badge">9:00 – 12:30</span>
         </div>
         <div class="menu-card-body">
           <h3>Encebollado</h3>
           <p>Sopa típica de la costa en caldo de pescado con yuca. Servida con pescado bonito en trozos, cebolla colorada, cilantro y limón al gusto.</p>
-          <div class="menu-card-footer"><span class="menu-price">5,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">9,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="desayunos">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/BOLON%20DE%20VERDE.jpeg" alt="Bolón de Verde" loading="lazy" decoding="async">
+          <img src="BOLON DE VERDE.jpeg" alt="Bolón de Verde" loading="lazy" decoding="async">
         </div>
         <div class="menu-card-body">
           <h3>Bolón de Verde</h3>
           <p>Plátano verde con chicharrón de cerdo y queso. Servido con seco de carne, huevo frito y ensalada de cebolla, tomate, cilantro y limón.</p>
-          <div class="menu-card-footer"><span class="menu-price">7,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">10,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="desayunos">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/BISTECK%20DE%20TERNERA.jpeg" alt="Bistec de Ternera" loading="lazy" decoding="async">
+          <img src="BISTECK DE TERNERA.jpeg" alt="Bistec de Ternera" loading="lazy" decoding="async">
         </div>
         <div class="menu-card-body">
           <h3>Bistec de Ternera</h3>
           <p>Filete de ternera al jugo, rehogado con pimientos y cebolla a la juliana. Se sirve con arroz y patacón.</p>
-          <div class="menu-card-footer"><span class="menu-price">5,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">10,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="desayunos">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/GUATITA.jpeg" alt="Guatita" loading="lazy" decoding="async">
+          <img src="GUATITA.jpeg" alt="Guatita" loading="lazy" decoding="async">
         </div>
         <div class="menu-card-body">
           <h3>Guatita</h3>
           <p>Mondongo de res y patatas en una salsa de maní, condimentado al gusto. Se sirve con arroz blanco y huevo duro.</p>
-          <div class="menu-card-footer"><span class="menu-price">5,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">9,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="desayunos">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/GUATALLARIN.jpeg" alt="Guatallarín" loading="lazy" decoding="async">
+          <img src="GUATALLARIN.jpeg" alt="Guatallarín" loading="lazy" decoding="async">
         </div>
         <div class="menu-card-body">
           <h3>Guatallarín</h3>
           <p>Deliciosa guatita y seco de carne sobre una base de tallarín. Todo preparado y condimentado al gusto.</p>
-          <div class="menu-card-footer"><span class="menu-price">5,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">10,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="desayunos">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/MOTE%20CON%20CHICHARRON.jpeg" alt="Mote con Chicharrón" loading="lazy" decoding="async">
+          <img src="MOTE CON CHICHARRON.jpeg" alt="Mote con Chicharrón" loading="lazy" decoding="async">
         </div>
         <div class="menu-card-body">
           <h3>Mote con Chicharrón</h3>
           <p>Grano de mote choclo en un sofrito de cebolla, revuelto con huevo y chicharrón de cerdo. Todo condimentado al gusto.</p>
-          <div class="menu-card-footer"><span class="menu-price">5,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">10,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="desayunos">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/MOTE%20PILLO%20CON%20HUEVO.jpeg" alt="Mote Pillo con Huevo" loading="lazy" decoding="async">
+          <img src="MOTE PILLO CON HUEVO.jpeg" alt="Mote Pillo con Huevo" loading="lazy" decoding="async">
         </div>
         <div class="menu-card-body">
           <h3>Mote Pillo con Huevo</h3>
           <p>Grano de mote cocido y revuelto con huevos en un sofrito de cebolla. Condimentado al gusto y servido con un huevo frito.</p>
-          <div class="menu-card-footer"><span class="menu-price">5,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">9,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="desayunos">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/SECO%20DE%20CARNE.jpeg" alt="Seco de Carne" loading="lazy" decoding="async">
+          <img src="SECO DE CARNE.jpeg" alt="Seco de Carne" loading="lazy" decoding="async">
         </div>
         <div class="menu-card-body">
           <h3>Seco de Carne</h3>
           <p>Carne de ternera guisada y condimentada al gusto. Se sirve con arroz blanco y huevo frito.</p>
-          <div class="menu-card-footer"><span class="menu-price">5,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">9,00 €</span></div>
         </div>
       </div>
 
       <!-- BOLLERÍA & BATIDOS -->
       <div class="menu-card reveal" data-cat="bolleria">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/PAN%20DE%20YUCA.jpeg" alt="Pan de Yuca" loading="lazy" decoding="async">
+          <img src="PAN DE YUCA.jpeg" alt="Pan de Yuca" loading="lazy" decoding="async">
           <span class="menu-card-badge">3 uds.</span>
         </div>
         <div class="menu-card-body">
@@ -3143,7 +3690,7 @@ footer{
       </div>
       <div class="menu-card reveal" data-cat="bolleria">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/Caf%C3%A9%20%2B%20Bollo%20o%20Tostada.jpeg" alt="Café + Bollo o Tostada" loading="lazy" decoding="async">
+          <img src="Caf%C3%A9%20%2B%20Bollo%20o%20Tostada.jpeg" alt="Café + Bollo o Tostada" loading="lazy" decoding="async">
         </div>
         <div class="menu-card-body">
           <h3>Café + Bollo o Tostada</h3>
@@ -3153,7 +3700,7 @@ footer{
       </div>
       <div class="menu-card reveal" data-cat="bolleria">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/Caf%C3%A9%20%2B%20Zumo%20%2B%20Bollo%20o%20Tostada.jpeg" alt="Café + Zumo + Bollo o Tostada" loading="lazy" decoding="async">
+          <img src="Caf%C3%A9%20%2B%20Zumo%20%2B%20Bollo%20o%20Tostada.jpeg" alt="Café + Zumo + Bollo o Tostada" loading="lazy" decoding="async">
         </div>
         <div class="menu-card-body">
           <h3>Café + Zumo + Bollo o Tostada</h3>
@@ -3163,23 +3710,13 @@ footer{
       </div>
       <div class="menu-card reveal" data-cat="bolleria">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/BATIDO%20DE%20FRUTAS.jpeg" alt="Batido de Frutas" loading="lazy" decoding="async">
+          <img src="BATIDO DE FRUTAS.jpeg" alt="Batido de Frutas" loading="lazy" decoding="async">
           <span class="menu-card-badge">11 sabores</span>
         </div>
         <div class="menu-card-body">
           <h3>Batido de Frutas</h3>
           <p>Batido natural a elegir entre 11 sabores: curuba, mango, fresa, mora, guanábana, papaya, guayaba, piña, lulo, tomate de árbol o maracuyá.</p>
-          <div class="menu-card-footer"><span class="menu-price">4,00 €</span></div>
-        </div>
-      </div>
-      <div class="menu-card reveal" data-cat="bolleria">
-        <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/BATIDO%20DE%20FRUTAS.jpeg" alt="Batido Mixto (Dos Frutas)" loading="lazy" decoding="async">
-        </div>
-        <div class="menu-card-body">
-          <h3>Batido Mixto (Dos Frutas)</h3>
-          <p>Combina dos frutas a tu elección de nuestra selección tropical, batidas al momento.</p>
-          <div class="menu-card-footer"><span class="menu-price">4,50 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">6,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="bolleria">
@@ -3189,172 +3726,172 @@ footer{
         <div class="menu-card-body">
           <h3>Batido con Zumo de Naranja Natural</h3>
           <p>Batido de frutas tropicales con zumo de naranja natural exprimido al momento.</p>
-          <div class="menu-card-footer"><span class="menu-price">5,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">6,00 €</span></div>
         </div>
       </div>
 
       <!-- ENTRANTES -->
       <div class="menu-card reveal" data-cat="entradas">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/E%20ENSALADA%20DE%20LA%20CASA.jpeg" alt="Ensalada de la Casa" loading="lazy" decoding="async">
+          <img src="E ENSALADA DE LA CASA.jpeg" alt="Ensalada de la Casa" loading="lazy" decoding="async">
           <span class="menu-card-badge">De la casa</span>
         </div>
         <div class="menu-card-body">
           <h3>Ensalada de la Casa</h3>
           <p>Cebolla, tomate, lechuga, atún, espárragos, maíz dulce y huevo duro. La ensalada especial de nuestro restaurante.</p>
-          <div class="menu-card-footer"><span class="menu-price">5,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">9,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="entradas">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/E%20EMPANADA%20DE%20VERDE%20RELLENA.jpeg" alt="Empanada de Verde Rellena" loading="lazy" decoding="async">
+          <img src="E EMPANADA DE VERDE RELLENA.jpeg" alt="Empanada de Verde Rellena" loading="lazy" decoding="async">
         </div>
         <div class="menu-card-body">
           <h3>Empanada de Verde Rellena</h3>
           <p>La masa es de plátano verde molido y rellena de carne o queso. Elige la que más te guste.</p>
-          <div class="menu-card-footer"><span class="menu-price">3,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">6,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="entradas">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/E%20EMPANADA%20COLOMBIANA.png.jpeg" alt="Empanada Colombiana" loading="lazy" decoding="async">
+          <img src="E EMPANADA COLOMBIANA.png.jpeg" alt="Empanada Colombiana" loading="lazy" decoding="async">
         </div>
         <div class="menu-card-body">
           <h3>Empanada Colombiana</h3>
           <p>Masa de harina de maíz rellena de carne de ternera con patatas.</p>
-          <div class="menu-card-footer"><span class="menu-price">3,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">6,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="entradas">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/E%20RUMITA%20DE%20QUESO.png.jpeg" alt="Humita con Queso" loading="lazy" decoding="async">
+          <img src="E RUMITA DE QUESO.png.jpeg" alt="Humita con Queso" loading="lazy" decoding="async">
         </div>
         <div class="menu-card-body">
           <h3>Humita con Queso</h3>
           <p>Masa de choclo tierno servida con una loncha de queso.</p>
-          <div class="menu-card-footer"><span class="menu-price">4,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">7,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="entradas">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/E%20MADURO%20LAMPREADO.jpeg" alt="Maduro Lampreado" loading="lazy" decoding="async">
+          <img src="E MADURO LAMPREADO.jpeg" alt="Maduro Lampreado" loading="lazy" decoding="async">
         </div>
         <div class="menu-card-body">
           <h3>Maduro Lampreado</h3>
           <p>Plátano maduro laminado y relleno de queso. Se fríe rebozado en harina con huevo.</p>
-          <div class="menu-card-footer"><span class="menu-price">3,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">6,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="entradas">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/E%20TORTILLA%20DE%20VERDE%20RELLENA.png.jpeg" alt="Tortilla de Verde Rellena" loading="lazy" decoding="async">
+          <img src="E TORTILLA DE VERDE RELLENA.png.jpeg" alt="Tortilla de Verde Rellena" loading="lazy" decoding="async">
         </div>
         <div class="menu-card-body">
           <h3>Tortilla de Verde Rellena</h3>
           <p>Masa de plátano verde molido y rellena de carne o de queso.</p>
-          <div class="menu-card-footer"><span class="menu-price">3,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">6,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="entradas">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/E%20TORTILLA%20DE%20YUCA.png.jpeg" alt="Tortilla de Yuca" loading="lazy" decoding="async">
+          <img src="E TORTILLA DE YUCA.png.jpeg" alt="Tortilla de Yuca" loading="lazy" decoding="async">
         </div>
         <div class="menu-card-body">
           <h3>Tortilla de Yuca</h3>
           <p>Masa de yuca, condimentada al gusto y rellena de queso.</p>
-          <div class="menu-card-footer"><span class="menu-price">3,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">6,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="entradas">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/E%20TAMAL.jpeg" alt="Tamal" loading="lazy" decoding="async">
+          <img src="E TAMAL.jpeg" alt="Tamal" loading="lazy" decoding="async">
           <span class="menu-card-badge">Tradicional</span>
         </div>
         <div class="menu-card-body">
           <h3>Tamal</h3>
           <p>Masa de harina de mote rellena de pollo y ternera, pimientos a la juliana y huevo duro. Se envuelve en hoja de plátano y se cocina a baño María.</p>
-          <div class="menu-card-footer"><span class="menu-price">4,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">7,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="entradas">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/E%20PAPA%20RELLENA.png.jpeg" alt="Papa Rellena" loading="lazy" decoding="async">
+          <img src="E PAPA RELLENA.png.jpeg" alt="Papa Rellena" loading="lazy" decoding="async">
         </div>
         <div class="menu-card-body">
           <h3>Papa Rellena</h3>
           <p>Masa de papa rellena de arroz y carne mechada de ternera. Se reboza en huevo y harina.</p>
-          <div class="menu-card-footer"><span class="menu-price">3,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">6,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="entradas">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/E%20SANDWICHE%20DE%20PERNIL.png.jpeg" alt="Sánduche de Pernil" loading="lazy" decoding="async">
+          <img src="E SANDWICHE DE PERNIL.png.jpeg" alt="Sánduche de Pernil" loading="lazy" decoding="async">
         </div>
         <div class="menu-card-body">
           <h3>Sánduche de Pernil</h3>
           <p>Pan especial para sánduche, servido con carne de pernil al horno y cebolla curtida.</p>
-          <div class="menu-card-footer"><span class="menu-price">4,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">7,00 €</span></div>
         </div>
       </div>
 
       <!-- ARROCES -->
       <div class="menu-card reveal" data-cat="arroces">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/ARROZ%20CON%20CAMARONES.jpeg" alt="Arroz con Camarón" loading="lazy" decoding="async">
+          <img src="ARROZ CON CAMARONES.jpeg" alt="Arroz con Camarón" loading="lazy" decoding="async">
           <span class="menu-card-badge">Costa</span>
         </div>
         <div class="menu-card-body">
           <h3>Arroz con Camarón</h3>
           <p>Arroz típico de la costa con camarón y verduras de cebolla y pimiento verde y rojo. Condimentado al gusto y servido con aguacate.</p>
-          <div class="menu-card-footer"><span class="menu-price">14,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">18,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="arroces">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/CHAULAFA.jpeg" alt="Chaulafán" loading="lazy" decoding="async">
+          <img src="CHAULAFA.jpeg" alt="Chaulafán" loading="lazy" decoding="async">
         </div>
         <div class="menu-card-body">
           <h3>Chaulafán</h3>
           <p>Arroz con cerdo, ternera, pollo, camarón, jamón york y verduras. Se sirve con una tortilla de huevo y plátano maduro frito.</p>
-          <div class="menu-card-footer"><span class="menu-price">12,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">18,00 €</span></div>
         </div>
       </div>
 
       <!-- CALDOS & SOPAS -->
       <div class="menu-card reveal" data-cat="caldos">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/CALDO%20DE%20GALLINA.jpeg" alt="Caldo de Gallina" loading="lazy" decoding="async">
+          <img src="CALDO DE GALLINA.jpeg" alt="Caldo de Gallina" loading="lazy" decoding="async">
           <span class="menu-card-badge">Favorito</span>
         </div>
         <div class="menu-card-body">
           <h3>Caldo de Gallina</h3>
           <p>Gallina criolla cocida en un caldo con yuca, zanahorias y apio, condimentada al gusto. Se sirve con cilantro picado.</p>
-          <div class="menu-card-footer"><span class="menu-price">9,50 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">14,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="caldos">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/CALDO%20DE%20BOLA.jpeg" alt="Caldo de Bola" loading="lazy" decoding="async">
+          <img src="CALDO DE BOLA.jpeg" alt="Caldo de Bola" loading="lazy" decoding="async">
         </div>
         <div class="menu-card-body">
           <h3>Caldo de Bola</h3>
           <p>Bola de plátano verde rellena de ternera con verduras, huevo duro y salsa de maní, cocida en un caldo de carne con choclo, col y yuca.</p>
-          <div class="menu-card-footer"><span class="menu-price">10,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">16,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="caldos">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/CALDO%20DE%20PATA.jpeg" alt="Caldo de Pata" loading="lazy" decoding="async">
+          <img src="CALDO DE PATA.jpeg" alt="Caldo de Pata" loading="lazy" decoding="async">
         </div>
         <div class="menu-card-body">
           <h3>Caldo de Pata</h3>
           <p>Preparado con pata de res en un caldo con mote y garbanzos. Se le añade leche y se sirve con cebolla blanca picada y cilantro.</p>
-          <div class="menu-card-footer"><span class="menu-price">9,50 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">14,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="caldos">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/SOPA%20MARINERA.jpeg" alt="Sopa Marinera" loading="lazy" decoding="async">
+          <img src="SOPA MARINERA.jpeg" alt="Sopa Marinera" loading="lazy" decoding="async">
           <span class="menu-card-badge">Costa</span>
         </div>
         <div class="menu-card-body">
@@ -3367,255 +3904,255 @@ footer{
       <!-- CARNES -->
       <div class="menu-card reveal" data-cat="carnes">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/HORNADO.jpeg" alt="Hornado" loading="lazy" decoding="async">
+          <img src="FRITADA.jpeg" alt="Hornado" loading="lazy" decoding="async">
           <span class="menu-card-badge">Estrella</span>
         </div>
         <div class="menu-card-body">
           <h3>Hornado</h3>
           <p>Cerdo adobado con especias de nuestra tierra y horneado por varias horas. Servido con dos tortillas de patatas, plátano maduro, aguacate, ensalada y salsa de maní.</p>
-          <div class="menu-card-footer"><span class="menu-price">14,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">19,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="carnes">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/BISTECK%20DE%20TERNERA.jpeg" alt="Bistec de Ternera" loading="lazy" decoding="async">
+          <img src="BISTECK DE TERNERA.jpeg" alt="Bistec de Ternera" loading="lazy" decoding="async">
         </div>
         <div class="menu-card-body">
           <h3>Bistec de Ternera</h3>
           <p>Preparado con verduras de cebolla, tomate y pimientos. Servido con arroz, huevo frito, patatas fritas, plátano maduro, aguacate y ensalada.</p>
-          <div class="menu-card-footer"><span class="menu-price">12,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">18,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="carnes">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/CHICHARRON%20CON%20PATACON.jpeg" alt="Chicharrón con Patacón" loading="lazy" decoding="async">
+          <img src="CHICHARRON CON PATACON.jpeg" alt="Chicharrón con Patacón" loading="lazy" decoding="async">
         </div>
         <div class="menu-card-body">
           <h3>Chicharrón con Patacón</h3>
           <p>Costillas de cerdo fritas y condimentadas con especias de nuestra tierra. Servidas con patacones, ensalada de cebolla, tomate y aguacate.</p>
-          <div class="menu-card-footer"><span class="menu-price">12,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">16,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="carnes">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/CHURRASCO.jpeg" alt="Churrasco" loading="lazy" decoding="async">
+          <img src="CHURRASCO.jpeg" alt="Churrasco" loading="lazy" decoding="async">
         </div>
         <div class="menu-card-body">
           <h3>Churrasco</h3>
           <p>Carne de ternera fina con nuestro aliño especial. Servida con arroz, patatas fritas, dos huevos fritos, plátano maduro, aguacate y ensalada.</p>
-          <div class="menu-card-footer"><span class="menu-price">12,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">18,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="carnes">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/FILETE%20APANADO.jpeg" alt="Filete Apanado de Ternera" loading="lazy" decoding="async">
+          <img src="FILETE APANADO.jpeg" alt="Filete Apanado de Ternera" loading="lazy" decoding="async">
         </div>
         <div class="menu-card-body">
           <h3>Filete Apanado de Ternera</h3>
           <p>Delicioso filete de ternera apanado. Servido con arroz, huevo frito, patatas fritas, maduros fritos, aguacate y ensalada.</p>
-          <div class="menu-card-footer"><span class="menu-price">12,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">18,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="carnes">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/FRITADA.jpeg" alt="Fritada" loading="lazy" decoding="async">
+          <img src="HORNADO.jpeg" alt="Fritada" loading="lazy" decoding="async">
           <span class="menu-card-badge">Popular</span>
         </div>
         <div class="menu-card-body">
           <h3>Fritada</h3>
           <p>Costillas y carne de cerdo frito con nuestras especias. Servida con mote cocido, dos tortillas de patatas, aguacate, ensalada y salsa de maní.</p>
-          <div class="menu-card-footer"><span class="menu-price">12,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">17,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="carnes">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/LOMITO%20SALTEADO.jpeg" alt="Lomito Salteado" loading="lazy" decoding="async">
+          <img src="LOMITO%20SALTEADO.png" alt="Lomito Salteado" loading="lazy" decoding="async">
         </div>
         <div class="menu-card-body">
           <h3>Lomito Salteado</h3>
           <p>Ternera en tiritas salteada con cebolla y pimientos. Servida con arroz, patatas fritas, ensalada, plátano maduro frito, aguacate y huevo frito.</p>
-          <div class="menu-card-footer"><span class="menu-price">12,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">18,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="carnes">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/LLAPINGACHO.png" alt="Llapingacho" loading="lazy" decoding="async">
+          <img src="LLAPINGACHO.png" alt="Llapingacho" loading="lazy" decoding="async">
           <span class="menu-card-badge">Sierra</span>
         </div>
         <div class="menu-card-body">
           <h3>Llapingacho</h3>
           <p>Plato de la región sierra con salsa de maní, tortillas de patatas, chorizo especial, huevo frito, ensalada y aguacate.</p>
-          <div class="menu-card-footer"><span class="menu-price">12,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">18,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="carnes">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/PICA%20POLLO.jpeg" alt="Pica Pollo" loading="lazy" decoding="async">
+          <img src="PICA POLLO.jpeg" alt="Pica Pollo" loading="lazy" decoding="async">
         </div>
         <div class="menu-card-body">
           <h3>Pica Pollo</h3>
           <p>Pollo frito sazonado con especias y rebozado en huevo y harina. Servido con patacones, aguacate y ensalada.</p>
-          <div class="menu-card-footer"><span class="menu-price">10,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">15,00 €</span></div>
         </div>
       </div>
 
       <!-- ESPECIALES -->
       <div class="menu-card reveal" data-cat="especiales">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/BANDERA.jpeg" alt="Bandera" loading="lazy" decoding="async">
+          <img src="BANDERA.jpeg" alt="Bandera" loading="lazy" decoding="async">
           <span class="menu-card-badge">4 sabores</span>
         </div>
         <div class="menu-card-body">
           <h3>Bandera</h3>
           <p>Cuatro sabores típicos de la costa en un solo plato: guatita, seco de carne, ceviche de camarón y arroz. Se sirve con aguacate y ensalada.</p>
-          <div class="menu-card-footer"><span class="menu-price">14,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">19,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="especiales">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/GUATITA%202.jpeg" alt="Guatita" loading="lazy" decoding="async">
+          <img src="GUATITA 2.jpeg" alt="Guatita" loading="lazy" decoding="async">
           <span class="menu-card-badge">Especial</span>
         </div>
         <div class="menu-card-body">
           <h3>Guatita</h3>
           <p>Mondongo / librillo de res y patatas en una salsa de maní (cacahuetes), condimentado al gusto. Se sirve con arroz blanco y huevo duro.</p>
-          <div class="menu-card-footer"><span class="menu-price">12,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">16,00 €</span></div>
         </div>
       </div>
 
       <!-- MARISCOS -->
       <div class="menu-card reveal" data-cat="mariscos">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/CEVICHE%20DE%20CAMARONES.jpeg" alt="Ceviche de Camarón" loading="lazy" decoding="async">
+          <img src="CEVICHE DE CAMARONES.jpeg" alt="Ceviche de Camarón" loading="lazy" decoding="async">
           <span class="menu-card-badge">Estrella</span>
         </div>
         <div class="menu-card-body">
           <h3>Ceviche de Camarón</h3>
           <p>Ceviche tradicional de la costa en un caldo de camarones condimentado al gusto, con cebolla colorada, pimientos, cilantro y limón.</p>
-          <div class="menu-card-footer"><span class="menu-price">14,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">18,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="mariscos">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/ENCEBOLLADO%202.jpeg" alt="Encebollado" loading="lazy" decoding="async">
+          <img src="ENCEBOLLADO 2.jpeg" alt="Encebollado" loading="lazy" decoding="async">
         </div>
         <div class="menu-card-body">
           <h3>Encebollado</h3>
           <p>Sopa típica de la región costa en caldo de pescado con yuca. Se sirve con pescado bonito en trozos, cebolla colorada, cilantro y limón.</p>
-          <div class="menu-card-footer"><span class="menu-price">10,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">16,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="mariscos">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/ENCEBOLLADO%20MIXTO.jpeg" alt="Encebollado Mixto" loading="lazy" decoding="async">
+          <img src="ENCEBOLLADO MIXTO.jpeg" alt="Encebollado Mixto" loading="lazy" decoding="async">
         </div>
         <div class="menu-card-body">
           <h3>Encebollado Mixto</h3>
           <p>Plato de la región costeña que mezcla los sabores del encebollado y del ceviche de camarón en uno solo.</p>
-          <div class="menu-card-footer"><span class="menu-price">15,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">18,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="mariscos">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/ENCOCADO%20DE%20CAMARON.jpeg" alt="Encocado de Camarón" loading="lazy" decoding="async">
+          <img src="ENCOCADO DE CAMARON.jpeg" alt="Encocado de Camarón" loading="lazy" decoding="async">
         </div>
         <div class="menu-card-body">
           <h3>Encocado de Camarón</h3>
           <p>Camarones salteados con verduras y salsa de coco. Plato de la región costa servido con arroz, patacones, ensalada y aguacate.</p>
-          <div class="menu-card-footer"><span class="menu-price">14,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">18,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="mariscos">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/DORADA%20FRITA%20CON%20PATACON.jpeg" alt="Dorada Frita con Patacón" loading="lazy" decoding="async">
+          <img src="DORADA FRITA CON PATACON.jpeg" alt="Dorada Frita con Patacón" loading="lazy" decoding="async">
         </div>
         <div class="menu-card-body">
           <h3>Dorada Frita con Patacón</h3>
           <p>Dorada frita sazonada al gusto con las especias de nuestra tierra. Se sirve con patacones y ensalada.</p>
-          <div class="menu-card-footer"><span class="menu-price">10,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">18,00 €</span></div>
         </div>
       </div>
 
       <!-- MENESTRAS -->
       <div class="menu-card reveal" data-cat="menestras">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/MENESTRA%20CON%20FILETE%20DE%20TERNERA.jpeg" alt="Menestra con Filete de Ternera" loading="lazy" decoding="async">
+          <img src="MENESTRA CON FILETE DE TERNERA.jpeg" alt="Menestra con Filete de Ternera" loading="lazy" decoding="async">
           <span class="menu-card-badge">Costa</span>
         </div>
         <div class="menu-card-body">
           <h3>Menestra con Filete de Ternera</h3>
           <p>Granos de fríjol en sofrito de la casa, condimentados al gusto, con filete de ternera. Se sirve con arroz, ensalada, aguacate y patacón.</p>
-          <div class="menu-card-footer"><span class="menu-price">12,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">19,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="menestras">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/MENESTRA%20CON%20FILETE%20DE%20POLLO.jpeg" alt="Menestra con Filete de Pollo" loading="lazy" decoding="async">
+          <img src="MENESTRA CON FILETE DE POLLO.jpeg" alt="Menestra con Filete de Pollo" loading="lazy" decoding="async">
         </div>
         <div class="menu-card-body">
           <h3>Menestra con Filete de Pollo</h3>
           <p>Granos de fríjol en sofrito de la casa con filete de pollo. Se sirve con arroz, ensalada, aguacate y patacón.</p>
-          <div class="menu-card-footer"><span class="menu-price">12,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">14,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="menestras">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/MENESTRA%20CON%20CHULETA%20DE%20CERDO.jpeg" alt="Menestra con Chuleta de Cerdo" loading="lazy" decoding="async">
+          <img src="MENESTRA CON CHULETA DE CERDO.jpeg" alt="Menestra con Chuleta de Cerdo" loading="lazy" decoding="async">
         </div>
         <div class="menu-card-body">
           <h3>Menestra con Chuleta de Cerdo</h3>
           <p>Granos de fríjol en sofrito de la casa con chuleta de cerdo. Se sirve con arroz, ensalada, aguacate y patacón.</p>
-          <div class="menu-card-footer"><span class="menu-price">12,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">18,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="menestras">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/MENESTRA%20CON%20DORADA%20FRITA.jpeg" alt="Menestra con Dorada Frita" loading="lazy" decoding="async">
+          <img src="MENESTRA CON DORADA FRITA.jpeg" alt="Menestra con Dorada Frita" loading="lazy" decoding="async">
         </div>
         <div class="menu-card-body">
           <h3>Menestra con Dorada Frita</h3>
           <p>Granos de fríjol en sofrito de la casa con dorada frita. Se sirve con arroz, ensalada, aguacate y patacón.</p>
-          <div class="menu-card-footer"><span class="menu-price">14,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">21,00 €</span></div>
         </div>
       </div>
 
       <!-- INFANTIL (incluye postre) -->
       <div class="menu-card reveal" data-cat="infantil">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/PAPIPOLLO.jpeg" alt="Papipollo" loading="lazy" decoding="async">
+          <img src="PAPIPOLLO.jpeg" alt="Papipollo" loading="lazy" decoding="async">
           <span class="menu-card-badge">+ Postre</span>
         </div>
         <div class="menu-card-body">
           <h3>Papipollo</h3>
           <p>Patatas fritas con pollo broster rebozado en huevo y harina, condimentado al gusto. Incluye postre.</p>
-          <div class="menu-card-footer"><span class="menu-price">7,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">10,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="infantil">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/FILETE%20DE%20POLLO%20CON%20PATATAS%20FRITAS.jpeg" alt="Filete de Pollo con Patatas" loading="lazy" decoding="async">
+          <img src="FILETE DE POLLO CON PATATAS FRITAS.jpeg" alt="Filete de Pollo con Patatas" loading="lazy" decoding="async">
           <span class="menu-card-badge">+ Postre</span>
         </div>
         <div class="menu-card-body">
           <h3>Filete de Pollo con Patatas</h3>
           <p>Patatas fritas con filete de pechuga de pollo a la plancha. Incluye postre.</p>
-          <div class="menu-card-footer"><span class="menu-price">7,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">10,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="infantil">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/SALCHIPAPAS.jpeg" alt="Salchipapas" loading="lazy" decoding="async">
+          <img src="SALCHIPAPAS.jpeg" alt="Salchipapas" loading="lazy" decoding="async">
           <span class="menu-card-badge">+ Postre</span>
         </div>
         <div class="menu-card-body">
           <h3>Salchipapas</h3>
           <p>El plato que le gusta a todos los niños: patatas y salchichas fritas. Incluye postre.</p>
-          <div class="menu-card-footer"><span class="menu-price">6,00 €</span></div>
+          <div class="menu-card-footer"><span class="menu-price">8,00 €</span></div>
         </div>
       </div>
       <div class="menu-card reveal" data-cat="infantil">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/NUGGETS.jpeg" alt="Nuggets de Pollo" loading="lazy" decoding="async">
+          <img src="NUGGETS.jpeg" alt="Nuggets de Pollo" loading="lazy" decoding="async">
           <span class="menu-card-badge">+ Postre</span>
         </div>
         <div class="menu-card-body">
@@ -3648,7 +4185,7 @@ footer{
       </div>
       <div class="menu-card reveal" data-cat="bebidas">
         <div class="menu-card-img">
-          <img src="IMAGENES%20EDITADAS%20PLATOS/REFRESCOS.jpeg" alt="Refrescos" loading="lazy" decoding="async">
+          <img src="REFRESCOS.jpeg" alt="Refrescos" loading="lazy" decoding="async">
         </div>
         <div class="menu-card-body">
           <h3>Refrescos</h3>
@@ -3805,8 +4342,8 @@ footer{
     </div>
     <div class="gallery-grid">
 
-      <div class="gallery-item reveal" onclick="openLightbox('IMAGENES%20EDITADAS%20PLATOS/HORNADO.jpeg')">
-        <img src="IMAGENES%20EDITADAS%20PLATOS/HORNADO.jpeg" alt="Hornado Serrano" loading="lazy" decoding="async">
+      <div class="gallery-item reveal" onclick="openLightbox('FRITADA.jpeg')">
+        <img src="FRITADA.jpeg" alt="Hornado Serrano" loading="lazy" decoding="async">
         <div class="gallery-overlay">
           <span class="gal-label">Especiales</span>
           <span class="gal-title">Hornado Serrano</span>
@@ -3815,8 +4352,8 @@ footer{
         <span class="gal-num">01</span>
       </div>
 
-      <div class="gallery-item reveal" onclick="openLightbox('IMAGENES%20EDITADAS%20PLATOS/ENCEBOLLADO.jpeg')">
-        <img src="IMAGENES%20EDITADAS%20PLATOS/ENCEBOLLADO.jpeg" alt="Encebollado" loading="lazy" decoding="async">
+      <div class="gallery-item reveal" onclick="openLightbox('ENCEBOLLADO.jpeg')">
+        <img src="ENCEBOLLADO.jpeg" alt="Encebollado" loading="lazy" decoding="async">
         <div class="gallery-overlay">
           <span class="gal-label">Caldos & Sopas</span>
           <span class="gal-title">Encebollado</span>
@@ -3825,8 +4362,8 @@ footer{
         <span class="gal-num">02</span>
       </div>
 
-      <div class="gallery-item reveal" onclick="openLightbox('IMAGENES%20EDITADAS%20PLATOS/CEVICHE%20DE%20CAMARONES.jpeg')">
-        <img src="IMAGENES%20EDITADAS%20PLATOS/CEVICHE%20DE%20CAMARONES.jpeg" alt="Ceviche de Camarones" loading="lazy" decoding="async">
+      <div class="gallery-item reveal" onclick="openLightbox('CEVICHE DE CAMARONES.jpeg')">
+        <img src="CEVICHE DE CAMARONES.jpeg" alt="Ceviche de Camarones" loading="lazy" decoding="async">
         <div class="gallery-overlay">
           <span class="gal-label">Mariscos</span>
           <span class="gal-title">Ceviche de Camarones</span>
@@ -3835,8 +4372,8 @@ footer{
         <span class="gal-num">03</span>
       </div>
 
-      <div class="gallery-item reveal" onclick="openLightbox('IMAGENES%20EDITADAS%20PLATOS/CHURRASCO.jpeg')">
-        <img src="IMAGENES%20EDITADAS%20PLATOS/CHURRASCO.jpeg" alt="Churrasco" loading="lazy" decoding="async">
+      <div class="gallery-item reveal" onclick="openLightbox('CHURRASCO.jpeg')">
+        <img src="CHURRASCO.jpeg" alt="Churrasco" loading="lazy" decoding="async">
         <div class="gallery-overlay">
           <span class="gal-label">Carnes</span>
           <span class="gal-title">Churrasco</span>
@@ -3845,8 +4382,8 @@ footer{
         <span class="gal-num">04</span>
       </div>
 
-      <div class="gallery-item reveal" onclick="openLightbox('IMAGENES%20EDITADAS%20PLATOS/ARROZ%20CON%20CAMARONES.jpeg')">
-        <img src="IMAGENES%20EDITADAS%20PLATOS/ARROZ%20CON%20CAMARONES.jpeg" alt="Arroz con Camarones" loading="lazy" decoding="async">
+      <div class="gallery-item reveal" onclick="openLightbox('ARROZ CON CAMARONES.jpeg')">
+        <img src="ARROZ CON CAMARONES.jpeg" alt="Arroz con Camarones" loading="lazy" decoding="async">
         <div class="gallery-overlay">
           <span class="gal-label">Arroces</span>
           <span class="gal-title">Arroz con Camarones</span>
@@ -3855,8 +4392,8 @@ footer{
         <span class="gal-num">05</span>
       </div>
 
-      <div class="gallery-item reveal" onclick="openLightbox('IMAGENES%20EDITADAS%20PLATOS/FRITADA.jpeg')">
-        <img src="IMAGENES%20EDITADAS%20PLATOS/FRITADA.jpeg" alt="Fritada" loading="lazy" decoding="async">
+      <div class="gallery-item reveal" onclick="openLightbox('HORNADO.jpeg')">
+        <img src="HORNADO.jpeg" alt="Fritada" loading="lazy" decoding="async">
         <div class="gallery-overlay">
           <span class="gal-label">Especiales</span>
           <span class="gal-title">Fritada</span>
@@ -3865,8 +4402,8 @@ footer{
         <span class="gal-num">06</span>
       </div>
 
-      <div class="gallery-item reveal" onclick="openLightbox('IMAGENES%20EDITADAS%20PLATOS/BOLON%20DE%20VERDE.jpeg')">
-        <img src="IMAGENES%20EDITADAS%20PLATOS/BOLON%20DE%20VERDE.jpeg" alt="Bolón de Verde" loading="lazy" decoding="async">
+      <div class="gallery-item reveal" onclick="openLightbox('BOLON DE VERDE.jpeg')">
+        <img src="BOLON DE VERDE.jpeg" alt="Bolón de Verde" loading="lazy" decoding="async">
         <div class="gallery-overlay">
           <span class="gal-label">Desayunos</span>
           <span class="gal-title">Bolón de Verde</span>
@@ -3875,8 +4412,8 @@ footer{
         <span class="gal-num">07</span>
       </div>
 
-      <div class="gallery-item reveal" onclick="openLightbox('IMAGENES%20EDITADAS%20PLATOS/CALDO%20DE%20GALLINA.jpeg')">
-        <img src="IMAGENES%20EDITADAS%20PLATOS/CALDO%20DE%20GALLINA.jpeg" alt="Caldo de Gallina" loading="lazy" decoding="async">
+      <div class="gallery-item reveal" onclick="openLightbox('CALDO DE GALLINA.jpeg')">
+        <img src="CALDO DE GALLINA.jpeg" alt="Caldo de Gallina" loading="lazy" decoding="async">
         <div class="gallery-overlay">
           <span class="gal-label">Caldos & Sopas</span>
           <span class="gal-title">Caldo de Gallina</span>
@@ -3885,11 +4422,11 @@ footer{
         <span class="gal-num">08</span>
       </div>
 
-      <div class="gallery-item reveal" onclick="openLightbox('IMAGENES%20EDITADAS%20PLATOS/LLAPINGACHO.png')">
-        <img src="IMAGENES%20EDITADAS%20PLATOS/LLAPINGACHO.png" alt="Llapingachos" loading="lazy" decoding="async">
+      <div class="gallery-item reveal" onclick="openLightbox('ENCOCADO DE CAMARON.jpeg')">
+        <img src="ENCOCADO DE CAMARON.jpeg" alt="Encocado de Camarón" loading="lazy" decoding="async">
         <div class="gallery-overlay">
-          <span class="gal-label">Especiales</span>
-          <span class="gal-title">Llapingachos</span>
+          <span class="gal-label">Mariscos</span>
+          <span class="gal-title">Encocado de Camarón</span>
         </div>
         <div class="gallery-zoom"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
         <span class="gal-num">09</span>
@@ -3932,7 +4469,7 @@ footer{
       Horario de Atención
       <span class="pd1-eline r"></span>
     </div>
-    <div class="pd1-line1">Lunes a Viernes</div>
+    <div class="pd1-line1">Lunes a Domingo</div>
     <div class="pd1-ornament">
       <span class="pd1-orn-line"></span>
       <span class="pd1-orn-diamond"></span>
@@ -3976,7 +4513,7 @@ footer{
         <div class="rc-score">4.9</div>
         <div class="rc-score-sub">Promedio basado en<br><strong style="color:#e8ddd0;">+500 reseñas</strong></div>
       </div>
-      <a href="https://search.google.com/local/writereview?kgmid=/g/11by__c4rf" target="_blank" rel="noopener" class="rc-cta-btn">
+      <a href="https://search.google.com/local/writereview?placeid=ChIJmdpFOAkmQg0RmbLbQz5my0U" target="_blank" rel="noopener" class="rc-cta-btn">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2l2.09 6.26L20 9l-4.55 3.7L17 19l-5-3.18L7 19l1.55-6.3L4 9l5.91-.74z"/></svg>
         Deja tu reseña
       </a>
@@ -4121,7 +4658,7 @@ footer{
           </div>
           <div>
             <h4>Horarios</h4>
-            <p><strong style="color:var(--orange)">Lunes a Viernes</strong><br>8:30 AM — 11:00 PM</p>
+            <p><strong style="color:var(--orange)">Lunes a Domingo</strong><br>8:30 AM — 11:00 PM</p>
           </div>
         </div>
       </div>
@@ -4332,7 +4869,7 @@ footer{
     <div class="footer-col">
       <h5>Horarios</h5>
       <ul>
-        <li><a href="#">Lun — Vie: 8:30 AM – 11:00 PM</a></li>
+        <li><a href="#">Lun — Dom: 8:30 AM – 11:00 PM</a></li>
         <li><a href="#contact">Reservas disponibles</a></li>
       </ul>
     </div>
@@ -4343,6 +4880,13 @@ footer{
     <span class="footer-addr-sep"></span>
     <img src="METRO LOGO.png" alt="Metro Madrid" style="height:18px;width:auto;flex-shrink:0;vertical-align:middle;">
     <span>Puente de Vallecas</span>
+  </div>
+  <div class="footer-legal">
+    <a href="#politica-cookies">Política de Cookies</a>
+    <span class="footer-legal-sep"></span>
+    <a href="#aviso-legal">Aviso Legal</a>
+    <span class="footer-legal-sep"></span>
+    <a href="#politica-privacidad">Política de Privacidad</a>
   </div>
   <div class="footer-bottom">
     <p>© 2026 <span>AKIPAN</span> Restaurante &amp; Panadería. Todos los derechos reservados.</p>
@@ -4364,8 +4908,55 @@ footer{
 window.addEventListener('load', () => {
   setTimeout(() => {
     document.getElementById('preloader').classList.add('hidden');
+    // Mostrar banner de cookies tras el preloader
+    initCookieBanner();
   }, 2800);
 });
+
+// =============================================
+// COOKIE CONSENT BANNER
+// =============================================
+function initCookieBanner(){
+  const STORAGE_KEY  = 'akipan_cookies_ts';
+  const INTERVAL_MS  = 3 * 60 * 60 * 1000; // 3 horas en ms
+  const overlay      = document.getElementById('cookie-overlay');
+  const btnAccept    = document.getElementById('cookieAccept');
+  const btnDecline   = document.getElementById('cookieDecline');
+
+  function shouldShow(){
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if(!saved) return true;
+    return (Date.now() - parseInt(saved, 10)) >= INTERVAL_MS;
+  }
+
+  function showBanner(){
+    overlay.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function hideBanner(){
+    overlay.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  function saveCookieChoice(){
+    localStorage.setItem(STORAGE_KEY, Date.now().toString());
+    hideBanner();
+  }
+
+  if(shouldShow()){
+    // Pequeño delay extra para que la animación de entrada sea suave
+    setTimeout(showBanner, 400);
+  }
+
+  btnAccept.addEventListener('click', saveCookieChoice);
+  btnDecline.addEventListener('click', saveCookieChoice);
+
+  // Cerrar también al hacer clic en el overlay fuera del banner
+  overlay.addEventListener('click', function(e){
+    if(e.target === overlay) saveCookieChoice();
+  });
+}
 
 // =============================================
 // PARTICLES
@@ -4612,6 +5203,19 @@ document.querySelectorAll('.menu-grid, .testimonials-grid, .counters-grid, .abou
   });
 });
 
+// Menú del Día — reveal on scroll
+(function(){
+  const mdSection = document.getElementById('menu-dia');
+  if(!mdSection) return;
+  const mdObs = new IntersectionObserver((entries) => {
+    if(entries[0].isIntersecting){
+      mdSection.classList.add('md-on');
+      mdObs.disconnect();
+    }
+  }, { threshold: 0.15 });
+  mdObs.observe(mdSection);
+})();
+
 // =============================================
 // COUNTER ANIMATION
 // =============================================
@@ -4806,19 +5410,32 @@ function submitForm(e){
     }catch(_){ fecha = fechaRaw; }
   }
 
+  // Emojis por codepoint numerico — cero literales no-ASCII en el fuente
+  const E = String.fromCodePoint;
+  const ico = {
+    plato  : E(0x1F37D) + String.fromCharCode(0xFE0F), // plato
+    persona: E(0x1F464),   // persona
+    movil  : E(0x1F4F1),   // movil
+    email  : E(0x1F4E7),   // email
+    fecha  : E(0x1F4C5),   // fecha
+    grupo  : E(0x1F465),   // grupo
+    chat   : E(0x1F4AC),   // chat
+    web    : E(0x1F310),   // web
+    sep    : String.fromCharCode(0x2501).repeat(13)
+  };
   const msg =
-`🍽️ *NUEVA RESERVA — AKIPAN* 🍽️
-━━━━━━━━━━━━━━━━━━━━━━━━━━
+`${ico.plato} *NUEVA RESERVA - AKIPAN* ${ico.plato}
+${ico.sep}
 
-👤 *Nombre:*    ${nombre}
-📱 *Teléfono:*  ${telefono}
-📧 *Email:*     ${email}
-📅 *Fecha:*     ${fecha}
-👥 *Personas:*  ${personas}
-💬 *Mensaje:*   ${mensaje}
+${ico.persona} *Nombre:*    ${nombre}
+${ico.movil} *Telefono:*  ${telefono}
+${ico.email} *Email:*     ${email}
+${ico.fecha} *Fecha:*     ${fecha}
+${ico.grupo} *Personas:*  ${personas}
+${ico.chat} *Mensaje:*   ${mensaje}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━
-_Reserva recibida desde akipan.es_ 🌐`;
+${ico.sep}
+_Reserva recibida desde akipanrestaurante.com_ ${ico.web}`;
 
   btn.disabled = true;
   btn.textContent = 'Abriendo WhatsApp…';
